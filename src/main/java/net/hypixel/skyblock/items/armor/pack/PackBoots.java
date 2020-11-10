@@ -1,0 +1,25 @@
+package net.hypixel.skyblock.items.armor.pack;
+
+import java.util.List;
+
+import net.hypixel.skyblock.items.armor.ModArmorItem;
+import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.ItemProperties;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
+
+public class PackBoots extends ModArmorItem {
+	public PackBoots() {
+		super(Pack.material, EquipmentSlotType.FEET, ItemProperties.c1, Pack.rarity);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new StringTextComponent(
+				ColorCodes.red + "Health" + ColorCodes.gray + ": " + Pack.helmet + "\n" + Pack.fsb));
+	}
+}

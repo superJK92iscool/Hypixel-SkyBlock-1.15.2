@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "# #",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "hypixelskyblockmod:e_end_stone_8"
+        }
+    },
+    "result": {
+        "item": "hypixelskyblockmod:e_end_stone_64",
+        "count": 1
+    }
+}

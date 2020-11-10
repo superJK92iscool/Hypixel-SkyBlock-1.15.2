@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "block/end_stone",
+        "layer1": "hypixelskyblockmod:items/overlay_64"
+    }
+}

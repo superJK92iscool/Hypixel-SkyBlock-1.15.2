@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "block/diamond_block",
+        "layer1": "hypixelskyblockmod:items/overlay_16"
+    }
+}

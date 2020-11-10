@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "# #",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "hypixelskyblockmod:cobblestone_8"
+        }
+    },
+    "result": {
+        "item": "hypixelskyblockmod:cobblestone_64",
+        "count": 1
+    },
+    "group": "cobble_64"
+}

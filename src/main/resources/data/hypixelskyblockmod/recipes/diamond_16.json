@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "d_16",
+    "pattern": [
+        "##"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result": {
+        "item": "hypixelskyblockmod:diamond_16",
+        "count": 1
+    }
+}

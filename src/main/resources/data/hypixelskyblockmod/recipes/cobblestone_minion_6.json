@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#M#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "hypixelskyblockmod:e_cobblestone_2"
+        },
+        "M": {
+            "item": "hypixelskyblockmod:cobblestone_minion_5"
+        }
+    },
+    "result": {
+        "item": "hypixelskyblockmod:cobblestone_minion_6",
+        "count": 1
+    }
+}

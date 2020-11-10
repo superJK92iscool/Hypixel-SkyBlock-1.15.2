@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "## "
+    ],
+    "key": {
+        "#": {
+            "item": "hypixelskyblockmod:e_diamond_32"
+        }
+    },
+    "result": {
+        "item": "hypixelskyblockmod:enchanted_diamond_block",
+        "count": 1
+    }
+}
