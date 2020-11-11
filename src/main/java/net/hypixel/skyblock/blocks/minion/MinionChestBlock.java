@@ -1,16 +1,16 @@
 package net.hypixel.skyblock.blocks.minion;
 
+import javax.annotation.Nonnull;
+
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.hypixel.skyblock.tileentity.minion.AbstractMinionChestTileEntity;
 import net.minecraft.block.AbstractChestBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.ChestTileEntity;
@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 /**
- * A class for the MinionStorageBlock.<br>
+ * Serve as base for additional {@link AbstractMinionBlock} storage.<br>
  * <a href="https://hypixel-skyblock.fandom.com/wiki/Minion_Chests">Click here
  * for a description.</a>
  *
@@ -39,47 +39,55 @@ import net.minecraftforge.fml.network.NetworkHooks;
  * @version 2 June 2020
  */
 public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinionChestTileEntity> {
-	public static class LargeMCB extends MinionChestBlock {
-		public LargeMCB(Properties properties) {
-			super(properties, Type.LARGE);
-		}
-	}
-
-	public static class MediumMCB extends MinionChestBlock {
-		public MediumMCB(Properties properties) {
-			super(properties, Type.MEDIUM);
-		}
-	}
-
 	public static class SmallMCB extends MinionChestBlock {
 		public SmallMCB(Properties properties) {
-			super(properties, Type.SMALL);
+			super(properties, ChestType.SMALL);
+		}
+	}
+	
+	public static class MediumMCB extends MinionChestBlock {
+		public MediumMCB(Properties properties) {
+			super(properties, ChestType.MEDIUM);
+		}
+	}
+	
+	public static class LargeMCB extends MinionChestBlock {
+		public LargeMCB(Properties properties) {
+			super(properties, ChestType.LARGE);
 		}
 	}
 
 	/**
-	 * Help with the logic handling of the different types of Minion Chest Blocks.
+	 * Help with the logic handling of the different types of {@link MinionChestBlock}.
 	 */
-	public enum Type {
+	public enum ChestType {
 		/**
-		 * Gives 15 extra slots.
+		 * Gives 3 extra slots.
 		 */
-		LARGE(15),
+		SMALL(3),
 		/**
 		 * Gives 9 extra slots.
 		 */
 		MEDIUM(9),
 		/**
-		 * Gives 3 extra slots.
+		 * Gives 15 extra slots.
 		 */
-		SMALL(3);
+		LARGE(15),
+		/**
+		 * Gives 21 extra slots.
+		 */
+		XLARGE(21),
+		/**
+		 * Gives 27 extra slots.
+		 */
+		XXLARGE(27);
 
 		/**
 		 * The number of additional slots this will give
 		 */
 		public final int additional;
 
-		private Type(int additional) {
+		private ChestType(int additional) {
 			this.additional = additional;
 		}
 	}
@@ -95,26 +103,21 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	protected static final VoxelShape shape = Block.makeCuboidShape(1, 0, 1, 15, 14, 15);
 
 	/**
-	 * The {@link Type} of {@code this}
+	 * The {@link ChestType} of {@code this}
 	 */
-	public final Type type;
+	public final ChestType type;
 
-	/**
-	 * Construct {@code this}
-	 *
-	 * @param properties the properties
-	 * @param type       the type.
-	 */
-	protected MinionChestBlock(Properties properties, Type type) {
+	protected MinionChestBlock(Properties properties, @Nonnull ChestType type) {
 		super(properties, () -> {
 			switch (type) {
 			case SMALL:
-			default:
 				return ModTileEntityTypes.small_mcte.get();
 			case MEDIUM:
 				return ModTileEntityTypes.medium_mcte.get();
 			case LARGE:
 				return ModTileEntityTypes.large_mcte.get();
+			default:
+				throw new IllegalStateException("Illegal ChestType " + type.name());
 			}
 		});
 		this.setDefaultState(this.stateContainer.getBaseState().with(facing, Direction.NORTH));
@@ -125,13 +128,14 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	public TileEntity createNewTileEntity(IBlockReader worldIn) {
 		switch (this.type) {
 		case SMALL:
-		default:
 			return ModTileEntityTypes.small_mcte.get().create();
 		case MEDIUM:
 			return ModTileEntityTypes.medium_mcte.get().create();
 		case LARGE:
 			return ModTileEntityTypes.large_mcte.get().create();
-		}
+		default:
+			throw new IllegalStateException("Illegal ChestType " + this.type.name());
+		} 
 	}
 
 	@Override
@@ -151,7 +155,7 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	}
 
 	/**
-	 * @return {@link Type#additional}
+	 * @return {@link ChestType#additional}
 	 */
 	public int getSize() {
 		return this.type.additional;
@@ -176,25 +180,12 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (!worldIn.isRemote) {
-			final TileEntity te = worldIn.getTileEntity(pos);
-			if (te instanceof AbstractMinionChestTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (AbstractMinionChestTileEntity) te, pos);
-				return ActionResultType.SUCCESS;
-			}
-		}
-		return ActionResultType.FAIL;
-	}
-
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		for (final BlockPos nextTo : new BlockPos[] { pos.north(), pos.east(), pos.south(), pos.west() })
-			if (!(worldIn.getBlockState(nextTo).getBlock() instanceof AbstractMinionBlock))
-				return;
-			else {
-				super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-				return;
-			}
+		if (worldIn.isRemote) return ActionResultType.FAIL;
+		final TileEntity te = worldIn.getTileEntity(pos);
+		if (te instanceof AbstractMinionChestTileEntity) {
+			NetworkHooks.openGui((ServerPlayerEntity) player, (AbstractMinionChestTileEntity) te, pos);
+			return ActionResultType.SUCCESS;
+		} return ActionResultType.FAIL;
 	}
 
 	@Deprecated
