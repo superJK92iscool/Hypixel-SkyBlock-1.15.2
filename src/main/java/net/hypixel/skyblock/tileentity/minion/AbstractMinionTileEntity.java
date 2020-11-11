@@ -787,7 +787,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 */
 	protected void playSound(SoundEvent sound) {
 		this.world.playSound(null, this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5, sound,
-				SoundCategory.BLOCKS, .5f, this.world.rand.nextFloat() * .1f + .9f);
+				SoundCategory.BLOCKS, .5f, rand.nextFloat() * .1f + .9f);
 	}
 
 	@Override
@@ -800,9 +800,10 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 
 	@Override
 	public boolean receiveClientEvent(int id, int type) {
-		if (id == 1)
+		if (id == 1) {
+			this.numPlayersUsing = type;
 			return true;
-		return super.receiveClientEvent(id, type);
+		} return super.receiveClientEvent(id, type);
 	}
 
 	@Override
