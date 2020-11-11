@@ -2,13 +2,12 @@ package net.hypixel.skyblock.tileentity.minion;
 
 import java.util.Objects;
 
-import net.hypixel.skyblock.blocks.minion.MinionChestBlock.Type;
-import net.hypixel.skyblock.init.blocks.BlockInit;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock.ChestType;
+import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.LargeMCC;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.MediumMCC;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.SmallMCC;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -18,17 +17,20 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -47,26 +49,26 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 		implements IChestLid, ITickableTileEntity {
 	public static class LargeMCTE extends AbstractMinionChestTileEntity {
 		public LargeMCTE() {
-			super(ModTileEntityTypes.large_mcte.get(), Type.LARGE);
+			super(ModTileEntityTypes.large_mcte.get(), ChestType.LARGE);
 		}
 	}
 
 	public static class MediumMCTE extends AbstractMinionChestTileEntity {
 		public MediumMCTE() {
-			super(ModTileEntityTypes.medium_mcte.get(), Type.MEDIUM);
+			super(ModTileEntityTypes.medium_mcte.get(), ChestType.MEDIUM);
 		}
 	}
 
 	public static class SmallMCTE extends AbstractMinionChestTileEntity {
 		public SmallMCTE() {
-			super(ModTileEntityTypes.small_mcte.get(), Type.SMALL);
+			super(ModTileEntityTypes.small_mcte.get(), ChestType.SMALL);
 		}
 	}
 
 	/**
 	 * {@link LazyOptional} of {@link IItemHandlerModifiable}
 	 */
-	protected LazyOptional<IItemHandlerModifiable> handler = LazyOptional.of(() -> new InvWrapper(this));
+	protected LazyOptional<IItemHandlerModifiable> chestHandler = LazyOptional.of(() -> new InvWrapper(this));
 
 	/**
 	 * The {@link NonNullList} of things that {@code this} contains.
@@ -96,28 +98,44 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	protected int ticksSinceSync;
 
 	/**
-	 * The {@link Type} of this.
+	 * The {@link ChestType} of this.
 	 */
-	protected final Type type;
+	public final ChestType type;
 
 	/**
 	 * Construct this.
 	 *
-	 * @param typeIn the {@link TileEntityType}
-	 * @param type   the {@link Type}
+	 * @param typeIn the {@link TileEntityChestType}
+	 * @param type   the {@link ChestType}
 	 */
-	protected AbstractMinionChestTileEntity(TileEntityType<?> typeIn, Type type) {
+	protected AbstractMinionChestTileEntity(TileEntityType<? extends AbstractMinionChestTileEntity> typeIn,
+			ChestType type) {
 		super(typeIn);
-		this.type = Objects.requireNonNull(type, "Minion Chest Tile Entity must have a type.");
+		this.type = Objects.requireNonNull(type, "Minion Chest Tile Entity must have a ChestType.");
 		this.items = NonNullList.withSize(this.type.additional, ItemStack.EMPTY);
+	}
+
+	public static int calculatePlayersUsing(World worldIn, LockableTileEntity tileEntity, int x, int y, int z) {
+		int i = 0;
+		for (PlayerEntity player : worldIn.getEntitiesWithinAABB(PlayerEntity.class,
+				new AxisAlignedBB(x - 5, y - 5, z - 5, x + 6, y + 6, z + 6)))
+			if (player.openContainer instanceof MinionChestContainer)
+				++i;
+		return i;
+	}
+
+	public static int calculatePlayersUsingSync(World worldIn, LockableTileEntity tileEntity, int ticksSinceSync, int x,
+			int y, int z, int numPlayerUsing) {
+		if (!worldIn.isRemote && numPlayerUsing != 0 && (ticksSinceSync + x + y + z) % 200 == 0)
+			numPlayerUsing = calculatePlayersUsing(worldIn, tileEntity, x, y, z);
+		return numPlayerUsing;
 	}
 
 	public boolean canBeUsed(PlayerEntity player) {
 		if (this.world.getTileEntity(this.pos) != this)
 			return false;
 		else
-			return (player.getDistanceSq(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D,
-					this.pos.getZ() + 0.5D) <= 64.0D);
+			return (player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d);
 	}
 
 	@Override
@@ -125,11 +143,11 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 		switch (this.type) {
 		case SMALL:
 		default:
-			return new SmallMCC(id, player, this);
+			return new SmallMCC(id, player);
 		case MEDIUM:
-			return new MediumMCC(id, player, this);
+			return new MediumMCC(id, player);
 		case LARGE:
-			return new LargeMCC(id, player, this);
+			return new LargeMCC(id, player);
 		}
 	}
 
@@ -141,15 +159,8 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return this.handler.cast();
+			return this.chestHandler.cast();
 		return super.getCapability(cap, side);
-	}
-
-	/**
-	 * @return {@link #type}
-	 */
-	public Type getChestType() {
-		return this.type;
 	}
 
 	@Override
@@ -225,12 +236,12 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	}
 
 	@Override
-	public boolean receiveClientEvent(int id, int type) {
+	public boolean receiveClientEvent(int id, int ChestType) {
 		if (id == 1) {
-			this.numPlayersUsing = type;
+			this.numPlayersUsing = ChestType;
 			return true;
 		}
-		return super.receiveClientEvent(id, type);
+		return super.receiveClientEvent(id, ChestType);
 	}
 
 	@Override
@@ -263,48 +274,45 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public void tick() {
-		Block block;
-		switch (this.type) {
-		case SMALL:
-		default:
-			block = BlockInit.small_mcb.get();
-		case MEDIUM:
-			block = BlockInit.medium_mcb.get();
-		case LARGE:
-			block = BlockInit.large_mcb.get();
-		}
-		if (++this.ticksSinceSync % 20 * 4 == 0)
-			this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
-
+		int i = this.pos.getX();
+		int j = this.pos.getY();
+		int k = this.pos.getZ();
+		++this.ticksSinceSync;
+		this.numPlayersUsing = calculatePlayersUsingSync(this.world, this, this.ticksSinceSync, i, j, k,
+				this.numPlayersUsing);
 		this.prevLidAngle = this.lidAngle;
-		final int i = this.pos.getX();
-		final int j = this.pos.getY();
-		final int k = this.pos.getZ();
-		if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F)
-			this.world.playSound((PlayerEntity) null, i + .5, j + .5, k + .5, SoundEvents.BLOCK_CHEST_OPEN,
-					SoundCategory.BLOCKS, .5f, this.world.rand.nextFloat() * .1f + .9f);
+		if (this.numPlayersUsing > 0 && this.lidAngle == 0f) {
+			this.playSound(SoundEvents.BLOCK_CHEST_OPEN);
+		}
+
 		if (this.numPlayersUsing == 0 && this.lidAngle > 0f || this.numPlayersUsing > 0 && this.lidAngle < 1f) {
-			final float f2 = this.lidAngle;
-			if (this.numPlayersUsing > 0)
+			float f1 = this.lidAngle;
+			if (this.numPlayersUsing > 0) {
 				this.lidAngle += .1f;
-			else
+			} else {
 				this.lidAngle -= .1f;
-			if (this.lidAngle > 1f)
+			}
+
+			if (this.lidAngle > 1f) {
 				this.lidAngle = 1f;
-			if (this.lidAngle < .5f && f2 >= .5f)
-				this.world.playSound((PlayerEntity) null, i + .5d, j + .5d, k + .5d, SoundEvents.BLOCK_CHEST_CLOSE,
-						SoundCategory.BLOCKS, .5f, this.world.rand.nextFloat() * .1f + .9f);
-			if (this.lidAngle < 0f)
+			}
+
+			if (this.lidAngle < .5f && f1 >= .5f) {
+				this.playSound(SoundEvents.BLOCK_CHEST_CLOSE);
+			}
+
+			if (this.lidAngle < 0f) {
 				this.lidAngle = 0f;
+			}
 		}
 	}
 
 	@Override
 	public void updateContainingBlockInfo() {
 		super.updateContainingBlockInfo();
-		if (this.handler != null) {
-			this.handler.invalidate();
-			this.handler = null;
+		if (this.chestHandler != null) {
+			this.chestHandler.invalidate();
+			this.chestHandler = null;
 		}
 	}
 
