@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
-import net.hypixel.skyblock.blocks.minion.MinionChestBlock.Type;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock.ChestType;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,23 +19,24 @@ import net.minecraft.util.text.ITextComponent;
  *
  * @author MrPineapple070
  * @version 24 June 2020
+ * @since 14 June 2019
  */
 public abstract class MinionChestScreen extends ContainerScreen<MinionChestContainer> {
-	public static class LargeMCS extends MinionChestScreen {
-		public LargeMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, Type.LARGE);
+	public static class SmallMCS extends MinionChestScreen {
+		public SmallMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+			super(screenContainer, inv, titleIn, ChestType.SMALL);
 		}
 	}
 
 	public static class MediumMCS extends MinionChestScreen {
 		public MediumMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, Type.MEDIUM);
+			super(screenContainer, inv, titleIn, ChestType.MEDIUM);
 		}
 	}
 
-	public static class SmallMCS extends MinionChestScreen {
-		public SmallMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, Type.SMALL);
+	public static class LargeMCS extends MinionChestScreen {
+		public LargeMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+			super(screenContainer, inv, titleIn, ChestType.LARGE);
 		}
 	}
 
@@ -64,10 +65,10 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 	 * The {@link Type} of this.
 	 */
 	@Nonnull
-	protected final Type type;
+	protected final ChestType type;
 
 	protected MinionChestScreen(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn,
-			Type type) {
+			ChestType type) {
 		super(screenContainer, inv, titleIn);
 		this.guiLeft = 0;
 		this.guiTop = 0;
@@ -78,7 +79,7 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1f, 1f, 1f, 1f);
 		switch (this.type) {
 		case SMALL:
 		default:
@@ -91,15 +92,16 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 			this.minecraft.getTextureManager().bindTexture(large);
 			break;
 		}
-		final int x = (this.width - this.xSize) / 2;
-		final int y = (this.height - this.ySize) / 2;
-		this.blit(x, y, 0, 0, this.xSize, this.ySize);
+		int x = (this.width - this.xSize) / 2;
+		int y = (this.height - this.ySize) / 2;
+		this.blit(x, y, 0, 0, this.xSize, this.type.additional + 17);
+		this.blit(x, y + this.type.additional + 17, 0, 126, this.xSize, 96);
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		this.font.drawString(this.title.getFormattedText(), 48, 50, 0xFFDF00);
+		this.font.drawString(this.title.getFormattedText(), 48, 50, 0x404040);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 48, 118, 0x404040);
 	}
 
