@@ -5,8 +5,7 @@
     	"bottom": "block/hay_block_top",
         "side": "block/hay_block_side",
         "top": "hypixelskyblockmod:blocks/wheat_minion_4_top",
-        "front": "hypixelskyblockmod:blocks/wheat_minion_front",
-        "particle": "block/hay_block"
+        "front": "hypixelskyblockmod:blocks/wheat_minion_front"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

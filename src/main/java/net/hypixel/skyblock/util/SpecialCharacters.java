@@ -69,7 +69,8 @@ public class SpecialCharacters {
 	 * Dungeon Star character.<br>
 	 * Used to indicate
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Star_Upgrades">Star
-	 * Upgrades</a>. &#x272a;
+	 * Upgrades</a>.<br>
+	 * &#x272a;
 	 */
 	public static final char dungeon_star = 0x272a;
 
@@ -109,7 +110,8 @@ public class SpecialCharacters {
 	public static final char intelligence = 0x270e;
 
 	/**
-	 * Used to indicate how an effect or buff will affect the player. &#x279c;
+	 * Used to indicate how an effect or buff will affect the player.<br>
+	 * &#x279c;
 	 */
 	public static final char level_up = 0x279c;
 
@@ -156,7 +158,7 @@ public class SpecialCharacters {
 	 * Used to indicate a
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Slayer">Slayer</a>
 	 * requirement.<br>
-	 * &#x2620 ;
+	 * &#x2620;
 	 */
 	public static final char requirement_slayer = 0x2620;
 

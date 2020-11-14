@@ -10,6 +10,8 @@ loaderVersion="[31,)"
 
 issueTrackerURL="https://hypixel.net/forums/skyblock-bug-reports.159/"
 
+logoFile="logo.png"
+
 [[mods]]
 
 modId="hypixelskyblockmod"
@@ -21,8 +23,6 @@ displayName="Hypixel SkyBlock Mod"
 updateJSONURL="https://hypixel.net/forums/skyblock-patch-notes.158/"
 
 displayURL="https://hypixel.net/forums/skyblock.157/"
-
-logoFile="hypixel_logo.png"
 
 credits="Hypixel SkyBlock Developers"
 
