@@ -1,6 +1,38 @@
 {
-	"parent": "item/generated",
+	"credit": "Made with Blockbench",
+	"texture_size": [8, 8],
 	"textures": {
-		"layer0": "hypixelskyblockmod:items/diver_helmet"
+		"0": "hypixelskyblockmod:items/diver_helmet/diver_helmet_down",
+		"1": "hypixelskyblockmod:items/diver_helmet/diver_helmet_east_0",
+		"3": "hypixelskyblockmod:items/diver_helmet/diver_helmet_north_0",
+		"5": "hypixelskyblockmod:items/diver_helmet/diver_helmet_south_0",
+		"7": "hypixelskyblockmod:items/diver_helmet/diver_helmet_up",
+		"8": "hypixelskyblockmod:items/diver_helmet/diver_helmet_west_0",
+		"particle": "hypixelskyblockmod:items/diver_helmet/diver_helmet_north_0"
+	},
+	"elements": [
+		{
+			"from": [4, 2, 4],
+			"to": [12, 10, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 6, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#8"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#7"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [35, -135, 0],
+			"translation": [0, 2, 0]
+		},
+		"head": {
+			"translation": [0, 4, 0],
+			"scale": [2, 2, 2]
+		}
 	}
 }

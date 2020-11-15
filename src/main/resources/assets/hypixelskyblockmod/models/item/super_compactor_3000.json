@@ -1,27 +1,38 @@
 {
-    "parent": "block/orientable",
-    "textures": {
-        "top": "hypixelskyblockmod:items/super_top",
-        "front": "hypixelskyblockmod:items/super_front",
-        "side": "hypixelskyblockmod:items/comp_side"
-    },
-    "display": {
-		"thirdperson": {
-			"rotation": [-180, 135, 0],
-			"translation": [0, 2, -2],
-			"scale": [0.25, 0.25, 0.25]
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "hypixelskyblockmod:items/super_compactor/super_top",
+		"1": "hypixelskyblockmod:items/super_compactor/comp_side",
+		"2": "hypixelskyblockmod:items/super_compactor/super_front",
+		"particle": "hypixelskyblockmod:items/super_compactor/comp_side"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"scale": [0.5, 0.5, 0.5]
 		},
 		"ground": {
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
-			"translation": [0, 0, 0],
-			"scale": [1, 1, 1]
-		},
-		"fixed": {
-			"translation": [0, 0, 0],
-			"scale": [1, 1, 1]
+			"rotation": [35, -135, 0],
+			"scale": [0.5, 0.5, 0.5]
 		}
 	}
-
 }

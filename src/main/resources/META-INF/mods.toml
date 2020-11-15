@@ -30,8 +30,12 @@ authors="Hypixel SkyBlock Developers"
 
 description='''
 Hypixel SkyBlock
+
 Textures by ImperiaL_24.
 Get the pack here: https://packshq.com/content/packs/
+
+Models made with BlockBench
+Get is here: https://blockbench.net/downloads/
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
