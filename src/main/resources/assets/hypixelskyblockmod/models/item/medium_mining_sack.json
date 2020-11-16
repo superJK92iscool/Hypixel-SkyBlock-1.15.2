@@ -2,13 +2,13 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [8, 8],
 	"textures": {
-		"0": "hypixelskyblockmod:items/small_foraging_sack/down",
-		"1": "hypixelskyblockmod:items/small_foraging_sack/east",
-		"2": "hypixelskyblockmod:items/small_foraging_sack/north",
-		"3": "hypixelskyblockmod:items/small_foraging_sack/south",
-		"4": "hypixelskyblockmod:items/small_foraging_sack/up",
-		"5": "hypixelskyblockmod:items/small_foraging_sack/west",
-		"particle": "hypixelskyblockmod:items/small_foraging_sack/down"
+		"0": "hypixelskyblockmod:items/medium_mining_sack/down",
+		"1": "hypixelskyblockmod:items/medium_mining_sack/east",
+		"2": "hypixelskyblockmod:items/medium_mining_sack/north",
+		"3": "hypixelskyblockmod:items/medium_mining_sack/south",
+		"4": "hypixelskyblockmod:items/medium_mining_sack/up",
+		"5": "hypixelskyblockmod:items/medium_mining_sack/west",
+		"particle": "hypixelskyblockmod:items/medium_mining_sack/down"
 	},
 	"elements": [
 		{
