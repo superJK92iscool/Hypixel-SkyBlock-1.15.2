@@ -2,13 +2,13 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [8, 8],
 	"textures": {
-		"0": "hypixelskyblockmod:items/diver_helmet/down",
-		"1": "hypixelskyblockmod:items/diver_helmet/east",
-		"2": "hypixelskyblockmod:items/diver_helmet/north",
-		"3": "hypixelskyblockmod:items/diver_helmet/south",
-		"4": "hypixelskyblockmod:items/diver_helmet/up",
-		"5": "hypixelskyblockmod:items/diver_helmet/west",
-		"particle": "hypixelskyblockmod:items/diver_helmet/down"
+		"0": "hypixelskyblockmod:items/recombobulator/down",
+		"1": "hypixelskyblockmod:items/recombobulator/east",
+		"2": "hypixelskyblockmod:items/recombobulator/north",
+		"3": "hypixelskyblockmod:items/recombobulator/south",
+		"4": "hypixelskyblockmod:items/recombobulator/up",
+		"5": "hypixelskyblockmod:items/recombobulator/west",
+		"particle": "hypixelskyblockmod:items/recombobulator/down"
 	},
 	"elements": [
 		{

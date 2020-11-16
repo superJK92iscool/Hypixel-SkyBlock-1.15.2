@@ -525,12 +525,12 @@ public class ArmorInit {
 			RevenantChestplate::new);
 	public static final RegistryObject<ArmorItem> revenant_leggings = armor.register("revenant_leggings",
 			RevenantLeggings::new);
-
-	public static final RegistryObject<ArmorItem> snow_boots = armor.register("snow_boots", SnowBoots::new);
+	
+	public static final RegistryObject<ArmorItem> snow_helmet = armor.register("snow_helmet", SnowHelmet::new);
 	public static final RegistryObject<ArmorItem> snow_chestplate = armor.register("snow_chestplate",
 			SnowChestplate::new);
-	public static final RegistryObject<ArmorItem> snow_helmet = armor.register("snow_helmet", SnowHelmet::new);
 	public static final RegistryObject<ArmorItem> snow_leggings = armor.register("snow_leggings", SnowLeggings::new);
+	public static final RegistryObject<ArmorItem> snow_boots = armor.register("snow_boots", SnowBoots::new);
 
 	public static final RegistryObject<ArmorItem> speedster_helmet = armor.register("speedster_helmet",
 			SpeedsterHelmet::new);

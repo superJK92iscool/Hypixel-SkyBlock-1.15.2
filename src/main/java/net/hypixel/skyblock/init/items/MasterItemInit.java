@@ -19,7 +19,7 @@ public class MasterItemInit {
 		ArmorInit.armor.register(bus);
 		BlockItemInit.blockItems.register(bus);
 		ExtraItemInit.miningExtraItems.register(bus);
-		ItemInit.miningItems.register(bus);
+		ItemInit.items.register(bus);
 		MinionBlockItemInit.minionItems.register(bus);
 		WeaponInit.weapon.register(bus);
 	}

@@ -1,6 +1,46 @@
 {
-	"parent": "item/generated",
+	"credit": "Made with Blockbench",
+	"texture_size": [8, 8],
 	"textures": {
-		"layer0": "hypixelskyblockmod:items/superior_dragon_helmet"
+		"0": "hypixelskyblockmod:items/superior_dragon_helmet/down",
+		"1": "hypixelskyblockmod:items/superior_dragon_helmet/east",
+		"2": "hypixelskyblockmod:items/superior_dragon_helmet/north",
+		"3": "hypixelskyblockmod:items/superior_dragon_helmet/south",
+		"4": "hypixelskyblockmod:items/superior_dragon_helmet/up",
+		"5": "hypixelskyblockmod:items/superior_dragon_helmet/west",
+		"particle": "hypixelskyblockmod:items/superior_dragon_helmet/down"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 2, 0]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 2, 0]
+		},
+		"ground": {
+			"translation": [0, 4, 0]
+		},
+		"gui": {
+			"rotation": [35, -135, 0],
+			"translation": [0, 4, 0]
+		},
+		"fixed": {
+			"translation": [0, 4, 0]
+		}
 	}
 }
