@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.items.sacks;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.item.Item;
@@ -16,19 +16,19 @@ import net.minecraft.item.Items;
  */
 public class MiningSack extends Sack {
 	/**
-	 * An {@link ImmutableList} of {@link Item} that this will hold.
+	 * An {@link ImmutableSet} of {@link Item} that this {@link Sack} will hold.
 	 */
-	private static final ImmutableList<Item> items = ImmutableList
+	private static final ImmutableSet<Item> items = ImmutableSet
 			.copyOf(new Item[] { Items.COBBLESTONE, Items.COAL, Items.IRON_INGOT, Items.GOLD_INGOT, Items.DIAMOND,
 					Items.LAPIS_LAZULI, Items.EMERALD, Items.REDSTONE, Items.QUARTZ, Items.OBSIDIAN,
 					Items.GLOWSTONE_DUST, Items.GRAVEL, Items.ICE, Items.NETHERRACK, Items.SAND, Items.END_STONE });
 
-	public MiningSack(SackType type) {
+	public MiningSack(SackSize type) {
 		super(ItemProperties.m1, type);
 	}
 
 	@Override
-	protected ImmutableList<Item> getItems() {
+	protected ImmutableSet<Item> getItems() {
 		return items;
 	}
 }

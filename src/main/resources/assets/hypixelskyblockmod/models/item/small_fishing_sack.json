@@ -1,0 +1,32 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [8, 8],
+	"textures": {
+		"0": "hypixelskyblockmod:items/small_fishing_sack/east",
+		"1": "hypixelskyblockmod:items/small_fishing_sack/north",
+		"2": "hypixelskyblockmod:items/small_fishing_sack/south",
+		"3": "hypixelskyblockmod:items/small_fishing_sack/up",
+		"4": "hypixelskyblockmod:items/small_fishing_sack/west",
+		"5": "hypixelskyblockmod:items/small_fishing_sack/down",
+		"particle": "hypixelskyblockmod:items/small_fishing_sack/east"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#5"}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [35, -135, 0]
+		}
+	}
+}

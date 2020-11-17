@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,20 +25,20 @@ public abstract class Sack extends Item {
 	/**
 	 * The different sizes of each {@link Sack}
 	 */
-	protected enum SackType {
+	protected enum SackSize {
 		Large(20160), Medium(2240), Small(640);
 
 		public final int size;
 
-		private SackType(int size) {
+		private SackSize(int size) {
 			this.size = size;
 		}
 
 		/**
-		 * @return the next {@link SackType}
+		 * @return the next {@link SackSize}
 		 * @throws IllegalAccessException if this does not have an upgrade.
 		 */
-		public SackType getNext() throws IllegalAccessException {
+		public SackSize getNext() throws IllegalAccessException {
 			switch (this) {
 			case Small:
 				return Medium;
@@ -57,11 +58,11 @@ public abstract class Sack extends Item {
 	protected final int[] held;
 
 	/**
-	 * {@link SackType} of this.
+	 * {@link SackSize} of this.
 	 */
-	protected SackType type;
+	protected SackSize type;
 
-	protected Sack(@Nonnull Properties properties, @Nonnull SackType type) {
+	protected Sack(@Nonnull Properties properties, @Nonnull SackSize type) {
 		super(properties);
 		this.type = type;
 		this.held = new int[this.getItems().size()];
@@ -74,7 +75,7 @@ public abstract class Sack extends Item {
 	 * @param player {@link PlayerEntity} to give all the items to.
 	 */
 	public void empty(@Nonnull PlayerEntity player) {
-		final ImmutableList<Item> list = this.getItems();
+		final ImmutableList<Item> list = this.getItems().asList();
 		for (int i = 0; i < list.size(); i++)
 			player.addItemStackToInventory(new ItemStack(list.get(i), this.held[i]));
 	}
@@ -82,10 +83,10 @@ public abstract class Sack extends Item {
 	/**
 	 * Allows the Sack class to access child classes held items.
 	 *
-	 * @return {@link ImmutableList} of {@link Item} that this holds
+	 * @return {@link ImmutableSet} of {@link Item} that this holds
 	 */
 	@Nonnull
-	protected abstract ImmutableList<Item> getItems();
+	protected abstract ImmutableSet<Item> getItems();
 
 	/**
 	 * Increases the amount of a certain item held in this.

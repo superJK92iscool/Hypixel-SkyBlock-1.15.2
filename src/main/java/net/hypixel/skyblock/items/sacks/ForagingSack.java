@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.items.sacks;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.item.Item;
@@ -13,20 +13,20 @@ import net.minecraft.item.Items;
  */
 public class ForagingSack extends Sack {
 	/**
-	 * An {@link ImmutableList} of {@link Item} that this will hold.
+	 * An {@link ImmutableSet} of {@link Item} that this {@link Sack} will hold.
 	 */
-	private static final ImmutableList<Item> items = ImmutableList.copyOf(new Item[] { Items.OAK_LOG, Items.SPRUCE_LOG,
+	private static final ImmutableSet<Item> items = ImmutableSet.copyOf(new Item[] { Items.OAK_LOG, Items.SPRUCE_LOG,
 			Items.BIRCH_LOG, Items.DARK_OAK_LOG, Items.ACACIA_LOG, Items.JUNGLE_LOG });
 
 	/**
 	 * @param type {@link SackType} of this.
 	 */
-	public ForagingSack(SackType type) {
+	public ForagingSack(SackSize type) {
 		super(ItemProperties.fg1, type);
 	}
 
 	@Override
-	protected ImmutableList<Item> getItems() {
+	protected ImmutableSet<Item> getItems() {
 		return items;
 	}
 }

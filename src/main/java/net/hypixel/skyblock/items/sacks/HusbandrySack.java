@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.items.sacks;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.item.Item;
@@ -16,17 +16,17 @@ import net.minecraft.item.Items;
  */
 public class HusbandrySack extends Sack {
 	/**
-	 * An {@link ImmutableList} of {@link Item} that this will hold.
+	 * An {@link ImmutableSet} of {@link Item} that this {@link Sack} can hold.
 	 */
-	private static final ImmutableList<Item> items = ImmutableList.copyOf(
+	private static final ImmutableSet<Item> items = ImmutableSet.copyOf(
 			new Item[] { Items.FEATHER, Items.LEATHER, Items.PORKCHOP, Items.CHICKEN, Items.MUTTON, Items.RABBIT });
 
-	public HusbandrySack(SackType type) {
+	public HusbandrySack(SackSize type) {
 		super(ItemProperties.f1, type);
 	}
 
 	@Override
-	protected ImmutableList<Item> getItems() {
+	protected ImmutableSet<Item> getItems() {
 		return items;
 	}
 }

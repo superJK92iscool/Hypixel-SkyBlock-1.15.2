@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.items.sacks;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.item.Item;
@@ -14,25 +14,20 @@ import net.minecraft.item.Items;
  * @version 01 September 2020
  * @since 01 September 2020
  */
-public class AgronomySack extends Sack {
+public final class AgronomySack extends Sack {
 	/**
-	 * An {@link ImmutableList} of {@link Item} that this will hold.
+	 * An {@link ImmutableSet} of {@link Item} that this {@link Sack} can hold.
 	 */
-	private static final ImmutableList<Item> items = ImmutableList.copyOf(new Item[] { Items.WHEAT, Items.CARROT,
+	private static final ImmutableSet<Item> items = ImmutableSet.copyOf(new Item[] { Items.WHEAT, Items.CARROT,
 			Items.POTATO, Items.PUMPKIN, Items.MELON, Items.WHEAT_SEEDS, Items.RED_MUSHROOM, Items.BROWN_MUSHROOM,
 			Items.COCOA_BEANS, Items.CACTUS, Items.SUGAR_CANE, Items.NETHER_WART });
-
-	/**
-	 * Construct this.
-	 *
-	 * @param type {@link SackType}
-	 */
-	public AgronomySack(SackType type) {
+	
+	public AgronomySack(SackSize type) {
 		super(ItemProperties.f1, type);
 	}
 
 	@Override
-	public ImmutableList<Item> getItems() {
+	public ImmutableSet<Item> getItems() {
 		return items;
 	}
 }
