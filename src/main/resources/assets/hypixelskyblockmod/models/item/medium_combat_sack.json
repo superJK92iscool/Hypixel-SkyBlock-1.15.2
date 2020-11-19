@@ -1,0 +1,31 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [8, 8],
+	"textures": {
+		"6": "hypixelskyblockmod:items/medium_combat_sack/down",
+		"7": "hypixelskyblockmod:items/medium_combat_sack/east",
+		"8": "hypixelskyblockmod:items/medium_combat_sack/north",
+		"9": "hypixelskyblockmod:items/medium_combat_sack/south",
+		"10": "hypixelskyblockmod:items/medium_combat_sack/up",
+		"11": "hypixelskyblockmod:items/medium_combat_sack/west"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#8"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#7"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#9"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#11"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#10"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#6"}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [35, -135, 0]
+		}
+	}
+}

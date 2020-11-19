@@ -78,18 +78,26 @@ public class ArmorEquipEvent {
 	 */
 	@SubscribeEvent
 	public static void minerEquip(LivingEquipmentChangeEvent event) {
-		final LivingEntity e = event.getEntityLiving();
-		if (e instanceof PlayerEntity)
+		PlayerEntity p;
+		try {
+			p = (PlayerEntity) event.getEntityLiving();
+		} catch (ClassCastException cce) {
 			return;
-
-		final PlayerEntity p = (PlayerEntity) e;
-		for (final ItemStack stack : p.getArmorInventoryList()) {
-			final ArmorItem item = (ArmorItem) stack.getItem();
-			if (item.getArmorMaterial() != ModArmorMaterial.Miner) {
-				p.removePotionEffect(Effects.HASTE);
-				return;
+		}
+		for (ItemStack stack : p.getArmorInventoryList()) {
+			if (stack.isEmpty())
+				continue;
+			ArmorItem armor;
+			try {
+				armor = (ArmorItem) stack.getItem();
+				if (armor.getArmorMaterial() != ModArmorMaterial.Miner) {
+					p.removePotionEffect(Effects.HASTE);
+					return;
+				}
+				p.addPotionEffect(new EffectInstance(Effects.HASTE, Integer.MAX_VALUE, 1));
+			} catch (ClassCastException cce) {
+				continue;
 			}
-			p.addPotionEffect(new EffectInstance(Effects.HASTE, Integer.MAX_VALUE, 1));
 		}
 	}
 }

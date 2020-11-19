@@ -96,7 +96,7 @@ public abstract class PersonalCompactor extends Accessory {
 
 	protected int[] getSuperCompIndex(Item item) {
 		HypixelSkyBlockMod.LOGGER.info("Finding super compactor indexes for: " + item.getRegistryName().toString());
-		final int[] indexs = new int[3];
+		int[] indexs = new int[3];
 		int index = 0;
 		boolean half = false;
 		for (int i = this.items.size() - 1; i > -1; i--) {
@@ -130,9 +130,12 @@ public abstract class PersonalCompactor extends Accessory {
 		if (!(entityIn instanceof PlayerEntity))
 			return;
 		final PlayerEntity player = (PlayerEntity) entityIn;
-		for (final ItemStack st : this.items) {
-			final Item item = st.getItem();
-			if (player.inventory.count(item) >= ItemMap.enchReqMap.get(item).intValue())
+		for (ItemStack st : this.items) {
+			Item item = st.getItem();
+			Integer count = ItemMap.enchReqMap.get(item);
+			if (count == null)
+				continue;
+			if (player.inventory.count(item) >= count.intValue())
 				for (final int index : this.getSuperCompIndex(item)) {
 					final ItemStack s = this.items.get(index);
 					if (s.getCount() < s.getMaxStackSize())
