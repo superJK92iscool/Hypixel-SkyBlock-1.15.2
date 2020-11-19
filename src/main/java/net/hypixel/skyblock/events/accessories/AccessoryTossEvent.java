@@ -46,12 +46,12 @@ public class AccessoryTossEvent {
 		final Item thrown = event.getEntityItem().getItem().getItem();
 		final PlayerEntity player = event.getPlayer();
 		final Biome biome = player.world.getBiome(player.getPosition());
-		if (biome != BiomeInit.farm_biome.get())
+		/**if (biome != BiomeInit.farm_biome.get())
 			return;
 		// else if (biome != null) return;
 		final IAttributeInstance spd = player.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 		if (thrown == AccessoriesInit.farming_talisman.get())
 			spd.applyModifier(
-					new AttributeModifier(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), -.01, Operation.ADDITION));
+					new AttributeModifier(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), -.01, Operation.ADDITION));*/
 	}
 }
