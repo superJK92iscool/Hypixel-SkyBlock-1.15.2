@@ -45,7 +45,7 @@ public abstract class AbstractMinionBlock extends Block {
 	protected final MinionTier tier;
 
 	protected AbstractMinionBlock(Properties properties, MinionTier tier) {
-		super(properties);
+		super(properties.hardnessAndResistance(0, 0x800).notSolid());
 		this.setDefaultState(this.stateContainer.getBaseState().with(facing, Direction.NORTH));
 		this.tier = Objects.requireNonNull(tier, "Minion Block must have a Tier");
 	}

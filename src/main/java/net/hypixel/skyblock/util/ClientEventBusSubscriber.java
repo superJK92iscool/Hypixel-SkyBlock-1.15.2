@@ -5,19 +5,25 @@ import net.hypixel.skyblock.client.gui.screen.AbstractMinionScreen;
 import net.hypixel.skyblock.client.gui.screen.MinionChestScreen.LargeMCS;
 import net.hypixel.skyblock.client.gui.screen.MinionChestScreen.MediumMCS;
 import net.hypixel.skyblock.client.gui.screen.MinionChestScreen.SmallMCS;
+import net.hypixel.skyblock.init.blocks.MinionBlockInit;
 import net.hypixel.skyblock.inventory.container.ModContainerTypes;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
- * EventBusSibscriber for Client
+ * {@link EventBusSubscriber} for Client.<br>
+ * Activates on {@link FMLClientSetupEvent}
  *
  * @author MrPineapple070
  * @version 8 June 2020
+ * @since 11 June 2019
  */
 @Mod.EventBusSubscriber(modid = HypixelSkyBlockMod.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ClientEventBusSubscriber {
@@ -38,5 +44,17 @@ public class ClientEventBusSubscriber {
 		ScreenManager.registerFactory(ModContainerTypes.small_mcc.get(), SmallMCS::new);
 		ScreenManager.registerFactory(ModContainerTypes.medium_mcc.get(), MediumMCS::new);
 		ScreenManager.registerFactory(ModContainerTypes.large_mcc.get(), LargeMCS::new);
+		
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_1.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_2.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_3.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_4.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_5.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_6.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_7.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_8.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_9.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_a.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(MinionBlockInit.cobblestone_minion_b.get(), RenderType.getTranslucent());
 	}
 }

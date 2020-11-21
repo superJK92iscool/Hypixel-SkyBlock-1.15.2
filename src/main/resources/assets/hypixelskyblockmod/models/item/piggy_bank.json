@@ -1,6 +1,63 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "hypixelskyblockmod:items/piggy_bank"
-    }
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 16],
+	"textures": {
+		"0": "hypixelskyblockmod:items/piggy_bank",
+		"particle": "hypixelskyblockmod:items/piggy_bank"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [10, 8, 12, 16], "texture": "#0"},
+				"east": {"uv": [8, 8, 10, 16], "texture": "#0"},
+				"south": {"uv": [14, 8, 16, 16], "texture": "#0"},
+				"west": {"uv": [12, 8, 14, 16], "texture": "#0"},
+				"up": {"uv": [10, 0, 12, 8], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [12, 0, 14, 8], "texture": "#0"}
+			}
+		},
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [2, 8, 4, 16], "texture": "#0"},
+				"east": {"uv": [0, 8, 2, 16], "texture": "#0"},
+				"south": {"uv": [6, 8, 8, 16], "texture": "#0"},
+				"west": {"uv": [4, 8, 6, 16], "texture": "#0"},
+				"up": {"uv": [2, 0, 4, 8], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [4, 0, 6, 8], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [70, 45, 0],
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [70, 45, 0],
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 135, 0],
+			"translation": [0, 1, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 135, 0],
+			"translation": [0, 1, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [35, -135, 0],
+			"scale": [1.1, 1.1, 1.1]
+		}
+	}
 }

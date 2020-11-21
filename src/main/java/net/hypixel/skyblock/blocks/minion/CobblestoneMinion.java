@@ -1,5 +1,7 @@
 package net.hypixel.skyblock.blocks.minion;
 
+import java.util.Arrays;
+
 import com.google.common.collect.ImmutableList;
 
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
@@ -23,10 +25,10 @@ public class CobblestoneMinion extends AbstractMinionBlock {
 	 * actions.
 	 */
 	public static final ImmutableList<Integer> speed = ImmutableList
-			.copyOf(new Integer[] { 280, 280, 240, 240, 200, 200, 180, 180, 160, 160, 140 });
+			.copyOf(Arrays.asList(280, 280, 240, 240, 200, 200, 180, 180, 160, 160, 140));
 
 	public CobblestoneMinion(MinionTier tier) {
-		super(Properties.create(Material.ROCK).hardnessAndResistance(0, 0x800).sound(SoundType.STONE), tier);
+		super(Properties.create(Material.ROCK).sound(SoundType.STONE), tier);
 	}
 
 	@Override

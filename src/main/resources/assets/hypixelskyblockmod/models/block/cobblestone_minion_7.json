@@ -1,24 +1,33 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-    	"back": "block/cobblestone",
-    	"bottom": "block/cobblestone",
-        "side": "block/cobblestone",
-        "top": "hypixelskyblockmod:blocks/cobblestone_minion_7_top",
-        "front": "hypixelskyblockmod:blocks/cobblestone_minion_front",
-        "particle": "block/cobblestone"
-    },
-    "elements": [
-        {   "from": [ 0, 0, 0 ],
-            "to": [ 16, 16, 16 ],
-            "faces": {
-            	"down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
-                "up":    { "uv": [ 0, 16, 16, 0 ], "texture": "#top", "cullface": "up" },
-                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#front", "cullface": "north" },
-                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#back", "cullface": "south" },
-                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "west" },
-                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "east" }
-            }
-        }
-    ]
+	"credit": "Made with Blockbench",
+	"parent": "block/cube_all",
+	"texture_size": [32, 16],
+	"textures": {
+		"0": "hypixelskyblockmod:blocks/cobblestone_minion",
+		"1": "hypixelskyblockmod:blocks/minion_tier_7",
+		"particle": "hypixelskyblockmod:blocks/cobblestone_minion"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 4, 4]},
+			"faces": {
+				"north": {"uv": [4, 8, 8, 16], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [0, 8, 4, 16], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [12, 8, 16, 16], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [8, 8, 12, 16], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [4, 0, 8, 8], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [8, 0, 12, 8], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"from": [0, 16, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 16, 8]},
+			"faces": {
+				"up": {"uv": [0, 0, 4, 8], "rotation": 180, "texture": "#1"}
+			}
+		}
+	]
 }

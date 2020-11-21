@@ -187,8 +187,8 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 	protected void setSurround() {
 		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
 		final int[] dx = this.hasUpgrade(ItemInit.minion_expander.get()) ? expanded_size : default_size;
-		for (int i = 0; i < this.surround.length; i++)
-			for (int j = 0; j < this.surround[i].length; j++)
+		for (int i = 0; i < this.surround[0].length; i++)
+			for (int j = 0; j < this.surround[0][i].length; j++)
 				this.surround[0][i][j] = dx[i] == 0 && dx[j] == 0 ? null
 						: new BlockPos(this.x + dx[j], this.y - 1, this.z + dx[i]);
 	}

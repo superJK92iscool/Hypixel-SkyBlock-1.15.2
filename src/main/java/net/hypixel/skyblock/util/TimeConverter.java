@@ -1,6 +1,7 @@
 package net.hypixel.skyblock.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,16 +15,16 @@ import com.google.common.collect.ImmutableList;
  * A conversion between hours and in-game ticks.
  *
  * @author MrPineapple070
- * @version 07 October 2020
- * @since 09 June 2019
+ * @version 11 June 2019
+ * @since 11 June 2019
  */
 public class TimeConverter {
 	/**
 	 * An {@link ImmutableList} that converts hours to Minecraft Ticks.<br>
 	 */
 	public static final ImmutableList<Long> hours = ImmutableList
-			.copyOf(new Long[] { 0x4650l, 0x4A38l, 0x4E20l, 0x5208l, 0l, 1000l, 2000l, 3000l, 4000l, 5000l, 6000l,
-					7000l, 8000l, 9000l, 0x2710l, 0x2AF8l, 0x2EE0l, 13000l, 14000l, 15000l, 15000l, 16000l, 17000l });
+			.copyOf(Arrays.asList(0x4650l, 0x4A38l, 0x4E20l, 0x5208l, 0l, 1000l, 2000l, 3000l, 4000l, 5000l, 6000l,
+					7000l, 8000l, 9000l, 0x2710l, 0x2AF8l, 0x2EE0l, 13000l, 14000l, 15000l, 15000l, 16000l, 17000l));
 
 	/**
 	 * A {@link Map} from {@link String} to {@link Long}.<br>
@@ -51,7 +52,7 @@ public class TimeConverter {
 	/**
 	 * The number of ticks in an hour.
 	 */
-	public static final int ticksPerHour = 1000;
+	public static final int ticksPerHour = 0x3e8;
 
 	/**
 	 * The number of ticks in a minute.

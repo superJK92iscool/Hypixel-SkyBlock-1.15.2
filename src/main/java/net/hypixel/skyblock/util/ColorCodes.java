@@ -4,8 +4,8 @@ package net.hypixel.skyblock.util;
  * Hold Minecraft Color Codes.
  *
  * @author MrPineapple070
- * @version 18 May 2020
- * @since 0.0.0
+ * @version 11 June 2019
+ * @since 11 June 2019
  */
 public class ColorCodes {
 	/**

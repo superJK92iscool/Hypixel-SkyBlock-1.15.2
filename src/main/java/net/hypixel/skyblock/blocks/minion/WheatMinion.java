@@ -1,5 +1,7 @@
 package net.hypixel.skyblock.blocks.minion;
 
+import java.util.Arrays;
+
 import com.google.common.collect.ImmutableList;
 
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
@@ -17,10 +19,10 @@ import net.minecraft.world.IBlockReader;
  */
 public class WheatMinion extends AbstractMinionBlock {
 	public static final ImmutableList<Integer> speed = ImmutableList
-			.copyOf(new Integer[] { 300, 300, 260, 260, 220, 220, 200, 200, 180, 180, 180 });
+			.copyOf(Arrays.asList(300, 300, 260, 260, 220, 220, 200, 200, 180, 180, 180));
 
 	public WheatMinion(MinionTier tier) {
-		super(Properties.create(Material.ORGANIC).hardnessAndResistance(0, 0x800).sound(SoundType.CROP), tier);
+		super(Properties.create(Material.ORGANIC).sound(SoundType.CROP), tier);
 	}
 
 	@Override

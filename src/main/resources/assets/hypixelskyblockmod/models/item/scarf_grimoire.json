@@ -1,6 +1,48 @@
 {
-	"parent": "item/generated",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 16],
 	"textures": {
-		"layer0": "hypixelskyblockmod:items/scarf_grimoire"
+		"0": "hypixelskyblockmod:items/scarf_grimoire",
+		"particle": "hypixelskyblockmod:items/scarf_grimoire"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [4, 8, 8, 16], "texture": "#0"},
+				"east": {"uv": [0, 8, 4, 16], "texture": "#0"},
+				"south": {"uv": [12, 8, 16, 16], "texture": "#0"},
+				"west": {"uv": [8, 8, 12, 16], "texture": "#0"},
+				"up": {"uv": [4, 0, 8, 8], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [8, 0, 12, 8], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [70, 45, 0],
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [70, 45, 0],
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -45, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -45, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [35, -135, 0]
+		}
 	}
 }

@@ -4,7 +4,8 @@ package net.hypixel.skyblock.util;
  * Hold Format Codes for Minecraft.
  *
  * @author MrPineapple070
- * @version 18 May 2020
+ * @version 11 June 2019
+ * @since 11 June 2019
  */
 public class FormatCodes {
 	/**

@@ -5,7 +5,7 @@ package net.hypixel.skyblock.util;
  *
  * @author MrPineapple070
  * @version 14 October 2020
- * @since 14 October 2020
+ * @since 11 June 2019
  */
 public class SpecialCharacters {
 	/**
