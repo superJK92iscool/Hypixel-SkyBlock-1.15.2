@@ -14,7 +14,6 @@ import net.hypixel.skyblock.tileentity.minion.CobblestoneMinionTileEntity.Cobble
 import net.hypixel.skyblock.tileentity.minion.CobblestoneMinionTileEntity.CobbleMTE8;
 import net.hypixel.skyblock.tileentity.minion.CobblestoneMinionTileEntity.CobbleMTE9;
 import net.hypixel.skyblock.tileentity.minion.CobblestoneMinionTileEntity.CobbleMTEa;
-import net.hypixel.skyblock.tileentity.minion.CobblestoneMinionTileEntity.CobbleMTEb;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -131,7 +130,7 @@ public abstract class CobblestoneMinionContainer extends AbstractMinionContainer
 
 	public static class CobbleMCb extends CobblestoneMinionContainer {
 		public CobbleMCb(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
-			this(windowId, pInvIn, new CobbleMTEb());
+			this(windowId, pInvIn, getTileEntity(pInvIn, data));
 		}
 		
 		public CobbleMCb(int windowId, PlayerInventory pInvIn, CobblestoneMinionTileEntity minion) {

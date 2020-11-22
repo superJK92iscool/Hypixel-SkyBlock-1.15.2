@@ -81,7 +81,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		 */
 		@Nonnegative
 		public final int size;
-		
+
 		private MinionTier(@Nonnegative int size, @Nonnegative int asInt) {
 			this.size = size;
 			this.asInt = asInt;
@@ -107,34 +107,34 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * Upgrade 2 Slot index.
 	 */
 	protected static final int UPGRADE_2_INDEX = 0x3;
-	
+
 	/**
 	 * Inventory start.
 	 */
 	protected static final int INVENTORY_START = 0x4;
-	
+
 	/**
 	 * Expanded differentials from center {@link BlockPos}
 	 */
 	protected static final int[] expanded_size = { -3, -2, -1, 0, 1, 2, 3 };
-	
+
 	/**
 	 * Default differentials from the center {@link BlockPos}
 	 */
-	protected static final int[] default_size = {-2, -1, 0, 1, 2};
-	
+	protected static final int[] default_size = { -2, -1, 0, 1, 2 };
+
 	/**
 	 * A Random Number Generator.
 	 */
 	@Nonnull
 	protected static final Random rand = new Random();
-	
+
 	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding {@link Blocks#AIR}
 	 */
 	@Nonnull
 	protected final List<BlockPos> airSurround = new ArrayList<>();
-	
+
 	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding valid {@code BlockPos}
 	 */
@@ -645,7 +645,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		this.setSurround();
 		HypixelSkyBlockMod.LOGGER.info(this.toString());
 	}
-	
+
 	public void init(BlockPos pos) {
 		this.pos = pos;
 		this.init();
@@ -803,7 +803,8 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		if (id == 1) {
 			this.numPlayersUsing = type;
 			return true;
-		} return super.receiveClientEvent(id, type);
+		}
+		return super.receiveClientEvent(id, type);
 	}
 
 	@Override
