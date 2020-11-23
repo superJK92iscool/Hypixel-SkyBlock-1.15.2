@@ -15,6 +15,7 @@ import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalM
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMCa;
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMCb;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,6 +23,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -101,15 +103,11 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 		}
 	}
 
-	/**
-	 * Constuct this
-	 *
-	 * @param typeIn {@link TileEntityType}
-	 * @param tier   {@link MinionTier}
-	 */
 	protected CoalMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
 		super(typeIn, tier);
 	}
+	
+	protected static final NonNullList<Block> validBlocks = NonNullList.from(Blocks.AIR, Blocks.COAL_ORE);
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
@@ -186,24 +184,33 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 	@Override
 	protected void setSurround() {
 		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
-		final int[] dx = this.hasUpgrade(ItemInit.minion_expander.get()) ? expanded_size : default_size;
 		for (int x = 0; x < this.surround[0].length; x++)
 			for (int z = 0; z < this.surround[0][x].length; z++)
-				this.surround[0][x][z] = dx[x] == 0 && dx[z] == 0 ? null
-						: new BlockPos(this.x + dx[z], this.y - 1, this.z + dx[x]);
+				this.surround[0][x][z] = expanded_size[x] == 0 && expanded_size[z] == 0 ? null
+						: new BlockPos(this.x + expanded_size[z], this.y - 1, this.z + expanded_size[x]);
 	}
 
 	@Override
 	protected void setValidSurround() {
 		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
 		final boolean hasExpander = this.hasUpgrade(ItemInit.minion_expander.get());
-		final int[] dx = hasExpander ? expanded_size : default_size;
 		final int iStart = hasExpander ? 1 : 0, iEnd = hasExpander ? this.surround.length : this.surround.length - 1;
 		final int jStart = hasExpander ? 1 : 0, jEnd = hasExpander ? this.surround.length : this.surround.length - 1;
-		for (int i = iStart; i < iEnd; i++)
-			for (int j = jStart; j < jEnd; j++)
-				this.surround[0][i][j] = dx[i] == 0 && dx[j] == 0 ? null
-						: new BlockPos(this.x + dx[j], this.y - 1, this.z + dx[i]);
+		this.validSurround.clear();
+		for (int x = iStart; x < iEnd; x++)
+			for (int z = jStart; z < jEnd; z++) {
+				BlockPos pos = this.surround[0][x][z];
+				if (pos == null)
+					continue;
+				BlockState state = this.world.getBlockState(pos);
+				if (state.isAir(this.world, pos))
+					this.validSurround.add(pos);
+				else if (this.isBlockValid(state.getBlock(), validBlocks))
+					this.validSurround.add(pos);
+				else
+					continue;
+			}
+		HypixelSkyBlockMod.LOGGER.info(this.validSurround.toString());
 	}
 
 	@Override
@@ -214,7 +221,7 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 			this.init();
 		if (this.isCompletlyFull())
 			return;
-		this.tick = (int) ((this.tick + 1) % Math.floor(CoalMinion.speed.get(this.tier.asInt) * this.getFuelSpeed()));
+		this.tick = ++this.tick % (int)(CoalMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
 		if (this.tick == 0)
 			this.interact(this.pickBlock());
 	}
