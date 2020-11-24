@@ -1,22 +1,23 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/cube_all",
 	"textures": {
-		"0": "hypixelskyblockmod:items/compactor/comp_front",
-		"1": "hypixelskyblockmod:items/compactor/comp_side",
-		"2": "hypixelskyblockmod:items/compactor/comp_top",
-		"particle": "hypixelskyblockmod:items/compactor/comp_side"
+		"1": "hypixelskyblockmod:items/comp_side",
+		"2": "hypixelskyblockmod:items/comp_up",
+		"3": "hypixelskyblockmod:items/comp_north",
+		"particle": "hypixelskyblockmod:items/comp_side"
 	},
 	"elements": [
 		{
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"north": {"uv": [0, 0, 16, 16], "texture": "#3"},
 				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#1"},
 				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
 				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
 			}
 		}
 	],

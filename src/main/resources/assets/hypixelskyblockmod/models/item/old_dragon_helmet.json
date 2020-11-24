@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/cube_all",
 	"texture_size": [8, 8],
 	"textures": {
 		"0": "hypixelskyblockmod:items/old_dragon_helmet/down",
@@ -12,9 +13,8 @@
 	},
 	"elements": [
 		{
-			"from": [4, 0, 4],
-			"to": [12, 8, 12],
-			"rotation": {"angle": 0, "axis": "x", "origin": [8, 4, 8]},
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#2"},
 				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
