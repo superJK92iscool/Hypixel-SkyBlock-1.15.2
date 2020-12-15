@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +29,7 @@ public class YetiSword extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Terrain Toss\n" + ColorCodes.gray
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Terrain Toss\n" + FormatingCodes.gray
 				+ "Throws a chunk of terrain in the direction you are facing.\n"
 				+ "Deals up to 4000 damage.\nMaximum range of 32 blocks."));
 	}

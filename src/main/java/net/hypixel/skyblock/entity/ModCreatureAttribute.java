@@ -4,7 +4,7 @@ import net.minecraft.entity.CreatureAttribute;
 
 /**
  * Mod version of {@link CreatureAttribute}
- * 
+ *
  * @author MrPineapple070
  * @version 13 October 2020
  * @since 13 October 2020

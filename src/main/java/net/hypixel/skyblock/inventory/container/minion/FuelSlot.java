@@ -14,7 +14,7 @@ public class FuelSlot extends Slot {
 	public FuelSlot(IInventory inventoryIn) {
 		super(inventoryIn, 0, 84, 54);
 	}
-	
+
 	@Override
 	public boolean isItemValid(ItemStack stack) {
 		return stack.getItem() instanceof MinionFuelItem;

@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.growth;
 import java.util.List;
 
 import net.hypixel.skyblock.items.armor.ModArmorItem;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -29,7 +29,7 @@ public class GrowthBoots extends ModArmorItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.red + "Health" + ColorCodes.gray + ": " + Growth.boots));
+		tooltip.add(new StringTextComponent(FormatingCodes.red + "Health" + FormatingCodes.gray + ": " + Growth.boots));
 	}
 
 }

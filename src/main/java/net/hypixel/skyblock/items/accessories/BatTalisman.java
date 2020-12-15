@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.accessories;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class BatTalisman extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Grants: " + ColorCodes.red + "+1% Health "
-				+ ColorCodes.white + "+1% Speed " + ColorCodes.aqua + " +1 Intelligence"));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Grants: " + FormatingCodes.red + "+1% Health "
+				+ FormatingCodes.white + "+1% Speed " + FormatingCodes.aqua + " +1 Intelligence"));
 	}
 }

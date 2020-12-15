@@ -1,6 +1,11 @@
 package net.hypixel.skyblock.items.fishing_rod;
 
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+
 import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
+import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -13,6 +18,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 /**
@@ -23,8 +29,17 @@ import net.minecraft.world.World;
  * @since 01 September 2020
  */
 public class ModFishingRodItem extends FishingRodItem {
-	public ModFishingRodItem() {
+	@Nonnull
+	final ModItemRarity rarity;
+
+	public ModFishingRodItem(ModItemRarity rarity) {
 		super(ItemProperties.fi1);
+		this.rarity = Objects.requireNonNull(rarity, "ModItemRarity must be nonnull");
+	}
+
+	@Override
+	public ITextComponent getDisplayName(ItemStack stack) {
+		return super.getDisplayName(stack).applyTextStyle(this.rarity.color);
 	}
 
 	@Override

@@ -42,7 +42,8 @@ public class ArmorEquipEvent {
 
 		float health = 0f;
 		final IAttributeInstance max_health = p.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
-		max_health.applyModifier(new AttributeModifier("MaxHealth", -1 * (p.getMaxHealth() - 20), Operation.ADDITION));
+		max_health.applyModifier(new AttributeModifier(SharedMonsterAttributes.MAX_HEALTH.getName(),
+				-1 * (p.getMaxHealth() - 20), Operation.ADDITION));
 
 		for (final ItemStack stack : p.getArmorInventoryList()) {
 			final Item item = stack.getItem();
@@ -68,7 +69,8 @@ public class ArmorEquipEvent {
 				continue;
 			}
 		}
-		max_health.applyModifier(new AttributeModifier("MaxHealth", health, Operation.ADDITION));
+		max_health.applyModifier(
+				new AttributeModifier(SharedMonsterAttributes.MAX_HEALTH.getName(), health, Operation.ADDITION));
 	}
 
 	/**

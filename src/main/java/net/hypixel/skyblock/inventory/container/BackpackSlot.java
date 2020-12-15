@@ -14,7 +14,7 @@ public class BackpackSlot extends Slot {
 	public BackpackSlot(IInventory inventoryIn, int row, int col) {
 		super(inventoryIn, col + row * 9 + 9, 207 - col * 18, 122 - row * 18);
 	}
-	
+
 	@Override
 	public boolean isItemValid(ItemStack stack) {
 		return !(stack.getItem() instanceof AbstractBackpack);

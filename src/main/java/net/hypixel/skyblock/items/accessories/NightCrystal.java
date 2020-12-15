@@ -18,18 +18,17 @@ import net.minecraft.world.World;
 
 public class NightCrystal extends Accessory {
 	/**
-	 * An {@link AttributeModifier} that increases
-	 * {@link SharedMonsterAttributes#ATTACK_DAMAGE} by 0xA.
+	 * An {@link AttributeModifier} that increases {@link SharedMonsterAttributes#ATTACK_DAMAGE}
+	 * by 0xA.
 	 */
 	private static final AttributeModifier attack_mod = new AttributeModifier(
 			SharedMonsterAttributes.ATTACK_DAMAGE.getName(), 0xA, Operation.ADDITION);
 
 	/**
-	 * An {@link AttributeModifier} that increases
-	 * {@link SharedMonsterAttributes#ARMOR} by 0xA.
+	 * An {@link AttributeModifier} that increases {@link SharedMonsterAttributes#ARMOR} by 0xA.
 	 */
-	private static final AttributeModifier defense_mod = new AttributeModifier(SharedMonsterAttributes.ARMOR.getName(),
-			0xA, Operation.ADDITION);
+	private static final AttributeModifier defense_mod = new AttributeModifier(SharedMonsterAttributes.ARMOR.getName(), 0xA,
+			Operation.ADDITION);
 
 	public NightCrystal() {
 		super(ItemProperties.m1, ModItemRarity.Rare);

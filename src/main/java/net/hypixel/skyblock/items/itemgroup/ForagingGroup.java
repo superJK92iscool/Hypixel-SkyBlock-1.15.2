@@ -7,10 +7,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ForagingGroup extends ItemGroup {
-	public static final ForagingGroup instance = new ForagingGroup(ItemGroup.GROUPS.length, "Foraging");
+	public static final ForagingGroup instance = new ForagingGroup(ItemGroup.GROUPS.length);
 
-	private ForagingGroup(int index, String label) {
-		super(index, label);
+	private ForagingGroup(int index) {
+		super(index, "Foraging");
 	}
 
 	@OnlyIn(Dist.CLIENT)

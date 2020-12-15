@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.fancy_tuxedo;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -41,7 +41,7 @@ public class FancyTuxedoSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Dashing!\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Dashing!\n" + FormatingCodes.gray
 				+ "Set max health to 150.\nDeal 100% more damage.";
 	}
 

@@ -92,11 +92,12 @@ public abstract class PerfectSet extends ModArmorItem {
 			super(ModArmorMaterial.PerfectC, slot, ModItemRarity.Legendary);
 		}
 	}
-	
+
 	protected PerfectSet(ModArmorMaterial materialIn, EquipmentSlotType slot, ModItemRarity rarity) {
 		super(materialIn, slot, ItemProperties.m1, rarity);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {}
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	}
 }

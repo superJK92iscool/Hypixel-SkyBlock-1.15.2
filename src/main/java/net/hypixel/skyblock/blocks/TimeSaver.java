@@ -52,7 +52,8 @@ public abstract class TimeSaver extends Block {
 		@Override
 		public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer,
 				ItemStack stack) {
-			worldIn.setGameTime(TimeConverter.hours.get(12));
+			worldIn.setGameTime(TimeConverter.hours.get(0));
+			return;
 		}
 	}
 
@@ -77,7 +78,8 @@ public abstract class TimeSaver extends Block {
 		@Override
 		public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer,
 				ItemStack stack) {
-			worldIn.setDayTime(TimeConverter.hours.get(0));
+			worldIn.setGameTime(TimeConverter.hours.get(0));
+			return;
 		}
 	}
 

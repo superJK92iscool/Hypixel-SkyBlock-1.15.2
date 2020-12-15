@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.mastiff;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -43,10 +43,11 @@ public class MastiffSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Absolute Unit\n" + ColorCodes.gray + "+10 " + ColorCodes.red
-				+ "Health" + ColorCodes.gray + " per " + ColorCodes.dark_blue + "Crit Damage" + ColorCodes.gray
-				+ ".\nRegain 2% of max hp when hit.\nReceive -20% damage from wolves.\n" + ColorCodes.dark_blue
-				+ "Crit Damage" + ColorCodes.gray + " is 50% less effective.";
+		return FormatingCodes.gold + "Full Set Bonus: Absolute Unit\n" + FormatingCodes.gray + "+10 "
+				+ FormatingCodes.red + "Health" + FormatingCodes.gray + " per " + FormatingCodes.dark_blue
+				+ "Crit Damage" + FormatingCodes.gray
+				+ ".\nRegain 2% of max hp when hit.\nReceive -20% damage from wolves.\n" + FormatingCodes.dark_blue
+				+ "Crit Damage" + FormatingCodes.gray + " is 50% less effective.";
 	}
 
 	@Override

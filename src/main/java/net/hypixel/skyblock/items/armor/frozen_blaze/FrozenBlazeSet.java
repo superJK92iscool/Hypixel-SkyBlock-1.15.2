@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.frozen_blaze;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -43,9 +43,9 @@ public class FrozenBlazeSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Blazing Aura\n" + ColorCodes.gray
-				+ "Damages mobs in a 5 block range for 300 base damage + 3% of their max " + ColorCodes.red + "Health "
-				+ ColorCodes.gray + "per second and applies Slowness 1 for 4 seconds.\n"
+		return FormatingCodes.gold + "Full Set Bonus: Blazing Aura\n" + FormatingCodes.gray
+				+ "Damages mobs in a 5 block range for 300 base damage + 3% of their max " + FormatingCodes.red
+				+ "Health " + FormatingCodes.gray + "per second and applies Slowness 1 for 4 seconds.\n"
 				+ "Max damage per second increased by +100 per 5000 rods (5000 max damage cap).\n"
 				+ "Also grants permanent Fire and Lava immunity.";
 	}

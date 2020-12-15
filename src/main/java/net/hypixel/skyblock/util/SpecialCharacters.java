@@ -4,7 +4,7 @@ package net.hypixel.skyblock.util;
  * Holds special characters to display in the tooltip.
  *
  * @author MrPineapple070
- * @version 14 October 2020
+ * @version 28 November 2020
  * @since 11 June 2019
  */
 public class SpecialCharacters {
@@ -24,6 +24,21 @@ public class SpecialCharacters {
 	 * &#x1fa93;
 	 */
 	public static final char[] axe = { 0xd83e, 0xde93 };
+	
+	/**
+	 * &#x269a;
+	 */
+	public static final char boss = 0x269a;
+	
+	/**
+	 * &#xfd3e;
+	 */
+	public static final char boss_name_start = 0xfd3e;
+	
+	/**
+	 * &#xfd3f;
+	 */
+	public static final char boss_name_end = 0xfd3f;
 
 	/**
 	 * &#x1f3f9;
@@ -131,7 +146,7 @@ public class SpecialCharacters {
 	public static final char magic_find = 0x272f;
 
 	/**
-	 * Used to indicate nighttime.<br>
+	 * Used to indicate night-time.<br>
 	 * &#x263d;
 	 */
 	public static final char night = 0x263d;

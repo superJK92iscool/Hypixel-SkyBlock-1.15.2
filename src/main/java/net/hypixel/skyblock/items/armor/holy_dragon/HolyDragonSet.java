@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.holy_dragon;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,7 +38,7 @@ public class HolyDragonSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Holy Blood\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Holy Blood\n" + FormatingCodes.gray
 				+ "Tripples the natural regneration rate of you and all players in a 6 block radius.";
 	}
 

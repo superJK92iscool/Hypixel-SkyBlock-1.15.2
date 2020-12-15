@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.accessories;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -25,7 +25,7 @@ public class HasteRing extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Gives you " + ColorCodes.dark_green + "Haste I "
-				+ ColorCodes.gray + "for 15 seconds when breaking any block."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Gives you " + FormatingCodes.dark_green + "Haste I "
+				+ FormatingCodes.gray + "for 15 seconds when breaking any block."));
 	}
 }

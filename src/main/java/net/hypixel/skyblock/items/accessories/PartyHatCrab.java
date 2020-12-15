@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.DyeColor;
@@ -53,8 +53,8 @@ public class PartyHatCrab extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Grants +1 " + ColorCodes.aqua + "Intelligence "
-				+ ColorCodes.gray + "per in-game year played."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Grants +1 " + FormatingCodes.aqua + "Intelligence "
+				+ FormatingCodes.gray + "per in-game year played."));
 	}
 
 	/**

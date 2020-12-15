@@ -18,6 +18,7 @@ import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
@@ -103,11 +104,15 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 		}
 	}
 
+	private static final NonNullList<Block> validBlocks = NonNullList.from(Blocks.AIR, Blocks.COAL_ORE);
+
+	private static final Item[] comp = new Item[] { Items.COAL, Items.DIAMOND };
+	private static final Item[] sup = new Item[] { Items.COAL, Items.COAL_BLOCK, Items.DIAMOND, Items.DIAMOND_BLOCK,
+			ItemInit.enchanted_coal.get(), ItemInit.enchanted_diamond.get() };
+
 	protected CoalMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
 		super(typeIn, tier);
 	}
-	
-	protected static final NonNullList<Block> validBlocks = NonNullList.from(Blocks.AIR, Blocks.COAL_ORE);
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
@@ -140,7 +145,7 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 
 	@Override
 	protected Item[] getCompactor() {
-		return new Item[] { Items.COAL, Items.DIAMOND };
+		return comp;
 	}
 
 	@Override
@@ -160,8 +165,7 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 
 	@Override
 	protected Item[] getSuperCompactor() {
-		return new Item[] { Items.COAL, Items.COAL_BLOCK, Items.DIAMOND, Items.DIAMOND_BLOCK,
-				ItemInit.enchanted_coal.get(), ItemInit.enchanted_diamond.get() };
+		return sup;
 	}
 
 	@Override
@@ -203,7 +207,7 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 				if (pos == null)
 					continue;
 				BlockState state = this.world.getBlockState(pos);
-				if (state.isAir(this.world, pos))
+				if (state.getMaterial() == Material.AIR)
 					this.validSurround.add(pos);
 				else if (this.isBlockValid(state.getBlock(), validBlocks))
 					this.validSurround.add(pos);
@@ -221,7 +225,7 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 			this.init();
 		if (this.isCompletlyFull())
 			return;
-		this.tick = ++this.tick % (int)(CoalMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
+		this.tick = ++this.tick % (int) (CoalMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
 		if (this.tick == 0)
 			this.interact(this.pickBlock());
 	}

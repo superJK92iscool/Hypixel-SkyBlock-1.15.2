@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.revenant;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,7 +38,7 @@ public class RevenantSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Trolling the Reaper\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Trolling the Reaper\n" + FormatingCodes.gray
 				+ "Healing Wands are 50% more effective.\nGain +20 defense against Zombies.";
 	}
 

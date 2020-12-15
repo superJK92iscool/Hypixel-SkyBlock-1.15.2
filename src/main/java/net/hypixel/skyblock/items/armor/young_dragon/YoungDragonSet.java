@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.young_dragon;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,7 +38,7 @@ public class YoungDragonSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Young Blood\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Young Blood\n" + FormatingCodes.gray
 				+ "Gain +70 walk speed when above 50% health.";
 	}
 

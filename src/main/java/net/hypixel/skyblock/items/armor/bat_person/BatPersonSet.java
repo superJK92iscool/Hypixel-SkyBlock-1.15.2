@@ -5,7 +5,7 @@ import java.util.List;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.ModArmorItem;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -30,7 +30,7 @@ public class BatPersonSet extends ModArmorItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Full Set Bonus: Bat Powers Activate!\n" + ColorCodes.gray
-				+ "Removes the cooldown from the Grappling Hook."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Full Set Bonus: Bat Powers Activate!\n"
+				+ FormatingCodes.gray + "Removes the cooldown from the Grappling Hook."));
 	}
 }

@@ -2,7 +2,7 @@ package net.hypixel.skyblock.items.armor.magma;
 
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -18,9 +18,9 @@ public class Magma {
 	public static final int boots = 9;
 	public static final int chestplate = 20;
 
-	public static final String fsb = ColorCodes.gold + "Full Set Bonus: Absorb\n" + ColorCodes.gray
-			+ "Every 10 Magma Cubes killed gives +1 " + ColorCodes.red + "Health " + ColorCodes.gray + "and +1 "
-			+ ColorCodes.aqua + "Intelligence " + ColorCodes.gray + "Max 200 each stat.";
+	public static final String fsb = FormatingCodes.gold + "Full Set Bonus: Absorb\n" + FormatingCodes.gray
+			+ "Every 10 Magma Cubes killed gives +1 " + FormatingCodes.red + "Health " + FormatingCodes.gray + "and +1 "
+			+ FormatingCodes.aqua + "Intelligence " + FormatingCodes.gray + "Max 200 each stat.";
 	public static final int helmet = 3;
 	public static final int leggings = 15;
 	public static final ModArmorMaterial material = ModArmorMaterial.Magma;

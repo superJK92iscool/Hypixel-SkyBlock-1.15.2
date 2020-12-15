@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.sponge;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 
 /**
  *
@@ -30,7 +30,8 @@ public class SpongeSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Absorb\n" + ColorCodes.gray + "Doubles defense while in water.";
+		return FormatingCodes.gold + "Full Set Bonus: Absorb\n" + FormatingCodes.gray
+				+ "Doubles defense while in water.";
 	}
 
 	@Override

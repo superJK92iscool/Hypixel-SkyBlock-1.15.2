@@ -24,35 +24,21 @@ import net.minecraft.util.text.ITextComponent;
 public abstract class MinionChestScreen extends ContainerScreen<MinionChestContainer> {
 	public static class SmallMCS extends MinionChestScreen {
 		public SmallMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, ChestType.SMALL);
+			super(screenContainer, inv, titleIn, ChestType.Small);
 		}
 	}
-
+	
 	public static class MediumMCS extends MinionChestScreen {
 		public MediumMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, ChestType.MEDIUM);
+			super(screenContainer, inv, titleIn, ChestType.Medium);
 		}
 	}
-
+	
 	public static class LargeMCS extends MinionChestScreen {
 		public LargeMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, ChestType.LARGE);
+			super(screenContainer, inv, titleIn, ChestType.Large);
 		}
 	}
-
-	/**
-	 * Background Texture for Large Minion Chest
-	 */
-	@Nonnull
-	private static final ResourceLocation large = new ResourceLocation(HypixelSkyBlockMod.MOD_ID,
-			"textures/gui/large_minion_chest_screen.png");
-
-	/**
-	 * Background Texture for Medium Minion Chest
-	 */
-	@Nonnull
-	private static final ResourceLocation medium = new ResourceLocation(HypixelSkyBlockMod.MOD_ID,
-			"textures/gui/medium_minion_chest_screen.png");
 
 	/**
 	 * Background Texture for Small Minion Chest
@@ -62,7 +48,21 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 			"textures/gui/small_minion_chest_screen.png");
 
 	/**
-	 * The {@link Type} of this.
+	 * Background Texture for Medium Minion Chest
+	 */
+	@Nonnull
+	private static final ResourceLocation medium = new ResourceLocation(HypixelSkyBlockMod.MOD_ID,
+			"textures/gui/medium_minion_chest_screen.png");
+	
+	/**
+	 * Background Texture for Large Minion Chest
+	 */
+	@Nonnull
+	private static final ResourceLocation large = new ResourceLocation(HypixelSkyBlockMod.MOD_ID,
+			"textures/gui/large_minion_chest_screen.png");
+	
+	/**
+	 * The {@link ChestType} of this.
 	 */
 	@Nonnull
 	protected final ChestType type;
@@ -78,19 +78,22 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1f, 1f, 1f, 1f);
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
+			int mouseY) {
+		// RenderSystem.color4f(1f, 1f, 1f, 1f);
+		RenderSystem.blendColor(1f, 1f, 1f, 1f);
 		switch (this.type) {
-		case SMALL:
-		default:
+		case Small:
 			this.minecraft.getTextureManager().bindTexture(small);
 			break;
-		case MEDIUM:
+		case Medium:
 			this.minecraft.getTextureManager().bindTexture(medium);
 			break;
-		case LARGE:
+		case Large:
 			this.minecraft.getTextureManager().bindTexture(large);
 			break;
+		default:
+			throw new IllegalStateException("Illegal ChestType " + this.type.name());
 		}
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
@@ -101,8 +104,8 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		this.font.drawString(this.title.getFormattedText(), 48, 50, 0x404040);
-		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 48, 118, 0x404040);
+		this.font.drawString(this.title.getString(), 48, 50, 0x404040);
+		this.font.drawString(this.playerInventory.getDisplayName().getString(), 48, 118, 0x404040);
 	}
 
 	@Override

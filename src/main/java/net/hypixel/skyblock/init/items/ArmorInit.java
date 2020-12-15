@@ -234,7 +234,7 @@ public class ArmorInit {
 			DiverChestplate::new);
 	public static final RegistryObject<ArmorItem> diver_leggings = armor.register("diver_leggings", DiverLeggings::new);
 	public static final RegistryObject<ArmorItem> diver_boots = armor.register("diver_boots", DiverBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> elegant_tuxedo_chestplate = armor
 			.register("elegant_tuxedo_chestplate", ElegantTuxedoChestplate::new);
 	public static final RegistryObject<ArmorItem> elegant_tuxedo_leggings = armor.register("elegant_tuxedo_leggings",
@@ -266,7 +266,7 @@ public class ArmorInit {
 			FairyChestplate::new);
 	public static final RegistryObject<ArmorItem> fairy_leggings = armor.register("fairy_leggings", FairyLeggings::new);
 	public static final RegistryObject<ArmorItem> fairy_boots = armor.register("fairy_boots", FairyBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> fancy_tuxedo_chestplate = armor.register("fancy_tuxedo_chestplate",
 			FancyTuxedoChestplate::new);
 	public static final RegistryObject<ArmorItem> fancy_tuxedo_leggings = armor.register("fancy_tuxedo_leggings",
@@ -279,7 +279,7 @@ public class ArmorInit {
 			FarmChestplate::new);
 	public static final RegistryObject<ArmorItem> farm_leggings = armor.register("farm_leggings", FarmLeggings::new);
 	public static final RegistryObject<ArmorItem> farm_boots = armor.register("farm_boots", FarmBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> farm_suit_helmet = armor.register("farm_suit_helmet",
 			FarmSuitHelmet::new);
 	public static final RegistryObject<ArmorItem> farm_suit_chestplate = armor.register("farm_suit_chestplate",
@@ -389,13 +389,13 @@ public class ArmorInit {
 			OldDragonLeggings::new);
 	public static final RegistryObject<ArmorItem> old_dragon_boots = armor.register("old_dragon_boots",
 			OldDragonBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> pack_helmet = armor.register("pack_helmet", PackHelmet::new);
 	public static final RegistryObject<ArmorItem> pack_chestplate = armor.register("pack_chestplate",
 			PackChestplate::new);
-	public static final RegistryObject<ArmorItem> pack_boots = armor.register("pack_boots", PackBoots::new);
 	public static final RegistryObject<ArmorItem> pack_leggings = armor.register("pack_leggings", PackLeggings::new);
-	
+	public static final RegistryObject<ArmorItem> pack_boots = armor.register("pack_boots", PackBoots::new);
+
 	public static final RegistryObject<ArmorItem> perfect_helmet_1 = armor.register("perfect_helmet_1",
 			() -> new Perfect1(EquipmentSlotType.HEAD));
 	public static final RegistryObject<ArmorItem> perfect_helmet_2 = armor.register("perfect_helmet_2",
@@ -413,7 +413,7 @@ public class ArmorInit {
 			() -> new Perfect7(EquipmentSlotType.HEAD));
 	public static final RegistryObject<ArmorItem> perfect_helmet_8 = armor.register("perfect_helmet_8",
 			() -> new Perfect8(EquipmentSlotType.HEAD));
-	
+
 	public static final RegistryObject<ArmorItem> perfect_helmet_9 = armor.register("perfect_helmet_9",
 			() -> new Perfect9(EquipmentSlotType.HEAD));
 	public static final RegistryObject<ArmorItem> perfect_helmet_a = armor.register("perfect_helmet_a",
@@ -476,7 +476,7 @@ public class ArmorInit {
 			() -> new PerfectB(EquipmentSlotType.LEGS));
 	public static final RegistryObject<ArmorItem> perfect_leggings_c = armor.register("perfect_leggings_c",
 			() -> new PerfectC(EquipmentSlotType.LEGS));
-	
+
 	public static final RegistryObject<ArmorItem> perfect_boots_1 = armor.register("perfect_boots_1",
 			() -> new Perfect1(EquipmentSlotType.FEET));
 	public static final RegistryObject<ArmorItem> perfect_boots_2 = armor.register("perfect_boots_2",
@@ -503,7 +503,7 @@ public class ArmorInit {
 			() -> new PerfectB(EquipmentSlotType.FEET));
 	public static final RegistryObject<ArmorItem> perfect_boots_c = armor.register("perfect_boots_c",
 			() -> new PerfectC(EquipmentSlotType.FEET));
-	
+
 	public static final RegistryObject<ArmorItem> protector_dragon_helmet = armor.register("protector_dragon_helmet",
 			ProtectorDragonHelmet::new);
 	public static final RegistryObject<ArmorItem> protector_dragon_chestplate = armor
@@ -525,7 +525,7 @@ public class ArmorInit {
 			RevenantChestplate::new);
 	public static final RegistryObject<ArmorItem> revenant_leggings = armor.register("revenant_leggings",
 			RevenantLeggings::new);
-	
+
 	public static final RegistryObject<ArmorItem> snow_helmet = armor.register("snow_helmet", SnowHelmet::new);
 	public static final RegistryObject<ArmorItem> snow_chestplate = armor.register("snow_chestplate",
 			SnowChestplate::new);
@@ -540,7 +540,7 @@ public class ArmorInit {
 			SpeedsterLeggings::new);
 	public static final RegistryObject<ArmorItem> speedster_boots = armor.register("speedster_boots",
 			SpeedsterBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> sponge_helmet = armor.register("sponge_helmet", SpongeHelmet::new);
 	public static final RegistryObject<ArmorItem> sponge_chestplate = armor.register("sponge_chestplate",
 			SpongeChestplate::new);
@@ -572,7 +572,7 @@ public class ArmorInit {
 			SuperiorDragonLeggings::new);
 	public static final RegistryObject<ArmorItem> superior_dragon_boots = armor.register("superior_dragon_boots",
 			SuperiorDragonBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> tarantula_helmet = armor.register("tarantula_helmet",
 			TarantulaHelmet::new);
 	public static final RegistryObject<ArmorItem> tarantula_chestplate = armor.register("tarantula_chestplate",
@@ -590,7 +590,7 @@ public class ArmorInit {
 			UnstableDragonLeggings::new);
 	public static final RegistryObject<ArmorItem> unstable_dragon_boots = armor.register("unstable_dragon_boots",
 			UnstableDragonBoots::new);
-	
+
 	public static final RegistryObject<ArmorItem> wise_dragon_helmet = armor.register("wise_dragon_helmet",
 			WiseDragonHelmet::new);
 	public static final RegistryObject<ArmorItem> wise_dragon_chestplate = armor.register("wise_dragon_chestplate",

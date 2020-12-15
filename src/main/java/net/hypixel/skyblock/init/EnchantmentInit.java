@@ -23,8 +23,7 @@ public class EnchantmentInit {
 	/**
 	 * A {@code DeferredRegister} for {@code Enchantment}
 	 */
-	public static final DeferredRegister<Enchantment> enchantments = new DeferredRegister<>(
-			ForgeRegistries.ENCHANTMENTS, HypixelSkyBlockMod.MOD_ID);
+	public static final DeferredRegister<Enchantment> enchantments = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, HypixelSkyBlockMod.MOD_ID);
 
 	// Sword
 	// public static final RegistryObject<Enchantment> critical =

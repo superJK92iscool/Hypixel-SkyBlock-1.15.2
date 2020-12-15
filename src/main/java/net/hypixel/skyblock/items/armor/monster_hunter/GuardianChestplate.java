@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.items.armor.ModArmorItem;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -24,9 +24,9 @@ public class GuardianChestplate extends ModArmorItem {
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		try {
 			tooltip.addAll(MonsterHunterSet.instance.getDescription(this.slot));
-			tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Block Damage"));
+			tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Block Damage"));
 			tooltip.add(new StringTextComponent(
-					ColorCodes.gray + "If you are full Health, the first damage you take will be nullified."));
+					FormatingCodes.gray + "If you are full Health, the first damage you take will be nullified."));
 		} catch (final IllegalAccessException e) {
 			HypixelSkyBlockMod.LOGGER.error(e.getMessage());
 		}

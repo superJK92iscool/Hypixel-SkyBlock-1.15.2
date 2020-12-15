@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.items.armor.ModArmorItem;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -23,8 +23,8 @@ public class SkeletonHelmet extends ModArmorItem {
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		try {
 			tooltip.addAll(MonsterHunterSet.instance.getDescription(this.slot));
-			tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Bone Shield"));
-			tooltip.add(new StringTextComponent(ColorCodes.gray
+			tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Bone Shield"));
+			tooltip.add(new StringTextComponent(FormatingCodes.gray
 					+ "A Bone Shield surrounds you, nullifying damage you take but consuming a bone in the process."));
 			tooltip.add(new StringTextComponent("Bones regenerate every 30 seconds."));
 			tooltip.add(new StringTextComponent("Does not work on bosses."));

@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.mushroom;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,7 +38,7 @@ public class MushroomSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Night Affinity\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Night Affinity\n" + FormatingCodes.gray
 				+ "Grants the wearer permanent Night Vision.\n"
 				+ "During the Night, the stats of the armor pieces are tripled.";
 	}

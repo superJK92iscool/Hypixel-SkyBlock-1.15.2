@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,16 +30,16 @@ public class AspectOfTheDragon extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Dragon Rage"));
-		tooltip.add(new StringTextComponent(ColorCodes.gray
-				+ "Deal 5000 Ability Damage to all Monsters in front of you.\nDamaged Monsters Take Huge Knockback."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Dragon Rage"));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray	+ "Deal 5000 Ability Damage to all Monsters in front of you."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Damaged Monsters take huge Knockback."));
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		// TODO Determine entities in front of player. Do damage to them.
 		final ItemStack handItem = playerIn.getHeldItem(handIn);
-		if (worldIn.isRemote)
+		if (!worldIn.isRemote)
 			return ActionResult.resultPass(handItem);
 		this.reforge = SwordReforge.Epic;
 		return ActionResult.resultSuccess(handItem);

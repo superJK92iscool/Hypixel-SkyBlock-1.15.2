@@ -3,13 +3,13 @@ package net.hypixel.skyblock.items.bows;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
+import net.hypixel.skyblock.util.StatString;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 /**
@@ -24,11 +24,10 @@ public class EnderBow extends ModBowItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		this.reforge = BowReforge.Awkward;
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Ender Warp"));
+		tooltip.add(new StringTextComponent(FormatingCodes.reset + "Shoots an Ender Pearl."));
+		tooltip.add(new StringTextComponent(FormatingCodes.reset
+				+ "Upon landing, you deal damage to all Monsters in an 8 block radius for 10% of their "
+				+ StatString.health + "."));
 	}
 }

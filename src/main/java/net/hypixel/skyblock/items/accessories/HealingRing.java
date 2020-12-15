@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.accessories;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class HealingRing extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(
-				ColorCodes.gray + "Increases " + ColorCodes.red + "healing " + ColorCodes.gray + "by 10%."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Increases " + FormatingCodes.red + "healing "
+				+ FormatingCodes.gray + "by 10%."));
 	}
 }

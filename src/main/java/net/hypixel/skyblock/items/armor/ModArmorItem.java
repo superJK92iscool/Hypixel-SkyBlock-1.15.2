@@ -15,9 +15,9 @@ import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.PotatoBookableItem;
 import net.hypixel.skyblock.items.ReforgableItem;
 import net.hypixel.skyblock.items.Reforge;
-import net.hypixel.skyblock.items.ReforgeStone;
 import net.hypixel.skyblock.items.UpgradableItem;
 import net.hypixel.skyblock.items.accessories.Accessory.AccessoryReforge;
+import net.hypixel.skyblock.items.reforge_stone.ReforgeStone;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -44,6 +44,10 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 	 * @since 11 June 2019
 	 */
 	public enum ArmorReforge implements Reforge {
+		/**
+		 * Unique
+		 */
+		Ancient(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		Clean(new double[] { 0, 5, 0, 1, 2, 0, 0, 0 }, new double[] { 0, 7, 0, 1.4, 4, 0, 0, 0 },
 				new double[] { 0, 10, 0, 2, 6, 0, 0, 0 }, new double[] { 0, 15, 0, 3, 8, 0, 0, 0 },
 				new double[] { 0, 20, 0, 4, 10, 0, 0, 0 }),
@@ -53,9 +57,17 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 		Cubic(new double[] { 3, 0, 0, 1, 0, 0, 0, 0 }, new double[] { 5, 0, 0, 1.4, 0, 0, 0, 0 },
 				new double[] { 7, 0, 0, 2, 0, 0, 0, 0 }, new double[] { 10, 0, 0, 3, 0, 0, 0, 0 },
 				new double[] { 12, 0, 0, 4, 0, 0, 0, 0 }),
+		/**
+		 * Unique
+		 */
+		Empowered(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		Fierce(new double[] { 2, 0, 0, 0, 2, 4, 0, 0 }, new double[] { 4, 0, 0, 0, 3, 7, 0, 0 },
 				new double[] { 6, 0, 0, 0, 4, 10, 0, 0 }, new double[] { 8, 0, 0, 0, 5, 14, 0, 0 },
 				new double[] { 10, 0, 0, 0, 6, 18, 0, 0 }),
+		/**
+		 * Unique
+		 */
+		Giant(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		Heavy(new double[] { 0, 25, -1, 0, 0, -1, 0, 0 }, new double[] { 0, 35, -1, 0, 0, -2, 0, 0 },
 				new double[] { 0, 50, -1, 0, 0, -2, 0, 0 }, new double[] { 0, 65, -1, 0, 0, -3, 0, 0 },
 				new double[] { 0, 80, -1, 0, 0, -5, 0, 0 }),
@@ -85,7 +97,6 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 		Perfect(new double[] { 0, 25, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 35, 0, 0, 0, 0, 0, 0 },
 				new double[] { 0, 50, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 65, 0, 0, 0, 0, 0, 0 },
 				new double[] { 0, 80, 0, 0, 0, 0, 0, 0 }),
-
 		Pure(new double[] { 2, 2, 1, .4, 2, 2, 2, 1 }, new double[] { 3, 3, 1, .6, 4, 3, 3, 1 },
 				new double[] { 4, 4, 1, .8, 6, 4, 4, 2 }, new double[] { 6, 6, 1, 1.2, 8, 5, 6, 3 },
 				new double[] { 8, 8, 1, 1.6, 10, 8, 8, 4 }),
@@ -108,6 +119,7 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 		Ridiculous(new double[] { 0, 10, 0, 2, 1, 0, 0, 0 }, new double[] { 0, 15, 0, 3, 2, 0, 0, 0 },
 				new double[] { 0, 20, 0, 4, 3, 0, 0, 0 }, new double[] { 0, 25, 0, 5, 4, 0, 0, 0 },
 				new double[] { 0, 35, 0, 7, 5, 0, 0, 0 }),
+		Silky(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		Smart(new double[] { 0, 4, 0, .8, 0, 0, 20, 0 }, new double[] { 0, 6, 0, 1.2, 0, 0, 40, 0 },
 				new double[] { 0, 9, 0, 1.8, 0, 0, 60, 0 }, new double[] { 0, 12, 0, 2.4, 0, 0, 80, 0 },
 				new double[] { 0, 15, 0, 3, 0, 0, 100, 0 }),
@@ -116,9 +128,22 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 		 */
 		Spiked(new double[] {}, new double[] {}, new double[] {}, new double[] { 8, 6, 1, 1.2, 8, 8, 8, 3 },
 				new double[] { 8, 8, 1, 1.6, 10, 10, 10, 4 }),
+		Strong(AccessoryReforge.Strong.common(), AccessoryReforge.Strong.uncommon(), AccessoryReforge.Strong.rare(),
+				AccessoryReforge.Strong.epic(), AccessoryReforge.Strong.legendary()),
+		/**
+		 * Unique
+		 */
+		Submerged(new double[0], new double[0], new double[0], new double[0], new double[0]),
+		Superior(AccessoryReforge.Superior.common(), AccessoryReforge.Superior.uncommon(),
+				AccessoryReforge.Superior.rare(), AccessoryReforge.Superior.epic(),
+				AccessoryReforge.Superior.legendary()),
 		Titanic(new double[] { 0, 10, 0, 2, 0, 0, 0, 0 }, new double[] { 0, 15, 0, 3, 0, 0, 0, 0 },
 				new double[] { 0, 20, 0, 4, 0, 0, 0, 0 }, new double[] { 0, 25, 0, 5, 0, 0, 0, 0 },
 				new double[] { 0, 35, 0, 7, 0, 0, 0, 0 }),
+		/**
+		 * Unique
+		 */
+		Undead(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		/**
 		 * Unique
 		 */
@@ -147,13 +172,15 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 		@Nonnull
 		private static final ArmorReforge[] unique;
 
-		/**
-		 * A primative type array of {@link AccessoryReforge} that holds all the values
-		 * of {@link AccessoryReforge}.<br>
-		 * This should be the same as calling the values() method.
-		 */
-		@Nonnull
-		private static final ArmorReforge[] values;
+		static {
+			nonunique = new ArmorReforge[] { Clean, Fierce, Heavy, Light, Mythic, Pure, Smart, Titanic, Wise };
+			unique = new ArmorReforge[] { Cubic, Loving, Necrotic, Perfect, Reinforced, Renowned, Ridiculous, Spiked,
+					Warped };
+		}
+
+		public static ArmorReforge getRandomReforge() {
+			return nonunique[rand.nextInt(nonunique.length)];
+		}
 
 		/**
 		 * The array for {@link ModItemRarity#Common}
@@ -192,22 +219,6 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 			this.epic = Objects.requireNonNull(epic, "Epic buff array must be non-null.");
 			this.legendary = Objects.requireNonNull(legendary, "Legendary buff array must be non-null.");
 			this.log();
-		}
-
-		static {
-			values = ArmorReforge.values();
-			nonunique = new ArmorReforge[] { Clean, Fierce, Heavy, Light, Mythic, Pure, Smart, Titanic, Wise };
-			unique = new ArmorReforge[] { Perfect, Necrotic, Spiked, Renowned, Cubic, Warped, Reinforced, Loving,
-					Ridiculous };
-		}
-
-		public static ArmorReforge getRandomReforge() {
-			return nonunique[rand.nextInt(nonunique.length)];
-		}
-
-		@Override
-		public Reforge[] all() {
-			return values;
 		}
 
 		@Override
@@ -268,7 +279,7 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 	 */
 	@Nullable
 	protected Reforge reforge = Reforge.None;
-	
+
 	protected ITextComponent reforge_display = new StringTextComponent("");
 
 	/**
@@ -306,7 +317,22 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
-		return super.getDisplayName(stack).applyTextStyle(this.rarity.color);
+		ITextComponent rd = this.reforge_display.deepCopy();
+		ITextComponent dp = super.getDisplayName(stack).deepCopy();
+		if (this.material == ModArmorMaterial.Wise_Dragon && this.reforge == ArmorReforge.Wise)
+			rd = new StringTextComponent("Very");
+		else if (this.material == ModArmorMaterial.Strong_Dragon && this.reforge == ArmorReforge.Strong)
+			rd = new StringTextComponent("Very");
+		else if (this.material == ModArmorMaterial.Superior_Dragon && this.reforge == ArmorReforge.Superior)
+			rd = new StringTextComponent("Highly");
+		else if (this.material == ModArmorMaterial.Heavy) {
+			if (this.reforge == ArmorReforge.Heavy)
+				rd = new StringTextComponent("Extremly");
+			else if (this.reforge == ArmorReforge.Light)
+				rd = new StringTextComponent("Not So");
+		} else if (ModArmorMaterial.isPerfect(this.material) && this.reforge == ArmorReforge.Perfect)
+			rd = new StringTextComponent("Absolutely");
+		return (rd.appendSibling(dp)).applyTextStyle(this.rarity.color);
 	}
 
 	@Override
@@ -336,12 +362,13 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 	public void reforge() {
 		this.reforge = ArmorReforge.getRandomReforge();
 		try {
-			this.reforge_display = new StringTextComponent(this.reforge.getClass().getMethod("name", (Class<?>[]) null).invoke(this.reforge) + "");
+			this.reforge_display = new StringTextComponent(
+					this.reforge.getClass().getMethod("name", (Class<?>[]) null).invoke(this.reforge) + "");
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
 			HypixelSkyBlockMod.LOGGER.error(e.getLocalizedMessage());
 			for (StackTraceElement element : e.getStackTrace())
-			HypixelSkyBlockMod.LOGGER.error(element.toString());
+				HypixelSkyBlockMod.LOGGER.error(element.toString());
 		}
 	}
 
@@ -354,6 +381,15 @@ public abstract class ModArmorItem extends ArmorItem implements ReforgableItem, 
 	@Override
 	public void setReforge(Reforge reforge) {
 		this.reforge = reforge;
+		try {
+			this.reforge_display = new StringTextComponent(
+					this.reforge.getClass().getMethod("name", (Class<?>[]) null).invoke(this.reforge) + "");
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			HypixelSkyBlockMod.LOGGER.error(e.getLocalizedMessage());
+			for (StackTraceElement element : e.getStackTrace())
+				HypixelSkyBlockMod.LOGGER.error(element.toString());
+		}
 	}
 
 	@Override

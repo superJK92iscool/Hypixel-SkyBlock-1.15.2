@@ -90,13 +90,6 @@ public interface Reforge {
 	}
 
 	/**
-	 * @return all {@link Reforge} stored in {@link Enum}. This should be the same
-	 *         as {@code values()}
-	 */
-	@Nonnull
-	Reforge[] all();
-
-	/**
 	 * @return The array for {@link ModItemRarity#Common}
 	 */
 	@Nonnull

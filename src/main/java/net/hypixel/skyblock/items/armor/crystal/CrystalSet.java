@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.crystal;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -33,7 +33,7 @@ public class CrystalSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Refraction\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Refraction\n" + FormatingCodes.gray
 				+ "The stats of this armor chance from 0% to 200% depending on the current light level.";
 	}
 

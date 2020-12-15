@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.items.bows;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -15,13 +15,14 @@ import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.PotatoBookableItem;
 import net.hypixel.skyblock.items.ReforgableItem;
 import net.hypixel.skyblock.items.Reforge;
-import net.hypixel.skyblock.items.ReforgeStone;
 import net.hypixel.skyblock.items.UpgradableItem;
+import net.hypixel.skyblock.items.reforge_stone.ReforgeStone;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 /**
@@ -98,13 +99,14 @@ public abstract class ModBowItem extends BowItem implements ReforgableItem, Upgr
 		@Nonnull
 		private static final BowReforge[] unique;
 
-		/**
-		 * A primative type array of {@link BowReforge} that holds all the values of
-		 * {@link BowReforge}.<br>
-		 * This should be the same as calling the values() method.
-		 */
-		@Nonnull
-		private static final BowReforge[] values;
+		static {
+			nonunique = new BowReforge[] { Awkward, Deadly, Fine, Grand, Hasty, Neat, Rapid, Unreal };
+			unique = new BowReforge[] { Precise, Spiritual };
+		}
+
+		public static BowReforge getRandomReforge() {
+			return nonunique[rand.nextInt(nonunique.length)];
+		}
 
 		/**
 		 * The array for {@link ModItemRarity#Common}
@@ -143,24 +145,6 @@ public abstract class ModBowItem extends BowItem implements ReforgableItem, Upgr
 			this.epic = Objects.requireNonNull(epic, "Epic buff array must be non-null.");
 			this.legendary = Objects.requireNonNull(legendary, "Legendary buff array must be non-null.");
 			this.log();
-		}
-
-		static {
-			values = BowReforge.values();
-			nonunique = new BowReforge[] { Awkward, Deadly, Fine, Grand, Hasty, Neat, Rapid, Unreal };
-			unique = new BowReforge[] { Precise, Spiritual };
-			HypixelSkyBlockMod.LOGGER.info("All values:\t" + Arrays.deepToString(values));
-			HypixelSkyBlockMod.LOGGER.info("Nonunique:\t" + Arrays.deepToString(nonunique));
-			HypixelSkyBlockMod.LOGGER.info("Unique:\t\t" + Arrays.deepToString(unique));
-		}
-
-		public static BowReforge getRandomReforge() {
-			return nonunique[rand.nextInt(nonunique.length)];
-		}
-
-		@Override
-		public Reforge[] all() {
-			return values;
 		}
 
 		@Override
@@ -222,6 +206,9 @@ public abstract class ModBowItem extends BowItem implements ReforgableItem, Upgr
 	@Nullable
 	protected Reforge reforge = Reforge.None;
 
+	@Nonnull
+	protected ITextComponent reforge_display = new StringTextComponent("");
+
 	protected ModBowItem(Properties builder, ModItemRarity rarity) {
 		super(builder);
 		this.isUpgraded = false;
@@ -234,7 +221,7 @@ public abstract class ModBowItem extends BowItem implements ReforgableItem, Upgr
 			ITooltipFlag flagIn);
 
 	@Override
-	public boolean apply() {
+	public final boolean apply() {
 		if (this.numPotatoBook == 10)
 			return false;
 		++this.numPotatoBook;
@@ -242,50 +229,60 @@ public abstract class ModBowItem extends BowItem implements ReforgableItem, Upgr
 	}
 
 	@Override
-	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+	public final <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
 		return super.damageItem(stack, 0, entity, onBroken);
 	}
 
 	@Override
-	public ITextComponent getDisplayName(ItemStack stack) {
+	public final ITextComponent getDisplayName(ItemStack stack) {
 		return super.getDisplayName(stack).applyTextStyle(this.rarity.color);
 	}
 
 	@Override
-	public ModItemRarity getRarity() {
+	public final ModItemRarity getRarity() {
 		return this.rarity;
 	}
 
 	@Override
-	public Reforge getReforge() {
+	public final Reforge getReforge() {
 		return this.reforge;
 	}
 
 	@Override
-	public boolean isDamageable() {
+	public final boolean isDamageable() {
 		return false;
 	}
 
 	@Override
-	public void reforge() {
-		this.setReforge(BowReforge.getRandomReforge());
+	public final void reforge() {
+		this.reforge = BowReforge.getRandomReforge();
+		try {
+			this.reforge_display = new StringTextComponent(
+					this.reforge.getClass().getMethod("name", (Class<?>[]) null).invoke(this.reforge) + "");
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			HypixelSkyBlockMod.LOGGER.error(e.getLocalizedMessage());
+			for (StackTraceElement element : e.getStackTrace())
+				HypixelSkyBlockMod.LOGGER.error(element.toString());
+		}
 	}
 
 	@Override
-	public void setRarity(ModItemRarity rarity) {
+	public final void setRarity(ModItemRarity rarity) {
+		HypixelSkyBlockMod.LOGGER.warn("Setting rarity:\t" + rarity.getNext());
 		this.rarity = rarity;
 	}
 
 	@Override
-	public void setReforge(Reforge reforge) {
+	public final void setReforge(Reforge reforge) {
 		this.reforge = reforge;
 	}
 
 	@Override
-	public boolean upgrade() {
+	public final boolean upgrade() {
 		if (this.isUpgraded)
 			return false;
-		this.setRarity(this.rarity.getNext());
+		this.rarity = this.rarity.getNext();
 		return true;
 	}
 }

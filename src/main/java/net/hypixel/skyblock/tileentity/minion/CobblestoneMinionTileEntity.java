@@ -20,6 +20,7 @@ import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
@@ -188,9 +189,9 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMinionTileEnti
 		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");
 		this.setValidSurround();
 		this.setAirSurround();
-		if (this.airSurround.size() > 0)
+		if (!this.airSurround.isEmpty())
 			return this.airSurround.get(rand.nextInt(this.airSurround.size()));
-		if (this.validSurround.size() > 0)
+		if (!this.validSurround.isEmpty())
 			return this.validSurround.get(rand.nextInt(this.validSurround.size()));
 		return null;
 	}
@@ -222,7 +223,7 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMinionTileEnti
 				if (pos == null)
 					continue;
 				final BlockState state = this.world.getBlockState(pos);
-				if (state.isAir(this.world, pos))
+				if (state.getMaterial() == Material.AIR)
 					this.validSurround.add(pos);
 				else if (this.isBlockValid(state.getBlock(), validBlocks))
 					this.validSurround.add(pos);

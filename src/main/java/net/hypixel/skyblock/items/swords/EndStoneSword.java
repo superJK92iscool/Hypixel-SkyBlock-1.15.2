@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,8 +15,9 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 /**
- * <a href="https://hypixel-skyblock.fandom.com/wiki/End_Stone_Sword">End Stone Sword</a>.
- * 
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/End_Stone_Sword">End Stone
+ * Sword</a>.
+ *
  * @author MrPineapple070
  * @version 14 August 2020
  * @since 14 August 2020
@@ -28,11 +29,11 @@ public class EndStoneSword extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Extreme Focus"));
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Consumes all your remaining" + ColorCodes.aqua + " Mana"
-				+ ColorCodes.gray
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Extreme Focus"));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Consumes all your remaining" + FormatingCodes.aqua
+				+ " Mana" + FormatingCodes.gray
 				+ "to grant Damage Resistance for 5 seconds and extra Damage on your next hit depending on how much"
-				+ ColorCodes.aqua + " Mana" + ColorCodes.gray + " was consumed."));
+				+ FormatingCodes.aqua + " Mana" + FormatingCodes.gray + " was consumed."));
 	}
 
 	@Override

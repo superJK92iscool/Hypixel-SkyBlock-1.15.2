@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.miner;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -39,7 +39,7 @@ public class MinerSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Regeneration\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Regeneration\n" + FormatingCodes.gray
 				+ "Regenerates 5% of your max Heal every second when exiting combat for 8 seconds.";
 	}
 

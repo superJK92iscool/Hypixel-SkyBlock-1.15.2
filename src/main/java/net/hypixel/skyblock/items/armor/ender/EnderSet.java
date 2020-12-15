@@ -15,17 +15,12 @@ import net.minecraft.inventory.EquipmentSlotType;
  * @since 02 August 2019
  */
 public class EnderSet implements FullSetInformation {
-	public static int boots_def = 25;
-
-	private static int boots_hp = 3;
-	public static int chestplate_def = 60;
-	private static int chestplate_hp = 6;
-	public static int helmet_def = 35;
+	public static final EnderSet instance = new EnderSet();
 
 	private static int helmet_hp = 4;
-	public static final EnderSet instance = new EnderSet();
-	public static int leggings_def = 50;
+	private static final int chestplate_hp = 6;
 	private static int leggings_hp = 5;
+	private static final int boots_hp = 3;
 
 	public EnderSet() {
 	}

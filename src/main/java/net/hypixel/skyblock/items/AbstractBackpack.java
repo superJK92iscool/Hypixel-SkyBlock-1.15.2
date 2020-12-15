@@ -62,36 +62,6 @@ public abstract class AbstractBackpack extends Item {
 		}
 	}
 
-	/**
-	 * The {@link DyeColor} of this.
-	 */
-	@Nullable
-	protected final DyeColor color;
-
-	/**
-	 * A {@link NonNullList} of {@link ItemStack} that this will hold.
-	 */
-	protected NonNullList<ItemStack> items;
-
-	/**
-	 * The {@link Type} of this.
-	 */
-	protected final Type type;
-
-	/**
-	 * Construct this
-	 *
-	 * @param properties {@link Properties}
-	 * @param type       {@link Type}
-	 * @param color      {@link DyeColor}
-	 */
-	public AbstractBackpack(Properties properties, Type type, @Nullable DyeColor color) {
-		super(properties);
-		this.type = type;
-		this.color = color;
-		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-	}
-
 	protected static ItemStack getColoredItemStack(@Nullable DyeColor colorIn) {
 		return new ItemStack(getItemByColor(colorIn));
 	}
@@ -138,16 +108,47 @@ public abstract class AbstractBackpack extends Item {
 	}
 
 	/**
-	 * @Nullable
-	 *
-	 * @Override public ICapabilityProvider initCapabilities(ItemStack
-	 * stack, @Nullable CompoundNBT nbt) { if(!HypixelSkyBlockMod.isCuriosLoaded())
-	 * return null; return Curios.createBackpackProvider(); }
+	 * The {@link DyeColor} of this.
 	 */
+	@Nullable
+	protected final DyeColor color;
+
+	/**
+	 * A {@link NonNullList} of {@link ItemStack} that this will hold.
+	 */
+	protected NonNullList<ItemStack> items;
+
+	/**
+	 * The {@link Type} of this.
+	 */
+	protected final Type type;
+
+	/**
+	 * Construct this
+	 *
+	 * @param properties {@link Properties}
+	 * @param type       {@link Type}
+	 * @param color      {@link DyeColor}
+	 */
+	public AbstractBackpack(Properties properties, Type type, @Nullable DyeColor color) {
+		super(properties);
+		this.type = type;
+		this.color = color;
+		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+	}
+
+	/**
+	 * @return {@link #color}
+	 */
+	@Nullable
 	public DyeColor getColor() {
 		return this.color;
 	}
 
+	/**
+	 * @param player {@link PlayerEntity} opening this.
+	 * @return {@link AbstractBackpackContainer} associated with this.
+	 */
 	public AbstractBackpackContainer getContainer(PlayerEntity player) {
 		switch (this.type) {
 		case Small:
@@ -162,10 +163,16 @@ public abstract class AbstractBackpack extends Item {
 		}
 	}
 
+	/**
+	 * @return {@link #items}
+	 */
 	public NonNullList<ItemStack> getItems() {
 		return this.items;
 	}
 
+	/**
+	 * @return {@link Type#size}
+	 */
 	public int getSizeInventory() {
 		return this.type.size;
 	}

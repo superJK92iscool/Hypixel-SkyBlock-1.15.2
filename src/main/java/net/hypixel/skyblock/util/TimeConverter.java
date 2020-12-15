@@ -134,7 +134,8 @@ public class TimeConverter {
 	/**
 	 * Converts hours and minutes into in-game time.<br>
 	 * This method does not ensure that {@code minutes} &#60; 60 or {@code minutes}
-	 * and {@code hours} &#62; 0.
+	 * and {@code hours} &#62; 0.<br>
+	 * Essentially, negative values for hours and minutes will be allowed.
 	 *
 	 * @param hours   the number of hours
 	 * @param minutes the number of minutes.
@@ -164,31 +165,22 @@ public class TimeConverter {
 	 * @throws NumberFormatException if {@code desc} is not valid.
 	 */
 	public static long parse(String desc) throws NumberFormatException {
-		// Only look at alphanumeric and lowercase and : for 24:00
 		desc = desc.toLowerCase(Locale.ENGLISH).replaceAll("[^A-Za-z0-9:]", "");
-
-		// Detect ticks format
 		try {
 			return parseTicks(desc);
-		} catch (final NumberFormatException ignored) {
+		} catch (final NumberFormatException nfe) {
 		}
-
-		// Detect 24-hour format
 		try {
 			return parse24(desc);
-		} catch (final NumberFormatException ignored) {
+		} catch (final NumberFormatException nfe) {
 		}
-
-		// Detect 12-hour format
 		try {
 			return parse12(desc);
-		} catch (final NumberFormatException ignored) {
+		} catch (final NumberFormatException nfe) {
 		}
-
-		// Detect aliases
 		try {
 			return parseAlias(desc);
-		} catch (final NumberFormatException ignored) {
+		} catch (final NumberFormatException nfe) {
 		}
 		throw new NumberFormatException(desc + " is not a valid description.");
 	}
@@ -315,8 +307,8 @@ public class TimeConverter {
 		// How many seconds on the last day?
 		final long seconds = (long) (dticks / ticksPerSecond);
 
-		// Now we create an English GMT calendar
-		final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.ENGLISH);
+		// Now we create an English UTC calendar
+		final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.ENGLISH);
 		cal.setLenient(true);
 
 		// And we set the time to 0. And append the time that passed!

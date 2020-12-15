@@ -24,7 +24,7 @@ public abstract class AbstractBackpackContainer extends Container {
 		public GreaterBC(int id, PlayerInventory pInvIn) {
 			super(ModContainerTypes.greater_backpack.get(), id, pInvIn, Type.Greater);
 		}
-		
+
 		public GreaterBC(int id, PlayerInventory pInvIn, PacketBuffer data) {
 			this(id, pInvIn);
 		}
@@ -34,7 +34,7 @@ public abstract class AbstractBackpackContainer extends Container {
 		public LargeBC(int id, PlayerInventory pInvIn) {
 			super(ModContainerTypes.large_backpack.get(), id, pInvIn, Type.Large);
 		}
-		
+
 		public LargeBC(int id, PlayerInventory pInvIn, PacketBuffer data) {
 			this(id, pInvIn);
 		}
@@ -44,7 +44,7 @@ public abstract class AbstractBackpackContainer extends Container {
 		public MediumBC(int id, PlayerInventory pInvIn) {
 			super(ModContainerTypes.medium_backpack.get(), id, pInvIn, Type.Medium);
 		}
-		
+
 		public MediumBC(int id, PlayerInventory pInvIn, PacketBuffer data) {
 			this(id, pInvIn);
 		}
@@ -54,7 +54,7 @@ public abstract class AbstractBackpackContainer extends Container {
 		public SmallBC(int id, PlayerInventory pInvIn) {
 			super(ModContainerTypes.small_backpack.get(), id, pInvIn, Type.Small);
 		}
-		
+
 		public SmallBC(int id, PlayerInventory pInvIn, PacketBuffer data) {
 			this(id, pInvIn);
 		}

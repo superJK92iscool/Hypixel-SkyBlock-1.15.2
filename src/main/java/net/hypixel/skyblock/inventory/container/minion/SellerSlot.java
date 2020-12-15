@@ -13,7 +13,7 @@ public class SellerSlot extends Slot {
 	public SellerSlot(IInventory inventoryIn) {
 		super(inventoryIn, 1, 84, 72);
 	}
-	
+
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
 		return 1;

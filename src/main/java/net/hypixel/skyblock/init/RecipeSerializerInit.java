@@ -1,12 +1,12 @@
 package net.hypixel.skyblock.init;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
+import net.hypixel.skyblock.items.crafting.EnchantedItemRecipe.Serializer;
 import net.hypixel.skyblock.items.crafting.EnchantmentRecipe;
 import net.hypixel.skyblock.items.crafting.IEnchantedItemRecipe;
 import net.hypixel.skyblock.items.crafting.IEnchantmentRecipe;
 import net.hypixel.skyblock.items.crafting.IPetRecipe;
 import net.hypixel.skyblock.items.crafting.PetItemRecipe;
-import net.hypixel.skyblock.items.crafting.EnchantedItemRecipe.Serializer;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
@@ -35,8 +35,7 @@ public class RecipeSerializerInit {
 		}
 	}
 
-	public static final DeferredRegister<IRecipeSerializer<?>> recipe_serializer = new DeferredRegister<>(
-			ForgeRegistries.RECIPE_SERIALIZERS, HypixelSkyBlockMod.MOD_ID);
+	public static final DeferredRegister<IRecipeSerializer<?>> recipe_serializer = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<IRecipeSerializer<?>> enchanted_item_serializer = recipe_serializer
 			.register("enchanted_item", Serializer::new);

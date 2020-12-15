@@ -1,12 +1,13 @@
 package net.hypixel.skyblock.items.armor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.StatString;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -20,33 +21,21 @@ import net.minecraft.util.text.StringTextComponent;
  * @since 11 June 2019
  */
 public interface FullSetInformation {
-	/**
-	 * A {@link ImmutableList} of color codes for each buff.
-	 */
-	ImmutableList<String> color = ImmutableList.copyOf(new String[] { ColorCodes.dark_red, ColorCodes.blue,
-			ColorCodes.dark_blue, ColorCodes.red, ColorCodes.white, ColorCodes.aqua, ColorCodes.green });
+	ImmutableList<String> buff = ImmutableList.copyOf(Arrays.asList(StatString.strength, StatString.crit_chance,
+			StatString.crit_damage, StatString.health, StatString.speed, StatString.intelligence, StatString.true_def));
 
-	/**
-	 * An {@link ImmutableList} of buff names.
-	 */
-	ImmutableList<String> name = ImmutableList.copyOf(new String[] { "Strength", "Crit Chance", "Crit Damage", "Health",
-			"Speed", "Intelligence", "True Defense" });
-
-	/**
-	 * Create a buff array.
-	 *
-	 * @param str     Strength buff.
-	 * @param cr_chn  Crit Chance buff.
-	 * @param cr_dmg  Crit Damage buff.
-	 * @param hp      Health buff.
-	 * @param spd     Speed buff.
-	 * @param intel   Intelligence buff.
-	 * @param tru_def True Defense buff.
-	 * @return an array of parameters.
-	 */
 	static double[] createBuffArray(double str, double cr_chn, double cr_dmg, double hp, double spd, double intel,
 			double tru_def) {
 		return new double[] { str, cr_chn, cr_dmg, hp, spd, intel, tru_def };
+	}
+
+	static double[] createBuffArray(double[] buff, int[] index) {
+		if (buff.length != index.length)
+			throw new IllegalStateException("Buff and index arrays must be the same length");
+		double[] b = new double[7];
+		for (int i = 0; i < buff.length; ++i)
+			b[index[i]] = buff[i];
+		return b;
 	}
 
 	/**
@@ -100,8 +89,7 @@ public interface FullSetInformation {
 			if (buffs[i] == 0)
 				continue;
 			else
-				description.add(new StringTextComponent(
-						color.get(i) + FullSetInformation.name.get(i) + ColorCodes.gray + ": " + buffs[i]));
+				description.add(new StringTextComponent(buff.get(i) + ": " + buffs[i]));
 		description.add(new StringTextComponent(this.getFullSetBonus()));
 		return description;
 	}

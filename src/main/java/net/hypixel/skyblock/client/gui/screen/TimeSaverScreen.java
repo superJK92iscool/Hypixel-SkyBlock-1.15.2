@@ -1,5 +1,6 @@
 package net.hypixel.skyblock.client.gui.screen;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
@@ -20,6 +21,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.play.client.CCloseWindowPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -55,6 +57,8 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 
 		/**
 		 * Binds and renders a texture over this button.
+		 *
+		 * @param matrixStack {@link MatrixStack} to use.
 		 */
 		protected abstract void bindTexture();
 
@@ -68,7 +72,8 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 		@Override
 		public void renderButton(int mouseX, int mouseY, float partialTicks) {
 			Minecraft.getInstance().getTextureManager().bindTexture(TimeSaverScreen.background_texture);
-			RenderSystem.color4f(1f, 1f, 1f, 1f);
+			// RenderSystem.color4f(1f, 1f, 1f, 1f);
+			RenderSystem.blendColor(1f, 1f, 1f, 1f);
 			final int i = 219;
 			int j = 0;
 			if (!this.active)
@@ -112,7 +117,8 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 
 		@Override
 		public void renderToolTip(int p_renderToolTip_1_, int p_renderToolTip_2_) {
-			TimeSaverScreen.this.renderTooltip(I18n.format("gui.cancel"), p_renderToolTip_1_, p_renderToolTip_2_);
+			TimeSaverScreen.this.renderTooltip(new StringTextComponent(I18n.format("gui.cancel")),
+					p_renderToolTip_1_, p_renderToolTip_2_);
 		}
 	}
 
@@ -140,7 +146,8 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 		 */
 		@Override
 		public void renderToolTip(int p_renderToolTip_1_, int p_renderToolTip_2_) {
-			TimeSaverScreen.this.renderTooltip(I18n.format("gui.done"), p_renderToolTip_1_, p_renderToolTip_2_);
+			TimeSaverScreen.this.renderTooltip(new StringTextComponent(I18n.format("gui.done")),
+					p_renderToolTip_1_, p_renderToolTip_2_);
 		}
 	}
 
@@ -187,8 +194,7 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 
 		@Override
 		public void renderToolTip(int width, int height) {
-			final String s = I18n.format(String.valueOf(this.time));
-			TimeSaverScreen.this.renderTooltip(s, width, height);
+			TimeSaverScreen.this.renderTooltip(new StringTextComponent(I18n.format(String.valueOf(this.time))), width, height);
 		}
 	}
 
@@ -232,11 +238,16 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 		this.ySize = 256;
 	}
 
+	public void renderTooltip(StringTextComponent stringTextComponent, int width, int height) {
+	}
+
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int x, int y) {
+		// RenderSystem.color4f(1f, 1f, 1f, 1f);
+		RenderSystem.blendColor(1f, 1f, 1f, 1f);
 		this.minecraft.getTextureManager().bindTexture(background_texture);
-		this.blit((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
+		this.blit((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize,
+				this.ySize);
 		this.itemRenderer.zLevel = 100f;
 		for (int t = 0; t < 9; t++)
 			this.itemRenderer.renderItemAndEffectIntoGUI(new ItemStack(Items.DAYLIGHT_DETECTOR), 48 + 18 * t, 51);

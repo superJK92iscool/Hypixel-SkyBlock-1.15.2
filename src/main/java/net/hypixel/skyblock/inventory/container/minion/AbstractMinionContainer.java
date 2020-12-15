@@ -27,6 +27,27 @@ import net.minecraft.util.IWorldPosCallable;
  */
 public abstract class AbstractMinionContainer extends Container {
 	/**
+	 * Retrieves a {@link AbstractMinionTileEntity} located at a position read from
+	 * {@link PacketBuffer}.
+	 *
+	 * @param <T>             a sub-class of {@link AbstractMinionTileEntity}
+	 * @param playerInventory {@link PlayerInventory} of player interacting with the
+	 *                        tile entity.
+	 * @param data            {@link PacketBuffer} to read from.
+	 * @return {@link AbstractMinionTileEntity} read from {@link PacketBuffer}.
+	 */
+	@SuppressWarnings("unchecked")
+	protected static <T extends AbstractMinionTileEntity> T getTileEntity(final PlayerInventory playerInventory,
+			final PacketBuffer data) {
+		Objects.requireNonNull(playerInventory, "playerInventory cannot be null");
+		Objects.requireNonNull(data, "data cannot be null");
+		final TileEntity tileAtPos = playerInventory.player.world.getTileEntity(data.readBlockPos());
+		if (tileAtPos instanceof AbstractMinionTileEntity)
+			return (T) tileAtPos;
+		throw new IllegalStateException("Tile entity is not correct! " + tileAtPos.toString());
+	}
+
+	/**
 	 * The {@link IWorldPosCallable} of this.
 	 */
 	@Nonnull
@@ -56,9 +77,10 @@ public abstract class AbstractMinionContainer extends Container {
 			PlayerInventory pInvIn, AbstractMinionTileEntity tileEntity) {
 		super(type, windowId);
 		this.minion = tileEntity;
-		this.inventory = new Inventory(this.minion.minionContents.toArray(new ItemStack[this.minion.getSizeInventory()]));
+		this.inventory = new Inventory(
+				this.minion.minionContents.toArray(new ItemStack[this.minion.getSizeInventory()]));
 		this.canInteractWithCallable = IWorldPosCallable.of(this.minion.getWorld(), this.minion.getPos());
-		
+
 		this.addSlot(new FuelSlot(this.minion));
 		this.addSlot(new SellerSlot(this.minion));
 		this.addSlot(new UpgradeSlot(this.minion, 2, 90));
@@ -84,27 +106,10 @@ public abstract class AbstractMinionContainer extends Container {
 		for (int column = 0; column < 9; ++column)
 			this.addSlot(new Slot(pInvIn, column, 48 + column * 18, 196));
 	}
-	
-	protected AbstractMinionContainer(ContainerType<? extends AbstractMinionContainer> type, int windowId, PlayerInventory pInvIn, PacketBuffer data) {
+
+	protected AbstractMinionContainer(ContainerType<? extends AbstractMinionContainer> type, int windowId,
+			PlayerInventory pInvIn, PacketBuffer data) {
 		this(type, windowId, pInvIn, getTileEntity(pInvIn, data));
-	}
-	
-	/**
-	 * Retrieves a {@link AbstractMinionTileEntity} located at a position read from {@link PacketBuffer}.
-	 * 
-	 * @param playerInventory {@link PlayerInventory} of player interacting with the tile entity.
-	 * @param data {@link PacketBuffer} to read from.
-	 * @return {@link AbstractMinionTileEntity} read.
-	 */
-	@SuppressWarnings("unchecked")
-	protected static <T extends AbstractMinionTileEntity> T getTileEntity(final PlayerInventory playerInventory,
-			final PacketBuffer data) {
-		Objects.requireNonNull(playerInventory, "playerInventory cannot be null");
-		Objects.requireNonNull(data, "data cannot be null");
-		final TileEntity tileAtPos = playerInventory.player.world.getTileEntity(data.readBlockPos());
-		if (tileAtPos instanceof AbstractMinionTileEntity)
-			return (T) tileAtPos;
-		throw new IllegalStateException("Tile entity is not correct! " + tileAtPos.toString());
 	}
 
 	@Override

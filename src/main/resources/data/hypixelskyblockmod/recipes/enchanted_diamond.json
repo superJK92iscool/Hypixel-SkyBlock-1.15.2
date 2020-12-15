@@ -6,7 +6,8 @@
     ],
     "key": {
         "#": {
-            "item": "hypixelskyblockmod:diamond_32"
+            "item": "minecraft:diamond",
+            "count": 32
         }
     },
     "result": {

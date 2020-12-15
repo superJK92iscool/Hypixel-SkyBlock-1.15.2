@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,7 +34,7 @@ public class ThickScorpionFoil extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Heartstopper\n" + ColorCodes.gray
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Heartstopper\n" + FormatingCodes.gray
 				+ "You have 4 tickers.\nBlocking clears 1 of them and heals 12 hp.\n"
 				+ "Once all tickers are cleared, your next attck is empowered for +250% damage.\nTickers refill after 5 seconds."));
 	}

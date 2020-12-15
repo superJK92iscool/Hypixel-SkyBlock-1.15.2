@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.spooky;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -33,7 +33,7 @@ public class SpookySet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Candy Man\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Candy Man\n" + FormatingCodes.gray
 				+ "Grants a +5% chance to find rare candy.";
 	}
 

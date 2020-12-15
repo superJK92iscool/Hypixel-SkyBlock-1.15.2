@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.accessories;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class DevourRing extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(
-				new StringTextComponent(ColorCodes.red + "Heals .1 " + ColorCodes.gray + "when killing a monster."));
+		tooltip.add(new StringTextComponent(
+				FormatingCodes.red + "Heals .1 " + FormatingCodes.gray + "when killing a monster."));
 	}
 }

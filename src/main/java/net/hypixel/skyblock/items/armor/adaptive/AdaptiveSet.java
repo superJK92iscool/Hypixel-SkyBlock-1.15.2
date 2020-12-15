@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.adaptive;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -33,7 +33,7 @@ public class AdaptiveSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Efficient Training\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Efficient Training\n" + FormatingCodes.gray
 				+ "Every 5 Catacombs levels, this armor piece gains +2% stats.";
 	}
 

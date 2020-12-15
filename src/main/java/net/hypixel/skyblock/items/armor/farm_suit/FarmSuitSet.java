@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.farm_suit;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,10 +38,10 @@ public class FarmSuitSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Bonus Speed\n" + ColorCodes.gray + "Increases" + ColorCodes.white
-				+ " Speed" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Bonus Speed\n" + FormatingCodes.gray + "Increases"
+				+ FormatingCodes.white + " Speed" + FormatingCodes.gray
 				+ " by 20% while worn near Farming Minions or in the Farm, Barn, and Mushroom Desert.\n"
-				+ ColorCodes.gold + "Full Set Bonus: Farmer Aura\n" + ColorCodes.gray
+				+ FormatingCodes.gold + "Full Set Bonus: Farmer Aura\n" + FormatingCodes.gray
 				+ "Increases te regrowth rate of nearby crops on public islands.";
 	}
 

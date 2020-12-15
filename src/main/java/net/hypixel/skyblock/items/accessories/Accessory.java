@@ -1,6 +1,5 @@
 package net.hypixel.skyblock.items.accessories;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +10,8 @@ import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.ReforgableItem;
 import net.hypixel.skyblock.items.Reforge;
-import net.hypixel.skyblock.items.ReforgeStone;
 import net.hypixel.skyblock.items.UpgradableItem;
+import net.hypixel.skyblock.items.reforge_stone.ReforgeStone;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -43,12 +42,14 @@ public abstract class Accessory extends Item implements ReforgableItem, Upgradab
 		Bizarre(new double[] { 1, 0, 0, .4, 0, -1, 6, 0 }, new double[] { 2, 0, 0, .4, 0, -2, 8, 0 },
 				new double[] { 2, 0, 0, .4, 0, -2, 10, 0 }, new double[] { 3, 0, 0, .4, 0, -3, 14, 0 },
 				new double[] { 5, 0, 0, .4, 0, -5, 20, 0 }),
+		Blessed(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		/**
 		 * Unique
 		 */
 		Bloody(new double[] { 1, 0, 1, 0, 0, 3, 0, 1 }, new double[] { 1, 0, 1, 0, 0, 4, 0, 1 },
 				new double[] { 1, 0, 1, 0, 0, 5, 0, 1 }, new double[] { 2, 0, 1, 0, 0, 6, 0, 2 },
 				new double[] { 3, 0, 1, 0, 0, 9, 0, 2 }),
+		Candied(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		Demonic(new double[] { 1, 0, 0, 0, 0, 0, 5, 0 }, new double[] { 2, 0, 0, 0, 0, 0, 7, 0 },
 				new double[] { 2, 0, 0, 0, 0, 0, 9, 0 }, new double[] { 3, 0, 0, 0, 0, 0, 12, 0 },
 				new double[] { 5, 0, 0, 0, 0, 0, 15, 0 }),
@@ -103,6 +104,7 @@ public abstract class Accessory extends Item implements ReforgableItem, Upgradab
 		Superior(new double[] { 2, 0, 0, 0, 0, 2, 0, 0 }, new double[] { 3, 0, 0, 0, 0, 2, 0, 0 },
 				new double[] { 4, 0, 0, 0, 0, 2, 0, 0 }, new double[] { 5, 0, 0, 0, 0, 3, 0, 0 },
 				new double[] { 7, 0, 0, 0, 0, 3, 0, 0 }),
+		Sweet(new double[0], new double[0], new double[0], new double[0], new double[0]),
 
 		Unpleasant(new double[] { 0, 0, 0, 0, 1, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 1, 0, 0, 0 },
 				new double[] { 0, 0, 0, 0, 1, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 2, 0, 0, 0 },
@@ -133,13 +135,19 @@ public abstract class Accessory extends Item implements ReforgableItem, Upgradab
 		@Nonnull
 		private static final AccessoryReforge[] unique;
 
+		static {
+			nonunique = new AccessoryReforge[] { Bizarre, Demonic, Forceful, Godly, Hurtful, Itchy, Keen, Ominous,
+					Pleasant, Pretty, Shiny, Simple, Strange, Strong, Superior, Unpleasant, Vivid };
+			unique = new AccessoryReforge[] { Bloody, Shaded, Silky };
+		}
+
 		/**
-		 * A primative type array of {@link AccessoryReforge} that holds all the values
-		 * of {@link AccessoryReforge}.<br>
-		 * This should be the same as calling the values() method.
+		 * @return a random {@link AccessoryReforge}
 		 */
 		@Nonnull
-		private static final AccessoryReforge[] values;
+		public static AccessoryReforge getRandomReforge() {
+			return nonunique[rand.nextInt(nonunique.length)];
+		}
 
 		/**
 		 * The array for {@link ModItemRarity#Common}
@@ -187,29 +195,6 @@ public abstract class Accessory extends Item implements ReforgableItem, Upgradab
 			this.epic = Objects.requireNonNull(epic, "Epic array must be non-null.");
 			this.legendary = Objects.requireNonNull(legendary, "Legendary array must be non-null.");
 			this.log();
-		}
-
-		static {
-			values = AccessoryReforge.values();
-			nonunique = new AccessoryReforge[] { Bizarre, Demonic, Forceful, Godly, Hurtful, Itchy, Keen, Ominous,
-					Pleasant, Pretty, Shiny, Simple, Strange, Strong, Superior, Unpleasant, Vivid };
-			unique = new AccessoryReforge[] { Bloody, Shaded, Silky };
-			HypixelSkyBlockMod.LOGGER.info("All values:\t" + Arrays.deepToString(values));
-			HypixelSkyBlockMod.LOGGER.info("Nonunique:\t" + Arrays.deepToString(nonunique));
-			HypixelSkyBlockMod.LOGGER.info("Unique:\t\t" + Arrays.deepToString(unique));
-		}
-
-		/**
-		 * @return a random {@link AccessoryReforge}
-		 */
-		@Nonnull
-		public static AccessoryReforge getRandomReforge() {
-			return nonunique[rand.nextInt(nonunique.length)];
-		}
-
-		@Override
-		public Reforge[] all() {
-			return values;
 		}
 
 		@Override

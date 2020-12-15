@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.ember;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -33,7 +33,7 @@ public class EmberSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Nether Lord\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Nether Lord\n" + FormatingCodes.gray
 				+ "Obsidian will be created below you when walking on Lava.\nIt also increases the chance of Nether monsters dropping an item by 20%.\nWearing this full set will also prevent you from taking Lava and Fire Damage.";
 	}
 

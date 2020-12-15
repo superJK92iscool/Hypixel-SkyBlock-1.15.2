@@ -100,8 +100,10 @@ public abstract class AbstractBackpackScreen extends ContainerScreen<AbstractBac
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1, 1, 1, 1);
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
+			int mouseY) {
+		// RenderSystem.color4f(1, 1, 1, 1);
+		RenderSystem.blendColor(1f, 1f, 1f, 1f);
 		ResourceLocation rl;
 		switch (this.type) {
 		case Small:
@@ -127,8 +129,9 @@ public abstract class AbstractBackpackScreen extends ContainerScreen<AbstractBac
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.font.drawString(this.title.getFormattedText(), 8f, 6f, 0x404040);
-		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8f, this.ySize - 94, 0x404040);
+		this.font.drawString(this.title.getString(), 8f, 6f, 0x404040);
+		this.font.drawString(this.playerInventory.getDisplayName().getString(), 8f, this.ySize - 94,
+				0x404040);
 	}
 
 	@Override

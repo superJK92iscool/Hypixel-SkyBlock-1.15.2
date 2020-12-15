@@ -54,8 +54,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @version 5 June 2020
  */
 public class ModContainerTypes {
-	public static final DeferredRegister<ContainerType<?>> container_types = new DeferredRegister<>(
-			ForgeRegistries.CONTAINERS, HypixelSkyBlockMod.MOD_ID);
+	public static final DeferredRegister<ContainerType<?>> container_types = new DeferredRegister<>(ForgeRegistries.CONTAINERS, HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<ContainerType<CoalMC1>> coal_minion_1 = container_types.register("coal_minion_1",
 			() -> IForgeContainerType.create(CoalMC1::new));

@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +13,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * The <a href="https://hypixel-skyblock.fandom.com/wiki/Ember_Rod">Ember
@@ -31,14 +29,15 @@ public class EmberRod extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Fire Blast\n"));
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Shoot 3 fireballs forwards in rapid succession."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Fire Blast"));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Shoot 3 fireballs forwards in rapid succession."));
 	}
-
-	@OnlyIn(Dist.DEDICATED_SERVER)
+	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack held = playerIn.getHeldItem(handIn);
+		if (!worldIn.isRemote) return ActionResult.resultPass(held);
 		playerIn.getCooldownTracker().setCooldown(this, 600);
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+		return ActionResult.resultSuccess(held);
 	}
 }

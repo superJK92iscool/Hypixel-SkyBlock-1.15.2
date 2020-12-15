@@ -52,10 +52,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  * @author MrPineapple070
  * @version 5 June 2020
+ * @since 11 June 2019
  */
 public class ModTileEntityTypes {
-	public static final DeferredRegister<TileEntityType<?>> tile_entity_types = new DeferredRegister<>(
-			ForgeRegistries.TILE_ENTITIES, HypixelSkyBlockMod.MOD_ID);
+	public static final DeferredRegister<TileEntityType<?>> tile_entity_types = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<TileEntityType<CoalMTE1>> coal_minion_1 = tile_entity_types.register(
 			"coal_minion_1", () -> Builder.create(CoalMTE1::new, MinionBlockInit.coal_minion_1.get()).build(null));
@@ -113,7 +113,7 @@ public class ModTileEntityTypes {
 	public static final RegistryObject<TileEntityType<CobbleMTEb>> cobblestone_minion_b = tile_entity_types.register(
 			"cobblestone_minion_b",
 			() -> Builder.create(CobbleMTEb::new, MinionBlockInit.cobblestone_minion_b.get()).build(null));
-	
+
 	public static final RegistryObject<TileEntityType<WheatMTE1>> wheat_minion_1 = tile_entity_types.register(
 			"wheat_minion_1", () -> Builder.create(WheatMTE1::new, MinionBlockInit.wheat_minion_1.get()).build(null));
 	public static final RegistryObject<TileEntityType<WheatMTE2>> wheat_minion_2 = tile_entity_types.register(
@@ -136,12 +136,12 @@ public class ModTileEntityTypes {
 			"wheat_minion_a", () -> Builder.create(WheatMTEa::new, MinionBlockInit.wheat_minion_a.get()).build(null));
 	public static final RegistryObject<TileEntityType<WheatMTEb>> wheat_minion_b = tile_entity_types.register(
 			"wheat_minion_b", () -> Builder.create(WheatMTEb::new, MinionBlockInit.wheat_minion_b.get()).build(null));
-	
+
 	public static final RegistryObject<TileEntityType<DaySaverTileEntity>> day_saver = tile_entity_types.register(
 			"day_saver", () -> Builder.create(DaySaverTileEntity::new, BlockInit.day_saver.get()).build(null));
 	public static final RegistryObject<TileEntityType<NightSaverTileEntity>> night_saver = tile_entity_types.register(
 			"night_saver", () -> Builder.create(NightSaverTileEntity::new, BlockInit.night_saver.get()).build(null));
-	
+
 	public static final RegistryObject<TileEntityType<SmallMCTE>> small_mcte = tile_entity_types.register("small_mcte",
 			() -> Builder.create(SmallMCTE::new, BlockInit.small_mcb.get()).build(null));
 	public static final RegistryObject<TileEntityType<MediumMCTE>> medium_mcte = tile_entity_types

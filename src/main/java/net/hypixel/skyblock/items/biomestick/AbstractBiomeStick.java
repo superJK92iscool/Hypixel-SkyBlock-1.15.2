@@ -6,13 +6,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -26,15 +24,15 @@ import net.minecraft.world.World;
  * @version 24 June 2020
  */
 public abstract class AbstractBiomeStick extends Item {
+	protected static void sendMessage(PlayerEntity player, ITextComponent text) {
+		player.sendMessage(text);
+	}
+
 	protected int range;
 
 	protected AbstractBiomeStick(Properties properties) {
 		super(properties);
 		this.range = 0;
-	}
-
-	protected static void sendMessage(PlayerEntity player, ITextComponent text) {
-		((ServerPlayerEntity) player).sendMessage(text, ChatType.GAME_INFO);
 	}
 
 	@Override

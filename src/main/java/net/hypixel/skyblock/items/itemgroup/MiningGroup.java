@@ -7,10 +7,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class MiningGroup extends ItemGroup {
-	public static final MiningGroup instance = new MiningGroup(ItemGroup.GROUPS.length, "Mining");
+	public static final MiningGroup instance = new MiningGroup(ItemGroup.GROUPS.length);
 
-	private MiningGroup(int index, String label) {
-		super(index, label);
+	private MiningGroup(int index) {
+		super(index, "Mining");
 	}
 
 	@OnlyIn(Dist.CLIENT)

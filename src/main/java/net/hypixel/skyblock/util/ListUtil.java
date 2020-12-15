@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 
@@ -27,6 +28,7 @@ public class ListUtil {
 	 * @return {@link NonNullList} of {@link Ingredient} read.
 	 */
 	public static NonNullList<Ingredient> readIngredients(JsonArray json_array) {
+		HypixelSkyBlockMod.LOGGER.info("JsonArray:\t" + json_array.toString());
 		final NonNullList<Ingredient> ingredients = NonNullList.create();
 		for (final JsonElement json : json_array) {
 			final Ingredient ingredient = Ingredient.deserialize(json);
@@ -46,6 +48,8 @@ public class ListUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E extends Object> E[] removeAll(E[] list, E... elements) {
+		HypixelSkyBlockMod.LOGGER.info("Removing " + Arrays.deepToString(elements));
+		HypixelSkyBlockMod.LOGGER.info("from " + Arrays.deepToString(list));
 		final List<E> temp = Arrays.asList(list);
 		temp.removeAll(Arrays.asList(elements));
 		return (E[]) temp.toArray();
@@ -60,6 +64,7 @@ public class ListUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E extends Object> E[] removeNull(E[] list) {
+		HypixelSkyBlockMod.LOGGER.info("Removing null from" + Arrays.deepToString(list));
 		return (E[]) Arrays.stream(list).filter(x -> x != null).toArray();
 	}
 
@@ -72,6 +77,7 @@ public class ListUtil {
 	 * @return converted {@link List}
 	 */
 	public static <E extends Object> List<E> setAll(@Nullable E element, @Nonnull List<E> list) {
+		HypixelSkyBlockMod.LOGGER.info("Setting all elements to " + element.toString());
 		for (int i = 0; i < list.size(); i++)
 			list.set(i, element);
 		return list;

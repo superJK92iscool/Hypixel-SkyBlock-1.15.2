@@ -3,12 +3,12 @@ package net.hypixel.skyblock.items.armor.wise_dragon;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 
 /**
  * <a href="https://hypixel-skyblock.fandom.com/wiki/Wise_Dragon_Armor">Wise
  * Dragon Set</a>
- * 
+ *
  * @author MrPineapple070
  * @version 01 July 2020
  * @since 02 August 2019
@@ -36,8 +36,8 @@ public class WiseDragonSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Wise Blood\n" + ColorCodes.gray + "All abilities cost 33% less "
-				+ ColorCodes.aqua + "Mana" + ColorCodes.gray + ".";
+		return FormatingCodes.gold + "Full Set Bonus: Wise Blood\n" + FormatingCodes.gray
+				+ "All abilities cost 33% less " + FormatingCodes.aqua + "Mana" + FormatingCodes.gray + ".";
 	}
 
 	@Override

@@ -37,6 +37,6 @@ public interface IMinionRecipe extends ICraftingRecipe {
 	@Nonnull
 	@Override
 	default IRecipeType<?> getType() {
-		return Registry.RECIPE_TYPE.getValue(recipe_type_id).get();
+		return Registry.RECIPE_TYPE.getOrDefault(recipe_type_id);
 	}
 }

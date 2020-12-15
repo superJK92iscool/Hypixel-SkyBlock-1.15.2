@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +29,7 @@ public class RogueSword extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Speed Boost\n" + ColorCodes.gray
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Speed Boost\n" + FormatingCodes.gray
 				+ "Increases your movement Speed by +20% for 30 seconds.\n" + "Only gives +10 if already active."));
 	}
 

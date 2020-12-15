@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.cactus;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -33,7 +33,7 @@ public class CactusSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Deflect\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Deflect\n" + FormatingCodes.gray
 				+ "Rebound 33% of the damage you take back at your enemy.";
 	}
 

@@ -41,6 +41,7 @@ public class TimeSaverTileEntity extends TileEntity implements IInventory {
 
 	@Override
 	public void clear() {
+		return;
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class TimeSaverTileEntity extends TileEntity implements IInventory {
 
 	@Override
 	public int getSizeInventory() {
-		return 0;
+		return 12;
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class TimeSaverTileEntity extends TileEntity implements IInventory {
 
 	@Override
 	public boolean isEmpty() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class TimeSaverTileEntity extends TileEntity implements IInventory {
 
 	@Override
 	public void markDirty() {
+		return;
 	}
 
 	@Override
@@ -79,5 +81,6 @@ public class TimeSaverTileEntity extends TileEntity implements IInventory {
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
+		return;
 	}
 }

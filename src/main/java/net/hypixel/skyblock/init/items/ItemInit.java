@@ -3,8 +3,8 @@ package net.hypixel.skyblock.init.items;
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.items.ModExperienceBottleItem;
 import net.hypixel.skyblock.items.ModExperienceBottleItem.Type;
-import net.hypixel.skyblock.items.enchanteditems.EnchantedFuelItem;
-import net.hypixel.skyblock.items.enchanteditems.EnchantedItem;
+import net.hypixel.skyblock.items.enchanted_items.EnchantedFuelItem;
+import net.hypixel.skyblock.items.enchanted_items.EnchantedItem;
 import net.hypixel.skyblock.items.minion.UpgradeItem;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.item.Item;
@@ -22,7 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @version 22 June 2020
  */
 public class ItemInit {
-	public static final DeferredRegister<Item> items = new DeferredRegister<>(ForgeRegistries.ITEMS,
+	public static final DeferredRegister<Item> items = new DeferredRegister<Item>(ForgeRegistries.ITEMS,
 			HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<Item> auto_smelter = items.register("auto_smelter",

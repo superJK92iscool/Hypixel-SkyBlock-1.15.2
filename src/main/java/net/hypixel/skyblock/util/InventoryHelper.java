@@ -2,6 +2,7 @@ package net.hypixel.skyblock.util;
 
 import javax.annotation.Nonnull;
 
+import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,6 +23,9 @@ public class InventoryHelper {
 	 * @param inventory {@link Inventory} to load.
 	 */
 	public static void loadAllItems(@Nonnull ListNBT list, @Nonnull Inventory inventory) {
+		HypixelSkyBlockMod.LOGGER.info("Loading all Items");
+		HypixelSkyBlockMod.LOGGER.info("ListNBT:\t" + list.toString());
+		HypixelSkyBlockMod.LOGGER.info("Inventory:\t" + inventory.toString());
 		for (int i = 0; i < list.size(); i++) {
 			final CompoundNBT compound = list.getCompound(i);
 			final int slot = compound.getByte("Slot") & 0xFF;
@@ -38,6 +42,9 @@ public class InventoryHelper {
 	 * @return a {@code ListNBT} with everything in {@code inventory}
 	 */
 	public static ListNBT saveAllItems(@Nonnull ListNBT list, @Nonnull Inventory inventory) {
+		HypixelSkyBlockMod.LOGGER.info("Saving all Items");
+		HypixelSkyBlockMod.LOGGER.info("ListNBT:\t" + list.toString());
+		HypixelSkyBlockMod.LOGGER.info("Inventory:\t" + inventory.toString());
 		for (int i = 0; i < inventory.getSizeInventory(); ++i) {
 			final ItemStack itemstack = inventory.getStackInSlot(i);
 			if (!itemstack.isEmpty()) {

@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.zombie;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -34,7 +34,7 @@ public class ZombieSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Projectile Absorption\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Projectile Absorption\n" + FormatingCodes.gray
 				+ "Heals the wearer for 2 health per second for 5 seconds when hit by a projectile.";
 	}
 

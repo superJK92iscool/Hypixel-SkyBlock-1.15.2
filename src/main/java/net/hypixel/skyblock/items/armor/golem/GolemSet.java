@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.golem;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,8 +38,8 @@ public class GolemSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Absorption\n" + ColorCodes.gray + "Grants the wearer "
-				+ ColorCodes.dark_green + "Absorption III " + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Absorption\n" + FormatingCodes.gray + "Grants the wearer "
+				+ FormatingCodes.dark_green + "Absorption III " + FormatingCodes.gray
 				+ "for 20 seconds when they kill an entity.";
 	}
 

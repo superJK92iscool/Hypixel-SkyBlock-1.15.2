@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.hypixel.skyblock.init.EnchantmentInit;
 import net.hypixel.skyblock.init.PotionInit;
+import net.hypixel.skyblock.init.RecipeSerializerInit;
 import net.hypixel.skyblock.init.blocks.MasterBlockInit;
 import net.hypixel.skyblock.init.items.MasterItemInit;
 import net.hypixel.skyblock.inventory.container.ModContainerTypes;
@@ -31,10 +32,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
  * @version 31 May 2020
  * @since 31 May 2020
  */
-@Mod("hypixelskyblockmod")
+@Mod(HypixelSkyBlockMod.MOD_ID)
 public class HypixelSkyBlockMod {
 	/**
-	 * An instance of this.
+	 * An instance of {@link HypixelSkyBlockMod}.
 	 */
 	@Nonnull
 	public static HypixelSkyBlockMod instance;
@@ -69,6 +70,8 @@ public class HypixelSkyBlockMod {
 		EnchantmentInit.enchantments.register(bus);
 
 		MasterItemInit.register(bus);
+		RecipeSerializerInit.recipe_serializer.register(bus);
+		// FluidInit.fluids.register(bus);
 		MasterBlockInit.register(bus);
 
 		ModTileEntityTypes.tile_entity_types.register(bus);
@@ -76,6 +79,10 @@ public class HypixelSkyBlockMod {
 
 		// BiomeInit.biomes.register(bus);
 		// DimensionInit.dimensions.register(bus);
+		// FeatureInit.features.register(bus);
+		// FeatureInit.strucutres.register(bus);
+		
+		// PortalBlockInit.portal_blocks.register(bus);
 
 		instance = this;
 		MinecraftForge.EVENT_BUS.register(this);

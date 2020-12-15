@@ -6,7 +6,8 @@
     ],
     "key": {
         "#": {
-            "item": "hypixelskyblockmod:cobblestone_32"
+            "item": "minecraft:cobblestone",
+            "count": 32
         }
     },
     "result": {

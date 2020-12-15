@@ -21,34 +21,35 @@ import net.minecraft.network.PacketBuffer;
  *
  * @author MrPineapple070
  * @version 12 June 2020
+ * @since 11 June 2019
  */
 public abstract class MinionChestContainer extends Container {
-	public static class LargeMCC extends MinionChestContainer {
-		public LargeMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.large_mcc.get(), windowId, pInvIn, ChestType.LARGE);
+	public static class SmallMCC extends MinionChestContainer {
+		public SmallMCC(int windowId, PlayerInventory pInvIn) {
+			super(ModContainerTypes.small_mcc.get(), windowId, pInvIn, ChestType.Small);
 		}
 
-		public LargeMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
+		public SmallMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
 			this(windowId, pInvIn);
 		}
 	}
-
+	
 	public static class MediumMCC extends MinionChestContainer {
 		public MediumMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.medium_mcc.get(), windowId, pInvIn, ChestType.MEDIUM);
+			super(ModContainerTypes.medium_mcc.get(), windowId, pInvIn, ChestType.Medium);
 		}
 
 		public MediumMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
 			this(windowId, pInvIn);
 		}
 	}
-
-	public static class SmallMCC extends MinionChestContainer {
-		public SmallMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.small_mcc.get(), windowId, pInvIn, ChestType.SMALL);
+	
+	public static class LargeMCC extends MinionChestContainer {
+		public LargeMCC(int windowId, PlayerInventory pInvIn) {
+			super(ModContainerTypes.large_mcc.get(), windowId, pInvIn, ChestType.Large);
 		}
 
-		public SmallMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
+		public LargeMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
 			this(windowId, pInvIn);
 		}
 	}
@@ -75,19 +76,19 @@ public abstract class MinionChestContainer extends Container {
 		// Main Inventory
 		int rowMin, rowMax, colMin, colMax;
 		switch (type) {
-		case SMALL:
+		case Small:
 			rowMin = 1;
 			rowMax = 2;
 			colMin = 1;
 			colMax = 4;
 			break;
-		case MEDIUM:
+		case Medium:
 			rowMin = 0;
 			rowMax = 3;
 			colMin = 1;
 			colMax = 4;
 			break;
-		case LARGE:
+		case Large:
 			rowMin = 0;
 			rowMax = 3;
 			colMin = 0;
@@ -96,8 +97,8 @@ public abstract class MinionChestContainer extends Container {
 		default:
 			throw new IllegalStateException("Illegal ChestType " + this.type.name());
 		}
-		
-		//Main Inventory
+
+		// Main Inventory
 		for (int row = rowMin; row < rowMax; ++row)
 			for (int col = colMin; col < colMax; ++col)
 				this.addSlot(new MinionChestSlot(this.chestInventory, row, col, rowMax));

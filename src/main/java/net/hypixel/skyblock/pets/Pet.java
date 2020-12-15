@@ -6,16 +6,19 @@ import java.util.Random;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.google.common.collect.ImmutableList;
+
 import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
+import net.hypixel.skyblock.util.PetLevelRequirement;
 
 /**
  * Basis for all
  * <a href="https://hypixel-skyblock.fandom.com/wiki/Pets">Pets</a>.
  *
  * @author MrPineapple070
- * @version 05 May 2020
+ * @version 08 September 2020
  * @since 11 October 2019
  */
 public abstract class Pet {
@@ -23,7 +26,7 @@ public abstract class Pet {
 	 * An enumerated type that holds all pets.<br>
 	 * Used to determine if two pets are identical.<br>
 	 *
-	 * @version 05 May 2020
+	 * @version 08 September 2020
 	 * @since 11 October 2019
 	 */
 	public enum PetType {
@@ -42,6 +45,22 @@ public abstract class Pet {
 	protected static final Random rand = new Random();
 
 	/**
+	 * @return {@link ModItemRarity#Epic} or {@link ModItemRarity#Legendary}
+	 *         randomly.
+	 */
+	protected static ModItemRarity getRandomRarityHigh() {
+		return ModItemRarity.high.get(rand.nextInt(ModItemRarity.high.size()));
+	}
+
+	/**
+	 * @return {@link ModItemRarity#Common}, {@link ModItemRarity#Uncommon}, or
+	 *         {@link ModItemRarity#Rare} randomly.
+	 */
+	protected static ModItemRarity getRandomRarityLow() {
+		return ModItemRarity.low.get(rand.nextInt(ModItemRarity.low.size()));
+	}
+
+	/**
 	 * {@link Collection}
 	 */
 	@Nonnull
@@ -51,7 +70,7 @@ public abstract class Pet {
 	 * Current amount of experience held.
 	 */
 	@Nonnegative
-	protected int current_xp;
+	protected float current_xp;
 
 	/**
 	 * Level of this.
@@ -76,22 +95,7 @@ public abstract class Pet {
 		this.petType = Objects.requireNonNull(petType, "Pet must have a PetType");
 		this.collection = Objects.requireNonNull(collection, "Pet must have a Collection");
 		this.level = 0;
-	}
-
-	/**
-	 * @return {@link ModItemRarity#Epic} or {@link ModItemRarity#Legendary}
-	 *         randomly.
-	 */
-	protected static ModItemRarity getRandomRarityHigh() {
-		return ModItemRarity.high.get(rand.nextInt(ModItemRarity.high.size()));
-	}
-
-	/**
-	 * @return {@link ModItemRarity#Common}, {@link ModItemRarity#Uncommon}, or
-	 *         {@link ModItemRarity#Rare} randomly.
-	 */
-	protected static ModItemRarity getRandomRarityLow() {
-		return ModItemRarity.low.get(rand.nextInt(ModItemRarity.low.size()));
+		this.current_xp = 0;
 	}
 
 	/**
@@ -107,7 +111,7 @@ public abstract class Pet {
 			return true;
 		if (obj == null)
 			return false;
-		if (this.getClass() != obj.getClass())
+		if (!(obj instanceof Pet))
 			return false;
 		final Pet other = (Pet) obj;
 		if (this.collection != other.collection)
@@ -156,19 +160,15 @@ public abstract class Pet {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (this.collection == null ? 0 : this.collection.hashCode());
-		result = prime * result + this.current_xp;
+		result = prime * result + (int)this.current_xp;
 		result = prime * result + this.level;
 		result = prime * result + (this.petType == null ? 0 : this.petType.hashCode());
 		result = prime * result + (this.rarity == null ? 0 : this.rarity.hashCode());
 		return result;
 	}
 
-	public void increaseXP(int increment) {
-		this.current_xp += increment;
-	}
-
 	public boolean isIdentical(Pet other) {
-		return this.petType == other.getPetType();
+		return this.petType == other.petType;
 	}
 
 	@Override
@@ -181,7 +181,16 @@ public abstract class Pet {
 	 * Sets {@link #level} to the next level.
 	 */
 	public void upgradeLevel() {
-		this.level++;
+		++this.level;
+	}
+	
+	public void addExperience(float xp) {
+		ImmutableList<Integer> lvl = PetLevelRequirement.getRequirement(this.rarity);
+		int amount = lvl.get(this.level + 1);
+		int inc = this.level + 1;
+		while (amount < xp)
+			amount += lvl.get(++inc);
+		this.level += inc;
 	}
 
 	/**

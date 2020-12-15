@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.emerald;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 
 public class EmeraldSet implements FullSetInformation {
 	private static int boots = 0;
@@ -28,9 +28,9 @@ public class EmeraldSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Tank\n" + ColorCodes.gray + "Increases the wearer's max "
-				+ ColorCodes.red + "Health" + ColorCodes.gray + " and " + ColorCodes.green + "Defense" + ColorCodes.gray
-				+ " by 1 for every 3000 Emeralds in your collection. Max 350 each.";
+		return FormatingCodes.gold + "Full Set Bonus: Tank\n" + FormatingCodes.gray + "Increases the wearer's max "
+				+ FormatingCodes.red + "Health" + FormatingCodes.gray + " and " + FormatingCodes.green + "Defense"
+				+ FormatingCodes.gray + " by 1 for every 3000 Emeralds in your collection. Max 350 each.";
 	}
 
 	@Override

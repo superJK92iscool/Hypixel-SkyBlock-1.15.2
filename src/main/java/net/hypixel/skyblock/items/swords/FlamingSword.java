@@ -13,8 +13,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 /**
- * <a href="https://hypixel-skyblock.fandom.com/wiki/Flaming_Sword">Flaming Sword</a>.
- * 
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/Flaming_Sword">Flaming
+ * Sword</a>.
+ *
  * @author MrPineapple070
  * @version 14 August 2020
  * @since 14 August 2020

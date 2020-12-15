@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.accessories;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -27,8 +27,8 @@ public class MineAffinityTalisman extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Increases your " + ColorCodes.white + "speed "
-				+ ColorCodes.gray
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Increases your " + FormatingCodes.white + "speed "
+				+ FormatingCodes.gray
 				+ "while in the Coal Mine, Gold Mine, Deep Caverns, Gunpowder Mines, Lapis Quarry, Pigmen's Den, Slimehill, Diamond Reserve, Obsidian Sanctuary."));
 	}
 }

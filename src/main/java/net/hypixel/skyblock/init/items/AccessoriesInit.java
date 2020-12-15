@@ -43,6 +43,9 @@ import net.hypixel.skyblock.items.accessories.NewYearCakeBag;
 import net.hypixel.skyblock.items.accessories.NightCrystal;
 import net.hypixel.skyblock.items.accessories.NightVisionCharm;
 import net.hypixel.skyblock.items.accessories.PartyHatCrab;
+import net.hypixel.skyblock.items.accessories.PersonalCompactor.PersonalComp4000;
+import net.hypixel.skyblock.items.accessories.PersonalCompactor.PersonalComp5000;
+import net.hypixel.skyblock.items.accessories.PersonalCompactor.PersonalComp6000;
 import net.hypixel.skyblock.items.accessories.PigFoot;
 import net.hypixel.skyblock.items.accessories.PiggyBank;
 import net.hypixel.skyblock.items.accessories.PotatoTalisman;
@@ -75,17 +78,6 @@ import net.hypixel.skyblock.items.accessories.TreasureRing;
 import net.hypixel.skyblock.items.accessories.TreasureTalisman;
 import net.hypixel.skyblock.items.accessories.VaccineTalisman;
 import net.hypixel.skyblock.items.accessories.VillageAffinityTalisman;
-import net.hypixel.skyblock.items.accessories.WitherArtifact;
-import net.hypixel.skyblock.items.accessories.WolfPaw;
-import net.hypixel.skyblock.items.accessories.WolfRing;
-import net.hypixel.skyblock.items.accessories.WolfTalisman;
-import net.hypixel.skyblock.items.accessories.WoodAffinityTalisman;
-import net.hypixel.skyblock.items.accessories.ZombieArtifact;
-import net.hypixel.skyblock.items.accessories.ZombieRing;
-import net.hypixel.skyblock.items.accessories.ZombieTalisman;
-import net.hypixel.skyblock.items.accessories.PersonalCompactor.PersonalComp4000;
-import net.hypixel.skyblock.items.accessories.PersonalCompactor.PersonalComp5000;
-import net.hypixel.skyblock.items.accessories.PersonalCompactor.PersonalComp6000;
 import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing0;
 import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing1;
 import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing2;
@@ -96,6 +88,14 @@ import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing6;
 import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing7;
 import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing8;
 import net.hypixel.skyblock.items.accessories.WeddingRing.WeddingRing9;
+import net.hypixel.skyblock.items.accessories.WitherArtifact;
+import net.hypixel.skyblock.items.accessories.WolfPaw;
+import net.hypixel.skyblock.items.accessories.WolfRing;
+import net.hypixel.skyblock.items.accessories.WolfTalisman;
+import net.hypixel.skyblock.items.accessories.WoodAffinityTalisman;
+import net.hypixel.skyblock.items.accessories.ZombieArtifact;
+import net.hypixel.skyblock.items.accessories.ZombieRing;
+import net.hypixel.skyblock.items.accessories.ZombieTalisman;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -110,7 +110,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @since 11 June 2019
  */
 public class AccessoriesInit {
-	public static final DeferredRegister<Item> accessories = new DeferredRegister<>(ForgeRegistries.ITEMS,
+	public static final DeferredRegister<Item> accessories = new DeferredRegister<Item>(ForgeRegistries.ITEMS,
 			HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<Item> bait_ring = accessories.register("bait_ring", BaitRing::new);

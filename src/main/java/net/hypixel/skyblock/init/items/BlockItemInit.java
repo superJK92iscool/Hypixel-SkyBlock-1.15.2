@@ -33,7 +33,7 @@ public class BlockItemInit {
 			() -> new BlockItem(BlockInit.night_saver.get(), ItemProperties.m64));
 	public static final RegistryObject<BlockItem> silence_block = blockItems.register("silence_block",
 			() -> new BlockItem(BlockInit.silence_block.get(), ItemProperties.m64));
-	
+
 	public static final RegistryObject<BlockItem> large_mcb = blockItems.register("large_mcb",
 			() -> new BlockItem(BlockInit.large_mcb.get(), ItemProperties.mn64));
 	public static final RegistryObject<BlockItem> medium_mcb = blockItems.register("medium_mcb",

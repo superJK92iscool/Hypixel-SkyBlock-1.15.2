@@ -13,7 +13,7 @@ public class MinionChestSlot extends Slot {
 	public MinionChestSlot(IInventory inventoryIn, int row, int col, int rowMax) {
 		super(inventoryIn, row * rowMax + col, 84 + 18 * col, 63 + 18 * row);
 	}
-	
+
 	@Override
 	public boolean isItemValid(ItemStack stack) {
 		return false;

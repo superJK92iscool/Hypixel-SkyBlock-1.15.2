@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.snow;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -37,7 +37,7 @@ public class SnowSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Cold Thumb\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Cold Thumb\n" + FormatingCodes.gray
 				+ "Allows the wearer to shoot unlimited snowballs from Frosty the Snow Cannon/Frosty the Snow Blaster.";
 	}
 

@@ -61,7 +61,6 @@ public class WeaponInit {
 	public static final DeferredRegister<Item> weapon = new DeferredRegister<>(ForgeRegistries.ITEMS,
 			HypixelSkyBlockMod.MOD_ID);
 
-	// Swords
 	public static final RegistryObject<SwordItem> aotd = weapon.register("aspect_of_the_dragons",
 			AspectOfTheDragon::new);
 	public static final RegistryObject<SwordItem> aote = weapon.register("aspect_of_the_end", AspectOfTheEnd::new);
@@ -73,9 +72,6 @@ public class WeaponInit {
 	public static final RegistryObject<SwordItem> end_stone_sword = weapon.register("end_stone_sword",
 			EndStoneSword::new);
 	public static final RegistryObject<SwordItem> end_sword = weapon.register("end_sword", EndSword::new);
-
-	// Bows
-	public static final RegistryObject<BowItem> ender_bow = weapon.register("ender_bow", EnderBow::new);
 	public static final RegistryObject<SwordItem> fancy_sword = weapon.register("fancy_sword", FancySword::new);
 	public static final RegistryObject<SwordItem> flaming_sword = weapon.register("flaming_sword", FlamingSword::new);
 	public static final RegistryObject<SwordItem> frozen_scythe = weapon.register("frozen_scythe", FrozenScythe::new);
@@ -114,6 +110,8 @@ public class WeaponInit {
 			ThickTacticianSword::new);
 	public static final RegistryObject<SwordItem> undead_sword = weapon.register("undead_sword", UndeadSword::new);
 	public static final RegistryObject<SwordItem> yeti_sword = weapon.register("yeti_sword", YetiSword::new);
-
 	public static final RegistryObject<SwordItem> zombie_sword = weapon.register("zombie_sword", ZombieSword::new);
+
+	// Bows
+	public static final RegistryObject<BowItem> ender_bow = weapon.register("ender_bow", EnderBow::new);
 }

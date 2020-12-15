@@ -1,6 +1,0 @@
-{
-	"parent": "item/generated",
-	"textures": {
-		"layer0": "hypixelskyblockmod:items/campfire_god_badge"
-	}
-}

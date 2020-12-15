@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.pumpkin;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,7 +38,7 @@ public class PumpkinSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Pumpkin Buff\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Pumpkin Buff\n" + FormatingCodes.gray
 				+ "Grants +10% damage reduction from all sources and +10% damage.";
 	}
 

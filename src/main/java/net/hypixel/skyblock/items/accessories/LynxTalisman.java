@@ -27,8 +27,8 @@ import net.minecraft.world.World;
  */
 public class LynxTalisman extends Accessory {
 	/**
-	 * An {@link AttributeModifier} that increases
-	 * {@link SharedMonsterAttributes#MOVEMENT_SPEED} by 3%
+	 * An {@link AttributeModifier} that increases {@link SharedMonsterAttributes#MOVEMENT_SPEED}
+	 * by 3%
 	 */
 	private static final AttributeModifier speed_mod = new AttributeModifier(
 			SharedMonsterAttributes.MOVEMENT_SPEED.getName(), .003, Operation.ADDITION);

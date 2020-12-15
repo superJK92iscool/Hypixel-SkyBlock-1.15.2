@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.items.swords;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -15,9 +15,9 @@ import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.PotatoBookableItem;
 import net.hypixel.skyblock.items.ReforgableItem;
 import net.hypixel.skyblock.items.Reforge;
-import net.hypixel.skyblock.items.ReforgeStone;
 import net.hypixel.skyblock.items.UpgradableItem;
 import net.hypixel.skyblock.items.accessories.Accessory.AccessoryReforge;
+import net.hypixel.skyblock.items.reforge_stone.ReforgeStone;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,6 +26,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 /**
@@ -44,6 +45,7 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 	 * @since 11 June 2019
 	 */
 	public enum SwordReforge implements Reforge {
+		Dirty(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		Epic(new double[] { 15, 0, 0, 0, 0, 10, 0, 1 }, new double[] { 20, 0, 0, 0, 0, 15, 0, 2 },
 				new double[] { 25, 0, 0, 0, 0, 20, 0, 4 }, new double[] { 32, 0, 0, 0, 0, 27, 0, 7 },
 				new double[] { 40, 0, 0, 0, 0, 35, 0, 10 }),
@@ -85,6 +87,7 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 		Spicy(new double[] { 2, 0, 0, 0, 1, 25, 0, 1 }, new double[] { 3, 0, 0, 0, 1, 35, 0, 2 },
 				new double[] { 4, 0, 0, 0, 1, 45, 0, 4 }, new double[] { 7, 0, 0, 0, 1, 60, 0, 7 },
 				new double[] { 10, 0, 0, 0, 1, 80, 0, 10 }),
+		Spiritual(new double[0], new double[0], new double[0], new double[0], new double[0]),
 		/**
 		 * Unique
 		 */
@@ -97,7 +100,8 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 		 */
 		Warped(new double[] { 0, 0, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0 },
 				new double[] { 165, 0, 0, 0, 0, 0, 0, 0 }, new double[] { 165, 0, 0, 0, 0, 0, 0, 0 },
-				new double[] { 0, 0, 0, 0, 0, 0, 0, 0 });
+				new double[] { 0, 0, 0, 0, 0, 0, 0, 0 }),
+		Withered(new double[0], new double[0], new double[0], new double[0], new double[0]);
 
 		/**
 		 * A primative type array of {@link AccessoryReforge} that holds all the
@@ -117,13 +121,17 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 		@Nonnull
 		private static final SwordReforge[] unique;
 
+		static {
+			nonunique = new SwordReforge[] { Epic, Fair, Fast, Gentle, Heroic, Legendary, Odd, Sharp, Spicy };
+			unique = new SwordReforge[] { Fabled, Gilded, Suspicious, Warped };
+		}
+
 		/**
-		 * A primative type array of {@link AccessoryReforge} that holds all the values
-		 * of {@link AccessoryReforge}.<br>
-		 * This should be the same as calling the values() method.
+		 * @return a random {@link SwordReforge}
 		 */
-		@Nonnull
-		private static final SwordReforge[] values;
+		public static SwordReforge getRandomReforge() {
+			return nonunique[rand.nextInt(nonunique.length)];
+		}
 
 		/**
 		 * The array for {@link ModItemRarity#Common}
@@ -162,27 +170,6 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 			this.epic = Objects.requireNonNull(epic, "Epic buff array must be non-null.");
 			this.legendary = Objects.requireNonNull(legendary, "Legendary buff array must be non-null.");
 			this.log();
-		}
-
-		static {
-			values = SwordReforge.values();
-			nonunique = new SwordReforge[] { Epic, Fair, Fast, Gentle, Heroic, Legendary, Odd, Sharp, Spicy };
-			unique = new SwordReforge[] { Fabled, Gilded, Suspicious, Warped };
-			HypixelSkyBlockMod.LOGGER.info("All values:\t" + Arrays.deepToString(values));
-			HypixelSkyBlockMod.LOGGER.info("Nonunique:\t" + Arrays.deepToString(nonunique));
-			HypixelSkyBlockMod.LOGGER.info("Unique:\t\t" + Arrays.deepToString(unique));
-		}
-
-		/**
-		 * @return a random {@link SwordReforge}
-		 */
-		public static SwordReforge getRandomReforge() {
-			return nonunique[rand.nextInt(nonunique.length)];
-		}
-
-		@Override
-		public Reforge[] all() {
-			return values;
 		}
 
 		@Override
@@ -244,6 +231,8 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 	@Nullable
 	protected Reforge reforge = Reforge.None;
 
+	protected ITextComponent reforge_display = new StringTextComponent("");
+
 	/**
 	 * Construct this
 	 *
@@ -299,7 +288,16 @@ public abstract class ModSwordItem extends SwordItem implements ReforgableItem, 
 
 	@Override
 	public void reforge() {
-		this.setReforge(SwordReforge.getRandomReforge());
+		this.reforge = SwordReforge.getRandomReforge();
+		try {
+			this.reforge_display = new StringTextComponent(
+					this.reforge.getClass().getMethod("name", (Class<?>[]) null).invoke(this.reforge) + "");
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			HypixelSkyBlockMod.LOGGER.error(e.getLocalizedMessage());
+			for (StackTraceElement element : e.getStackTrace())
+				HypixelSkyBlockMod.LOGGER.error(element.toString());
+		}
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
@@ -176,7 +177,7 @@ public class WheatMinionTileEntity extends AbstractMinionTileEntity {
 			return false;
 		HypixelSkyBlockMod.LOGGER.info("Interacting with " + pos.toString());
 		final BlockState state = this.world.getBlockState(pos);
-		if (state.isAir(this.world, pos)) {
+		if (state.getMaterial() == Material.AIR) {
 			this.world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS,
 					1f, 1f, true);
 			this.world.setBlockState(pos, Blocks.WHEAT.getDefaultState());
@@ -206,7 +207,7 @@ public class WheatMinionTileEntity extends AbstractMinionTileEntity {
 		this.airSurround.clear();
 		for (BlockPos pos : this.validSurround) {
 			final BlockPos up = pos.up();
-			if (this.world.getBlockState(up).isAir(this.world, up))
+			if (this.world.getBlockState(up).getMaterial() == Material.AIR)
 				this.airSurround.add(pos);
 		}
 	}

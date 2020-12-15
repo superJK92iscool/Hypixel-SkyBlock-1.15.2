@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.blaze;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -33,7 +33,7 @@ public class BlazeSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Blazing Aura\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Blazing Aura\n" + FormatingCodes.gray
 				+ "Damages mobs in a 5 block range for 3% of their max Health per second.\n"
 				+ "Also grants permanent Fire and Lava immunity";
 	}

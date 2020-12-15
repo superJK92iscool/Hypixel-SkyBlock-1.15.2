@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.crafting;
 import javax.annotation.Nonnull;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
-import net.hypixel.skyblock.items.enchanteditems.EnchantedItem;
+import net.hypixel.skyblock.items.enchanted_items.EnchantedItem;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -37,6 +37,6 @@ public interface IEnchantedItemRecipe extends ICraftingRecipe {
 	@Nonnull
 	@Override
 	default IRecipeType<?> getType() {
-		return Registry.RECIPE_TYPE.getValue(recipe_type_id).get();
+		return Registry.RECIPE_TYPE.getOrDefault(recipe_type_id);
 	}
 }

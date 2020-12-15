@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.superior_dragon;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -38,7 +38,7 @@ public class SuperiorDragonSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Superior Blood\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Superior Blood\n" + FormatingCodes.gray
 				+ "All stats are increased by 5%.\nThe Aspect of the Dragons ability deals 50% more damage.";
 	}
 

@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.accessories;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,8 +25,6 @@ import net.minecraft.world.World;
  * @version 28 July 2020
  */
 public class MelodyHair extends Accessory {
-	private static final ITextComponent display_name_end = new StringTextComponent("\u266b");
-	private static final ITextComponent display_name_start = new StringTextComponent("\u266a");
 	private int currentPitch;
 
 	public MelodyHair() {
@@ -36,13 +34,7 @@ public class MelodyHair extends Accessory {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gray + "Gives +6 " + ColorCodes.aqua + "Intelligence"));
-	}
-
-	@Override
-	public ITextComponent getDisplayName(ItemStack stack) {
-		return display_name_start.appendSibling(super.getDisplayName(stack)).appendSibling(display_name_end)
-				.applyTextStyle(this.rarity.color);
+		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Gives +6 " + FormatingCodes.aqua + "Intelligence"));
 	}
 
 	@Override

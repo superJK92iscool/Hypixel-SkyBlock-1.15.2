@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.strong_dragon;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 
 /**
  * @author MrPineapple070
@@ -37,7 +37,7 @@ public class StrongDragonSet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Strong Blood\n" + ColorCodes.gray
+		return FormatingCodes.gold + "Full Set Bonus: Strong Blood\n" + FormatingCodes.gray
 				+ "Gives +75 damage, +2 teleport distance, +3 seconds of duration, +5 strength of cast to the Aspect of the End.";
 	}
 

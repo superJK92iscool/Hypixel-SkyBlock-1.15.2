@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.swords;
 import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +29,7 @@ public class ReaperScythe extends ModSwordItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Desecration\n" + ColorCodes.gray
+		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Desecration\n" + FormatingCodes.gray
 				+ "Within 3 seconds of killing an enemy, Desecrate their grave to spawn a zombie.\n"
 				+ "Zombies lose 2% Health/s"));
 	}

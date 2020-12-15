@@ -21,7 +21,7 @@ public final class AgronomySack extends Sack {
 	private static final ImmutableSet<Item> items = ImmutableSet.copyOf(new Item[] { Items.WHEAT, Items.CARROT,
 			Items.POTATO, Items.PUMPKIN, Items.MELON, Items.WHEAT_SEEDS, Items.RED_MUSHROOM, Items.BROWN_MUSHROOM,
 			Items.COCOA_BEANS, Items.CACTUS, Items.SUGAR_CANE, Items.NETHER_WART });
-	
+
 	public AgronomySack(SackSize type) {
 		super(ItemProperties.f1, type);
 	}

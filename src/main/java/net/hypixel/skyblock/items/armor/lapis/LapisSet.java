@@ -5,7 +5,7 @@ import java.util.List;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.ModArmorItem;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -27,9 +27,9 @@ public class LapisSet extends ModArmorItem {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(
-				ColorCodes.green + "+200% " + ColorCodes.gray + "Bonus Experience when mining ores.\n" + ColorCodes.gold
-						+ "Full Set Bonus: Health\n" + ColorCodes.gray + "Increases the wearer's " + ColorCodes.dark_red
-						+ "Health " + ColorCodes.gray + "by 60."));
+		tooltip.add(new StringTextComponent(FormatingCodes.green + "+200% " + FormatingCodes.gray
+				+ "Bonus Experience when mining ores.\n" + FormatingCodes.gold + "Full Set Bonus: Health\n"
+				+ FormatingCodes.gray + "Increases the wearer's " + FormatingCodes.dark_red + "Health "
+				+ FormatingCodes.gray + "by 60."));
 	}
 }

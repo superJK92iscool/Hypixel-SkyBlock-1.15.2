@@ -6,7 +6,7 @@ import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.ModArmorItem;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.hypixel.skyblock.util.ItemProperties;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -25,8 +25,8 @@ public class SpiderBoots extends ModArmorItem {
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		try {
 			tooltip.addAll(MonsterHunterSet.instance.getDescription(this.slot));
-			tooltip.add(new StringTextComponent(ColorCodes.gold + "Item Ability: Double Jump"));
-			tooltip.add(new StringTextComponent(ColorCodes.gray + "Allows you to double jump!"));
+			tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Double Jump"));
+			tooltip.add(new StringTextComponent(FormatingCodes.gray + "Allows you to double jump!"));
 		} catch (final IllegalAccessException e) {
 			HypixelSkyBlockMod.LOGGER.error(e.getMessage());
 		}

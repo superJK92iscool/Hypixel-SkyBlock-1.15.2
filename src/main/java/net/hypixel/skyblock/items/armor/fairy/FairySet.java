@@ -3,7 +3,7 @@ package net.hypixel.skyblock.items.armor.fairy;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.items.armor.FullSetInformation;
 import net.hypixel.skyblock.items.armor.ModArmorMaterial;
-import net.hypixel.skyblock.util.ColorCodes;
+import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.inventory.EquipmentSlotType;
 
 /**
@@ -47,9 +47,9 @@ public class FairySet implements FullSetInformation {
 
 	@Override
 	public String getFullSetBonus() {
-		return ColorCodes.gold + "Full Set Bonus: Fairy's Outfit\n" + ColorCodes.gray + "Increases " + ColorCodes.white
-				+ "Speed " + ColorCodes.gray + "by 10%.\n" + "Gain .2 " + ColorCodes.red + "Health " + ColorCodes.gray
-				+ "per Fairy Soul found.";
+		return FormatingCodes.gold + "Full Set Bonus: Fairy's Outfit\n" + FormatingCodes.gray + "Increases "
+				+ FormatingCodes.white + "Speed " + FormatingCodes.gray + "by 10%.\n" + "Gain .2 " + FormatingCodes.red
+				+ "Health " + FormatingCodes.gray + "per Fairy Soul found.";
 	}
 
 	@Override

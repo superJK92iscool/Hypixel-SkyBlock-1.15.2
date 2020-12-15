@@ -7,10 +7,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CombatGroup extends ItemGroup {
-	public static final CombatGroup instance = new CombatGroup(ItemGroup.GROUPS.length, "Combat");
+	public static final CombatGroup instance = new CombatGroup(ItemGroup.GROUPS.length);
 
-	private CombatGroup(int index, String label) {
-		super(index, label);
+	private CombatGroup(int index) {
+		super(index, "Combat");
 	}
 
 	@OnlyIn(Dist.CLIENT)

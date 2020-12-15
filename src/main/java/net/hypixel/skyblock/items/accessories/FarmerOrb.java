@@ -16,6 +16,7 @@ import net.minecraft.block.CocoaBlock;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.StemBlock;
 import net.minecraft.block.SugarCaneBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -79,7 +80,7 @@ public class FarmerOrb extends Accessory {
 						continue;
 					final BlockState state = worldIn.getBlockState(pos);
 					final Block block = state.getBlock();
-					if (state.isAir(worldIn, pos))
+					if (state.getMaterial() == Material.AIR)
 						continue;
 					switch (effective_on.indexOf(block)) {
 					case Wheat:

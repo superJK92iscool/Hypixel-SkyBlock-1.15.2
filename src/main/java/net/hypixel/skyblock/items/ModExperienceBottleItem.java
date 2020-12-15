@@ -53,11 +53,11 @@ public class ModExperienceBottleItem extends ExperienceBottleItem {
 				SoundEvents.ENTITY_EXPERIENCE_BOTTLE_THROW, SoundCategory.NEUTRAL, 0.5F,
 				0.4F / (random.nextFloat() * 0.4F + 0.8F));
 		if (!worldIn.isRemote) {
-			final ModExperienceBottleEntity experiencebottleentity = new ModExperienceBottleEntity(worldIn, playerIn,
+			final ModExperienceBottleEntity exp_entity = new ModExperienceBottleEntity(worldIn, playerIn,
 					this.type);
-			experiencebottleentity.setItem(itemstack);
-			experiencebottleentity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.7F, 1.0F);
-			worldIn.addEntity(experiencebottleentity);
+			exp_entity.setItem(itemstack);
+			exp_entity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20f, -7f, 1f);
+			worldIn.addEntity(exp_entity);
 		}
 
 		playerIn.addStat(Stats.ITEM_USED.get(this));

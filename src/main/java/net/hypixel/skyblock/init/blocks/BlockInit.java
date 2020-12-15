@@ -26,7 +26,7 @@ public class BlockInit {
 	/**
 	 * A {@code DeferredRegister} for {@code Block}.
 	 */
-	public static final DeferredRegister<Block> blocks = new DeferredRegister<>(ForgeRegistries.BLOCKS,
+	public static final DeferredRegister<Block> blocks = new DeferredRegister<Block>(ForgeRegistries.BLOCKS,
 			HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<Block> hard_glass = blocks.register("hard_glass",

@@ -4,16 +4,16 @@ import java.util.List;
 
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.util.ItemProperties;
-import net.hypixel.skyblock.world.biomes.VillageBiome;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 /**
- * An {@link Accessory} that gives +10% speed while in the
- * {@link VillageBiome}.<br>
+ * An {@link Accessory} that gives +10% speed while in certain
+ * {@link Biome}.<br>
  * <a href=
  * "https://hypixel-skyblock.fandom.com/wiki/Village_Affinity_Talisman">Village
  * Affinity Talisman</a>
