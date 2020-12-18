@@ -25,7 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @version 6 June 2020
  * @since 6 June 2020
  */
-public class AbstractMinionScreen extends ContainerScreen<AbstractMinionContainer> {
+public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionContainer> {
 	private boolean buttonsNotDrawn;
 	private UpgradeButton upgrade;
 	private EmptyButton empty;
@@ -80,6 +80,10 @@ public class AbstractMinionScreen extends ContainerScreen<AbstractMinionContaine
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		this.font.drawString(this.title.getString(), 48, 44, 0x404040);
+		this.font.drawString("Fuel", 48, 56, 0x404040);
+		this.font.drawString("Seller", 48, 73, 0x404040);
+		this.font.drawString("Boost0", 48, 91, 0x404040);
+		this.font.drawString("Boost1", 48, 109, 0x404040);
 		this.font.drawString(this.playerInventory.getDisplayName().getString(), 48, 126, 0x404040);
 	}
 
@@ -109,29 +113,20 @@ public class AbstractMinionScreen extends ContainerScreen<AbstractMinionContaine
 	
 	@OnlyIn(Dist.CLIENT)
 	abstract static class Button extends AbstractButton {
-		private boolean isSelected;
-
 		/**
 		 * Construct this.
 		 *
 		 * @param xIn x coordinate
 		 * @param yIn y coordinate
 		 */
-		public Button(int xIn, int yIn) {
-			super(xIn, yIn, 18, 18, "");
-		}
-
-		/**
-		 * @return {@link #isSelected}
-		 */
-		public boolean isSelected() {
-			return this.isSelected;
+		public Button(int xIn, int yIn, String name) {
+			super(xIn, yIn, 18, 18, name);
 		}
 	}
 
 	class UpgradeButton extends Button {
 		public UpgradeButton(int x, int y) {
-			super(x + 119, y + 109);
+			super(x + 119, y + 109, "\u2191");
 		}
 
 		@Override
@@ -148,7 +143,7 @@ public class AbstractMinionScreen extends ContainerScreen<AbstractMinionContaine
 
 	class EmptyButton extends Button {
 		public EmptyButton(int x, int y) {
-			super(x + 138, y + 109);
+			super(x + 138, y + 109, "\u2193");
 		}
 
 		@Override

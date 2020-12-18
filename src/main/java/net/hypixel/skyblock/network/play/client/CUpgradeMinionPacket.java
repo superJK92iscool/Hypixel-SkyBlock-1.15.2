@@ -9,13 +9,13 @@ import net.minecraft.network.play.IServerPlayNetHandler;
 
 /**
  * @author MrPineapple070
- * @version 13 December 2020
+ * @version 15 December 2020
  * @since 11 July 2019
  */
-public class CEmptyMinionPacket implements IPacket<IServerPlayNetHandler> {
-	public CEmptyMinionPacket() {
+public class CUpgradeMinionPacket implements IPacket<IServerPlayNetHandler> {
+	public CUpgradeMinionPacket() {
 	}
-	
+
 	@Override
 	public void readPacketData(PacketBuffer buf) throws IOException {
 		HypixelSkyBlockMod.LOGGER.info(buf.toString());

@@ -1,6 +1,7 @@
 package net.hypixel.skyblock.init;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
+import net.hypixel.skyblock.enchantment.Bank;
 import net.hypixel.skyblock.enchantment.LifeSteal;
 import net.hypixel.skyblock.enchantment.SmeltingTouch;
 import net.hypixel.skyblock.enchantment.Telekinesis;
@@ -111,4 +112,6 @@ public class EnchantmentInit {
 	// enchantments.register("vampirism" , () -> new Enchantment());
 	// public static final RegistryObject<Enchantment> venomous =
 	// enchantments.register("venomous" , () -> new Enchantment());
+	
+	public static final RegistryObject<Enchantment> bank = enchantments.register("bank", Bank::new);
 }

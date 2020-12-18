@@ -13,8 +13,7 @@ import javax.annotation.Nullable;
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.items.minion.MinionFuelItem;
-import net.hypixel.skyblock.items.minion.SellerItem;
-import net.hypixel.skyblock.items.minion.UpgradeItem;
+import net.hypixel.skyblock.tags.ModItemTags;
 import net.hypixel.skyblock.util.ItemMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -394,10 +393,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		final int time = fuel.getBurnTime();
 		if (time == -1)
 			return;
-		HypixelSkyBlockMod.LOGGER.info("Consuming fuel: " + fuel.toString());
-		this.fuelTick = (this.fuelTick + 1) % time;
-		if (this.fuelTick == 0)
+		this.fuelTick = (++this.fuelTick) % time;
+		if (this.fuelTick == 0) {
+			HypixelSkyBlockMod.LOGGER.info("Consuming fuel: " + fuel.toString());
 			this.decrStackSize(FUEL_INDEX, 1);
+		}
 	}
 
 	@Override
@@ -715,10 +715,14 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 
 	@Override
 	public final boolean isEmpty() {
-		for (final ItemStack stack : this.minionContents)
-			if (!stack.isEmpty())
-				return false;
-		return true;
+		if (this.hasSeller())
+			return false;
+		for (int i = 4; i < this.getSizeInventory(); ++i) 
+			if (this.getStackInSlot(i).isEmpty())
+				return true;
+		if (this.mcte != null)
+			return this.mcte.isFull();
+		return false;
 	}
 
 	/**
@@ -740,12 +744,12 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		final Item item = stack.getItem();
 		switch (index) {
 		case FUEL_INDEX:
-			return item instanceof MinionFuelItem;
+			return item.isIn(ModItemTags.fuel);
 		case SELLER_INDEX:
-			return item instanceof SellerItem;
+			return item.isIn(ModItemTags.seller);
 		case UPGRADE_1_INDEX:
 		case UPGRADE_2_INDEX:
-			return item instanceof UpgradeItem;
+			return item.isIn(ModItemTags.upgrade);
 		default:
 			return false;
 		}
@@ -755,11 +759,25 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	public final boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
 		if (this.world.getTileEntity(this.pos) != this)
 			return false;
-		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64.0;
+		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
+	}
+	
+	public void log() {
+		HypixelSkyBlockMod.LOGGER.info(this.getClass().getSimpleName());
+		HypixelSkyBlockMod.LOGGER.info("Tier:\t" + this.tier.name());
+		HypixelSkyBlockMod.LOGGER.info("Coords:\t(" + this.x + ", " + this.y + ", " + this.z + ")");
+		HypixelSkyBlockMod.LOGGER.info("Tick:\t" + this.tick);
+		HypixelSkyBlockMod.LOGGER.info("FuelTick:\t" + this.fuelTick);
+		HypixelSkyBlockMod.LOGGER.info("Surround:\t" + Arrays.deepToString(this.surround));
+		HypixelSkyBlockMod.LOGGER.info("ValidSurround:\t" + this.validSurround.toString());
+		HypixelSkyBlockMod.LOGGER.info("AirSurround:\t" + this.airSurround.toString());
+		HypixelSkyBlockMod.LOGGER.info("Contents:\t" + this.minionContents.toString());
 	}
 
 	@Override
 	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		HypixelSkyBlockMod.LOGGER.info("NetworkManager:\t" + net.toString());
+		HypixelSkyBlockMod.LOGGER.info("SUpdateTileEntityPacket:\t" + pkt.toString());
 		this.read(pkt.getNbtCompound());
 	}
 

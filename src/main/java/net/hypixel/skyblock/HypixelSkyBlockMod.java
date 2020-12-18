@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.hypixel.skyblock.init.EnchantmentInit;
-import net.hypixel.skyblock.init.PotionInit;
 import net.hypixel.skyblock.init.RecipeSerializerInit;
 import net.hypixel.skyblock.init.blocks.MasterBlockInit;
 import net.hypixel.skyblock.init.items.MasterItemInit;
@@ -64,8 +63,8 @@ public class HypixelSkyBlockMod {
 
 		// ParticleInit.particle_types.register(bus);
 		// SoundInit.sounds.register(bus);
-		PotionInit.effects.register(bus);
-		PotionInit.potions.register(bus);
+		// PotionInit.effects.register(bus);
+		// PotionInit.potions.register(bus);
 
 		EnchantmentInit.enchantments.register(bus);
 
@@ -89,6 +88,7 @@ public class HypixelSkyBlockMod {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
+		
 		proxy.init();
 	}
 }
