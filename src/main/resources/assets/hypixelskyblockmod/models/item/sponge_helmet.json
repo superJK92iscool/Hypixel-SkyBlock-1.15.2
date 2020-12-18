@@ -1,6 +1,3 @@
 {
-	"parent": "item/generated",
-	"textures": {
-		"layer0": "hypixelskyblockmod:items/sponge_helmet"
-	}
+    "parent": "block/sponge"
 }
