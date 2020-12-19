@@ -3,7 +3,7 @@
 	"parent": "block/cube_all",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "hypixelskyblockmod:items/wise_dragon_helmet"
+		"0": "hypixelskyblockmod:items/red_small_backpack"
 	},
 	"elements": [
 		{

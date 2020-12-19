@@ -31,7 +31,7 @@ public class AspectOfTheDragon extends ModSwordItem {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Dragon Rage"));
-		tooltip.add(new StringTextComponent(FormatingCodes.gray	+ "Deal 5000 Ability Damage to all Monsters in front of you."));
+		tooltip.add(new StringTextComponent(FormatingCodes.gray	+ "Deal 12000 Damage to all Monsters in front of you."));
 		tooltip.add(new StringTextComponent(FormatingCodes.gray + "Damaged Monsters take huge Knockback."));
 	}
 
@@ -41,7 +41,6 @@ public class AspectOfTheDragon extends ModSwordItem {
 		final ItemStack handItem = playerIn.getHeldItem(handIn);
 		if (!worldIn.isRemote)
 			return ActionResult.resultPass(handItem);
-		this.reforge = SwordReforge.Epic;
 		return ActionResult.resultSuccess(handItem);
 	}
 }

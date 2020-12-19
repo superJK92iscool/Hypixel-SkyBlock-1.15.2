@@ -17,6 +17,7 @@ public class MasterItemInit {
 	public static void register(final IEventBus bus) {
 		AccessoriesInit.accessories.register(bus);
 		ArmorInit.armor.register(bus);
+		BackpackInit.backpack.register(bus);
 		BlockItemInit.blockItems.register(bus);
 		ItemInit.items.register(bus);
 		MinionBlockItemInit.minionItems.register(bus);

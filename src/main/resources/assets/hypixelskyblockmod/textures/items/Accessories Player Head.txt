@@ -1,4 +1,4 @@
-Accessory		http://textures.minecraft.net/texture/
+Accessory		https://textures.minecraft.net/texture/
 AutoRecombobulator	5dff8dbbab15bfbb11e23b1f50b34ef548ad9832c0bd7f5a13791adad0057e1b
 BaitRing		5a316d585b789b582f2d99e8e6cb2d70433e8996fab024a74bc790e22aedcdeb
 BatArtifact		382fc3f71b41769376a9e92fe3adbaac3772b999b219c9d6b4680ba9983e527

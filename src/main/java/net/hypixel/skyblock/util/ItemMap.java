@@ -5,7 +5,9 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
+import net.hypixel.skyblock.init.items.AccessoriesInit;
 import net.hypixel.skyblock.init.items.ItemInit;
+import net.hypixel.skyblock.init.items.WeaponInit;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
@@ -53,6 +55,11 @@ public class ItemMap {
 	 */
 	public static final ImmutableMap<Item, Item> smeltMap = ImmutableMap.copyOf(smeltMapMake());
 
+	/**
+	 * Help determine how many coins to give the player when selling an item to an NPC.
+	 */
+	public static final ImmutableMap<Item, Integer> sell = ImmutableMap.copyOf(sellMap());
+	
 	/**
 	 * Create {@link #compCountMap}
 	 *
@@ -178,6 +185,57 @@ public class ItemMap {
 		temp.put(Items.CACTUS, Items.GREEN_DYE);
 		temp.put(Items.ACACIA_LOG, Items.COAL);
 		temp.put(Items.OAK_LOG, Items.COAL);
+		return temp;
+	}
+	
+	/**
+	 * Create {@link #sell}
+	 * @return {@link #sell}
+	 */
+	private static Map<Item, Integer> sellMap() {
+		final Map<Item, Integer> temp = new HashMap<>();
+		temp.put(AccessoriesInit.bait_ring.get(), 0);
+		
+		temp.put(WeaponInit.aotd.get(), 100000);
+		temp.put(WeaponInit.aote.get(), 50000);
+		temp.put(WeaponInit.aotj.get(), 0);
+		temp.put(WeaponInit.cleaver.get(), 0);
+		temp.put(WeaponInit.edible_mace.get(), 0);
+		temp.put(WeaponInit.ember_rod.get(), 0);
+		temp.put(WeaponInit.emerald_blade.get(), 0);
+		temp.put(WeaponInit.end_stone_sword.get(), 0);
+		temp.put(WeaponInit.end_sword.get(), 0);
+		temp.put(WeaponInit.fancy_sword.get(), 0);
+		temp.put(WeaponInit.flaming_sword.get(), 0);
+		temp.put(WeaponInit.frozen_scythe.get(), 0);
+		temp.put(WeaponInit.golem_sword.get(), 0);
+		temp.put(WeaponInit.hunter_knife.get(), 0);
+		temp.put(WeaponInit.ink_wand.get(), 0);
+		temp.put(WeaponInit.leaping_sword.get(), 0);
+		temp.put(WeaponInit.midas_sword.get(), 0);
+		temp.put(WeaponInit.ornate_zombie_sword.get(), 0);
+		temp.put(WeaponInit.pigman_sword.get(), 0);
+		temp.put(WeaponInit.pooch_sword.get(), 0);
+		temp.put(WeaponInit.prismarine_blade.get(), 0);
+		temp.put(WeaponInit.raider_axe.get(), 0);
+		temp.put(WeaponInit.reaper_falchion.get(), 0);
+		temp.put(WeaponInit.reaper_scythe.get(), 0);
+		temp.put(WeaponInit.recluse_fang.get(), 0);
+		temp.put(WeaponInit.revenant_falchion.get(), 0);
+		temp.put(WeaponInit.rogue_sword.get(), 0);
+		temp.put(WeaponInit.scorpion_foil.get(), 0);
+		temp.put(WeaponInit.shaman_sword.get(), 0);
+		temp.put(WeaponInit.silk_edge_sword.get(), 0);
+		temp.put(WeaponInit.silver_fang.get(), 0);
+		temp.put(WeaponInit.spider_sword.get(), 0);
+		temp.put(WeaponInit.spider_sword.get(), 0);
+		temp.put(WeaponInit.tactician_sword.get(), 0);
+		temp.put(WeaponInit.thick_aotj.get(), 0);
+		temp.put(WeaponInit.thick_scorpion_foil.get(), 0);
+		temp.put(WeaponInit.thick_tactician_sword.get(), 0);
+		temp.put(WeaponInit.undead_sword.get(), 0);
+		temp.put(WeaponInit.yeti_sword.get(), 0);
+		temp.put(WeaponInit.zombie_sword.get(), 0);
 		return temp;
 	}
 }

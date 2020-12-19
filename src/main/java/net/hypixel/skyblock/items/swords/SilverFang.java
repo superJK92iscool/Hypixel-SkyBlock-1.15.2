@@ -22,7 +22,12 @@ import net.minecraft.world.World;
  */
 public class SilverFang extends ModSwordItem {
 	public SilverFang() {
-		super(ModSwordTier.Silver_Fang, ItemProperties.c1, ModItemRarity.Uncommon);
+		super(ModSwordTier.Silver_Fang, ItemProperties.c64, ModItemRarity.Uncommon);
+	}
+
+	@Override
+	public int getItemStackLimit(ItemStack stack) {
+		return 64;
 	}
 
 	@Override
