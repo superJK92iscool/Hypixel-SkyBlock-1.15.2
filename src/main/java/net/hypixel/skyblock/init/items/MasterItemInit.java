@@ -4,10 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /**
- * Initialize and Register every {@link Item} for this mod.<br>
- * {@link AccessoriesInit}, {@link ArmorInit}, {@link BlockItemInit},
- * {@link ExtraItemInit}, {@link ItemInit}, {@link MinionBlockItemInit} and
- * {@link WeaponInit}.
+ * Initialize and Register every {@link Item} for this mod.
  *
  * @author MrPineapple070
  * @version 07 July 2020
@@ -21,6 +18,7 @@ public class MasterItemInit {
 		BlockItemInit.blockItems.register(bus);
 		ItemInit.items.register(bus);
 		MinionBlockItemInit.minionItems.register(bus);
+		PetItemInit.pets.register(bus);
 		WeaponInit.weapon.register(bus);
 	}
 }

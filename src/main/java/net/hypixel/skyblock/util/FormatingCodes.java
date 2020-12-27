@@ -1,5 +1,6 @@
 package net.hypixel.skyblock.util;
 
+import net.minecraft.item.DyeColor;
 import net.minecraft.util.text.TextFormatting;
 
 /**
@@ -175,6 +176,45 @@ public class FormatingCodes {
 			return yellow;
 		default:
 			throw new IllegalStateException("Illegal TextFormating:\t" + format.name());
+		}
+	}
+	
+	public static final TextFormatting getColorCode(DyeColor color) {
+		switch (color) {
+		case BLACK:
+			return TextFormatting.BLACK;
+		case BLUE:
+			return TextFormatting.BLUE;
+		case BROWN:
+			return TextFormatting.DARK_BLUE;
+		case CYAN:
+			return TextFormatting.DARK_AQUA;
+		case GRAY:
+			return TextFormatting.DARK_GRAY;
+		case GREEN:
+			return TextFormatting.DARK_GREEN;
+		case LIGHT_BLUE:
+			return TextFormatting.AQUA;
+		case LIGHT_GRAY:
+			return TextFormatting.GRAY;
+		case LIME:
+			return TextFormatting.GREEN;
+		case MAGENTA:
+			return TextFormatting.LIGHT_PURPLE;
+		case ORANGE:
+			return TextFormatting.GOLD;
+		case PINK:
+			return TextFormatting.RED;
+		case PURPLE:
+			return TextFormatting.DARK_PURPLE;
+		case RED:
+			return TextFormatting.DARK_RED;
+		case WHITE:
+			return TextFormatting.WHITE;
+		case YELLOW:
+			return TextFormatting.YELLOW;
+		default:
+			return TextFormatting.RESET;
 		}
 	}
 }

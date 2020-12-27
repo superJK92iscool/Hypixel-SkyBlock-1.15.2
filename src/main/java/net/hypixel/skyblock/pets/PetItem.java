@@ -65,7 +65,7 @@ public abstract class PetItem extends Item {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn instanceof PlayerEntity) {
+		if (entityIn instanceof ModServerPlayerEntity) {
 			this.pet.effect((ModServerPlayerEntity) entityIn);
 			super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
 		}

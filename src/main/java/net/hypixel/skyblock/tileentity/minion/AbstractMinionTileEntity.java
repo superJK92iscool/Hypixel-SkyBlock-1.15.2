@@ -64,31 +64,6 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		implements ITickableTileEntity, IClearable, INamedContainerProvider {
 	/**
-	 * The tier of each Minion
-	 */
-	public enum MinionTier {
-		I(1, 0x0), II(3, 0x1), III(3, 0x2), IV(6, 0x3), IX(12, 0x8), V(6, 0x4), VI(9, 0x5), VII(9, 0x6), VIII(12, 0x7),
-		X(15, 0x9), XI(15, 0xa);
-
-		/**
-		 * A conversion between this and an integer.
-		 */
-		@Nonnegative
-		public final int asInt;
-
-		/**
-		 * The amount of slots for each tier.
-		 */
-		@Nonnegative
-		public final int size;
-
-		private MinionTier(@Nonnegative int size, @Nonnegative int asInt) {
-			this.size = size;
-			this.asInt = asInt;
-		}
-	}
-
-	/**
 	 * Fuel Slot index.
 	 */
 	protected static final int FUEL_INDEX = 0x0;
@@ -717,7 +692,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	public final boolean isEmpty() {
 		if (this.hasSeller())
 			return false;
-		for (int i = 4; i < this.getSizeInventory(); ++i) 
+		for (int i = 4; i < this.getSizeInventory(); ++i)
 			if (this.getStackInSlot(i).isEmpty())
 				return true;
 		if (this.mcte != null)
@@ -742,6 +717,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	@Override
 	public final boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
 		final Item item = stack.getItem();
+		HypixelSkyBlockMod.LOGGER.info(item.getTags().toString());
 		switch (index) {
 		case FUEL_INDEX:
 			return item.isIn(ModItemTags.fuel);
@@ -761,7 +737,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			return false;
 		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
 	}
-	
+
 	public void log() {
 		HypixelSkyBlockMod.LOGGER.info(this.getClass().getSimpleName());
 		HypixelSkyBlockMod.LOGGER.info("Tier:\t" + this.tier.name());
@@ -993,5 +969,30 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		super.write(compound);
 		ItemStackHelper.saveAllItems(compound, this.minionContents);
 		return compound;
+	}
+
+	/**
+	 * The tier of each Minion
+	 */
+	public enum MinionTier {
+		I(1, 0x0), II(3, 0x1), III(3, 0x2), IV(6, 0x3), IX(12, 0x8), V(6, 0x4), VI(9, 0x5), VII(9, 0x6), VIII(12, 0x7),
+		X(15, 0x9), XI(15, 0xa);
+
+		/**
+		 * A conversion between this and an integer.
+		 */
+		@Nonnegative
+		public final int asInt;
+
+		/**
+		 * The amount of slots for each tier.
+		 */
+		@Nonnegative
+		public final int size;
+
+		private MinionTier(@Nonnegative int size, @Nonnegative int asInt) {
+			this.size = size;
+			this.asInt = asInt;
+		}
 	}
 }

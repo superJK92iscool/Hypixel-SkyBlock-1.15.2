@@ -1,6 +1,7 @@
 package net.hypixel.skyblock.inventory.container.minion;
 
 import net.hypixel.skyblock.items.minion.UpgradeItem;
+import net.hypixel.skyblock.tags.ModItemTags;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,6 @@ public class UpgradeSlot extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof UpgradeItem;
+		return stack.getItem().isIn(ModItemTags.upgrade);
 	}
 }

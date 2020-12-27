@@ -24,36 +24,6 @@ import net.minecraft.network.PacketBuffer;
  * @since 11 June 2019
  */
 public abstract class MinionChestContainer extends Container {
-	public static class SmallMCC extends MinionChestContainer {
-		public SmallMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.small_mcc.get(), windowId, pInvIn, ChestType.Small);
-		}
-
-		public SmallMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
-			this(windowId, pInvIn);
-		}
-	}
-	
-	public static class MediumMCC extends MinionChestContainer {
-		public MediumMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.medium_mcc.get(), windowId, pInvIn, ChestType.Medium);
-		}
-
-		public MediumMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
-			this(windowId, pInvIn);
-		}
-	}
-	
-	public static class LargeMCC extends MinionChestContainer {
-		public LargeMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.large_mcc.get(), windowId, pInvIn, ChestType.Large);
-		}
-
-		public LargeMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
-			this(windowId, pInvIn);
-		}
-	}
-
 	/**
 	 * {@link IInventory} of the contents of this.
 	 */
@@ -147,5 +117,35 @@ public abstract class MinionChestContainer extends Container {
 				slot.onSlotChanged();
 		}
 		return itemstack;
+	}
+	
+	public static class SmallMCC extends MinionChestContainer {
+		public SmallMCC(int windowId, PlayerInventory pInvIn) {
+			super(ModContainerTypes.small_mcc.get(), windowId, pInvIn, ChestType.Small);
+		}
+
+		public SmallMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
+			this(windowId, pInvIn);
+		}
+	}
+	
+	public static class MediumMCC extends MinionChestContainer {
+		public MediumMCC(int windowId, PlayerInventory pInvIn) {
+			super(ModContainerTypes.medium_mcc.get(), windowId, pInvIn, ChestType.Medium);
+		}
+
+		public MediumMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
+			this(windowId, pInvIn);
+		}
+	}
+	
+	public static class LargeMCC extends MinionChestContainer {
+		public LargeMCC(int windowId, PlayerInventory pInvIn) {
+			super(ModContainerTypes.large_mcc.get(), windowId, pInvIn, ChestType.Large);
+		}
+
+		public LargeMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
+			this(windowId, pInvIn);
+		}
 	}
 }

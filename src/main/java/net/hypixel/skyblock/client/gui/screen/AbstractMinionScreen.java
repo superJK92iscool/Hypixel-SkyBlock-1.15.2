@@ -25,18 +25,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @version 6 June 2020
  * @since 6 June 2020
  */
+@OnlyIn(Dist.CLIENT)
 public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionContainer> {
-	private boolean buttonsNotDrawn;
-	private UpgradeButton upgrade;
-	private EmptyButton empty;
-
 	/**
 	 * The texture for this screen.
 	 */
 	@Nonnull
 	public static final ResourceLocation background_texture = new ResourceLocation(HypixelSkyBlockMod.MOD_ID,
 			"textures/gui/abstract_minion_screen.png");
-
+	
+	private boolean buttonsNotDrawn;
+	private UpgradeButton upgrade;
+	private EmptyButton empty;
+	
 	/**
 	 * Construct this.
 	 *

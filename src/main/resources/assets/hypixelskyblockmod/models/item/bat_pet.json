@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/cube_all",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "hypixelskyblockmod:pets/bat",
-		"particle": "hypixelskyblockmod:pets/bat"
+		"0": "hypixelskyblockmod:pets/bat"
 	},
 	"elements": [
 		{
@@ -368,21 +368,6 @@
 			}
 		}
 	],
-	"display": {
-		"ground": {
-			"rotation": [-22.5, 0, 0]
-		},
-		"gui": {
-			"rotation": [-22.5, 0, 0],
-			"translation": [0, -2, -0.5],
-			"scale": [0.7, 0.7, 0.7]
-		},
-		"fixed": {
-			"rotation": [0, -180, 0],
-			"translation": [0, -3, 0],
-			"scale": [1, 1, 0.25]
-		}
-	},
 	"groups": [
 		{
 			"name": "head",

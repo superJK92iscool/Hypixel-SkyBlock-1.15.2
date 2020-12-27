@@ -2,7 +2,7 @@
 	"credit": "Model by Timy, made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "entity/snowman"
+		"0": "hypixelskyblockmod:pets/snowman"
 	},
 	"elements": [
 		{

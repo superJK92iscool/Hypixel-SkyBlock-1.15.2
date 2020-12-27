@@ -9,7 +9,6 @@ import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.Medi
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.SmallMCC;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.hypixel.skyblock.tileentity.minion.AbstractMinionChestTileEntity;
-import net.hypixel.skyblock.tileentity.minion.AbstractMinionChestTileEntity.SmallMCTE;
 import net.minecraft.block.AbstractChestBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -49,71 +48,17 @@ import net.minecraft.world.World;
  * @since 11 June 2019
  */
 public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinionChestTileEntity> {
-	/**
-	 * Help with the logic handling of the different types of
-	 * {@link MinionChestBlock}.
-	 */
-	public enum ChestType {
-		/**
-		 * Gives 3 extra slots.
-		 */
-		Small(3),
-		/**
-		 * Gives 9 extra slots.
-		 */
-		Medium(9),
-		/**
-		 * Gives 15 extra slots.
-		 */
-		Large(15),
-		/**
-		 * Gives 21 extra slots.
-		 */
-		XLarge(21),
-		/**
-		 * Gives 27 extra slots.
-		 */
-		XXLarge(27);
-
-		/**
-		 * The number of additional slots this will give
-		 */
-		public final int additional;
-
-		private ChestType(int additional) {
-			this.additional = additional;
-		}
-	}
-
-	public static class SmallMCB extends MinionChestBlock {
-		public SmallMCB(Properties properties) {
-			super(properties, ChestType.Small);
-		}
-	}
-
-	public static class MediumMCB extends MinionChestBlock {	
-		public MediumMCB(Properties properties) {
-			super(properties, ChestType.Medium);
-		}
-	}
-
-	public static class LargeMCB extends MinionChestBlock {
-		public LargeMCB(Properties properties) {
-			super(properties, ChestType.Large);
-		}
-	}
-
-	private static final ITextComponent container_name_s = new TranslationTextComponent("container.small_minion_chest");
-	private static final ITextComponent container_name_m = new TranslationTextComponent("container.medium_minion_chest");
-	private static final ITextComponent container_name_l = new TranslationTextComponent("container.large_minion_chest");
-	//private static final ITextComponent container_name_xl = new TranslationTextComponent("container.x_large_minion_chest");
-	//private static final ITextComponent container_name_xxl = new TranslationTextComponent("container.xx_large_minion_chest");
+	public static final ITextComponent container_name_s = new TranslationTextComponent("container.small_minion_chest");
+	public static final ITextComponent container_name_m = new TranslationTextComponent("container.medium_minion_chest");
+	public static final ITextComponent container_name_l = new TranslationTextComponent("container.large_minion_chest");
+	//public static final ITextComponent container_name_xl = new TranslationTextComponent("container.x_large_minion_chest");
+	//public static final ITextComponent container_name_xxl = new TranslationTextComponent("container.xx_large_minion_chest");
 
 	/**
 	 * {@link DirectionProperty}
 	 */
 	@Nonnull
-	public static final DirectionProperty facing = HorizontalBlock.HORIZONTAL_FACING;
+	protected static final DirectionProperty facing = HorizontalBlock.HORIZONTAL_FACING;
 
 	/**
 	 * {@link VoxelShape}
@@ -233,7 +178,7 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 		}
 
 		TileEntity te = worldIn.getTileEntity(pos);
-		if (te instanceof SmallMCTE) {
+		if (te instanceof AbstractMinionChestTileEntity) {
 			BlockPos blockpos = pos.up();
 			if (worldIn.getBlockState(blockpos).isNormalCube(worldIn, blockpos))
 				return ActionResultType.PASS;
@@ -252,5 +197,55 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
 		return state.with(facing, rot.rotate(state.get(facing)));
+	}
+	
+	public enum ChestType {
+		/**
+		 * Gives 3 extra slots.
+		 */
+		Small(3),
+		/**
+		 * Gives 9 extra slots.
+		 */
+		Medium(9),
+		/**
+		 * Gives 15 extra slots.
+		 */
+		Large(15),
+		/**
+		 * Gives 21 extra slots.
+		 */
+		XLarge(21),
+		/**
+		 * Gives 27 extra slots.
+		 */
+		XXLarge(27);
+
+		/**
+		 * The number of additional slots this will give
+		 */
+		public final int additional;
+
+		private ChestType(int additional) {
+			this.additional = additional;
+		}
+	}
+
+	public static class SmallMCB extends MinionChestBlock {
+		public SmallMCB(Properties properties) {
+			super(properties, ChestType.Small);
+		}
+	}
+
+	public static class MediumMCB extends MinionChestBlock {	
+		public MediumMCB(Properties properties) {
+			super(properties, ChestType.Medium);
+		}
+	}
+
+	public static class LargeMCB extends MinionChestBlock {
+		public LargeMCB(Properties properties) {
+			super(properties, ChestType.Large);
+		}
 	}
 }

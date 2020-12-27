@@ -9,7 +9,7 @@ package net.hypixel.skyblock.pets;
  */
 public class Pets {
 	public static final Pet baby_yeti = null;
-	public static final Pet bat = null;
+	public static final Pet bat = new BatPet();
 	public static final Pet bee = new BeePet();
 	public static final Pet black_cat = null;
 	public static final Pet blaze = null;

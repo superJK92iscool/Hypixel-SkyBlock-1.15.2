@@ -1,6 +1,6 @@
 package net.hypixel.skyblock.inventory.container.minion;
 
-import net.hypixel.skyblock.items.minion.SellerItem;
+import net.hypixel.skyblock.tags.ModItemTags;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -21,6 +21,6 @@ public class SellerSlot extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof SellerItem;
+		return stack.getItem().isIn(ModItemTags.seller);
 	}
 }

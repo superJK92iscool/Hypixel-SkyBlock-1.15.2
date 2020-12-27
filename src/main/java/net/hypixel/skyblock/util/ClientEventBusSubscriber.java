@@ -8,11 +8,14 @@ import net.hypixel.skyblock.client.gui.screen.MinionChestScreen.SmallMCS;
 import net.hypixel.skyblock.init.blocks.BlockInit;
 import net.hypixel.skyblock.init.blocks.MinionBlockInit;
 import net.hypixel.skyblock.inventory.container.ModContainerTypes;
+import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -107,5 +110,9 @@ public class ClientEventBusSubscriber {
 		RenderTypeLookup.setRenderLayer(MinionBlockInit.wheat_minion_b.get(), RenderType.getTranslucent());
 		
 		RenderTypeLookup.setRenderLayer(BlockInit.hard_glass.get(), RenderType.getTranslucent());
+		
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.small_mcte.get(), ChestTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.medium_mcte.get(), ChestTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.large_mcte.get(), ChestTileEntityRenderer::new);
 	}
 }

@@ -11,7 +11,7 @@ public class ModItemTags extends ItemTags {
 	public static final Tag<Item> seller = makeWrapperTag("wrapper");
 	public static final Tag<Item> pets = makeWrapperTag("pets");
 	
-	private static Tag<Item> makeWrapperTag(String p_199901_0_) {
-		return new Wrapper(new ResourceLocation(p_199901_0_));
+	private static Tag<Item> makeWrapperTag(String location) {
+		return new ItemTags.Wrapper(new ResourceLocation(location));
 	}
 }

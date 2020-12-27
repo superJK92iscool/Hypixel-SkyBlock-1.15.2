@@ -2,13 +2,20 @@ package net.hypixel.skyblock.tileentity.minion;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.hypixel.skyblock.HypixelSkyBlockMod;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock;
 import net.hypixel.skyblock.blocks.minion.MinionChestBlock.ChestType;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.LargeMCC;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.MediumMCC;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.SmallMCC;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -28,7 +35,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -43,31 +49,15 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * @author MrPineapple070
  * @version 5 July 2020
  */
-public abstract class AbstractMinionChestTileEntity extends LockableLootTileEntity
-		implements IChestLid, ITickableTileEntity {
-	public static class SmallMCTE extends AbstractMinionChestTileEntity {
-		public SmallMCTE() {
-			super(ModTileEntityTypes.small_mcte.get(), ChestType.Small);
-		}
-	}
-
-	public static class MediumMCTE extends AbstractMinionChestTileEntity {
-		public MediumMCTE() {
-			super(ModTileEntityTypes.medium_mcte.get(), ChestType.Medium);
-		}
-	}
-
-	public static class LargeMCTE extends AbstractMinionChestTileEntity {
-		public LargeMCTE() {
-			super(ModTileEntityTypes.large_mcte.get(), ChestType.Large);
-		}
-	}
-
+@OnlyIn(value = Dist.CLIENT, _interface = IChestLid.class)
+public abstract class AbstractMinionChestTileEntity extends LockableLootTileEntity implements IChestLid, ITickableTileEntity {
+	@Nullable
 	protected LazyOptional<IItemHandler> chestHandler = LazyOptional.of(() -> new InvWrapper(this));
 
 	/**
 	 * The {@link NonNullList} of things that {@code this} contains.
 	 */
+	@Nonnull
 	protected NonNullList<ItemStack> items;
 
 	/**
@@ -78,6 +68,7 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	/**
 	 * The number of Players using {@code this}
 	 */
+	@Nonnegative
 	protected int numPlayersUsing;
 
 	/**
@@ -95,6 +86,7 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	/**
 	 * The {@link ChestType} of this.
 	 */
+	@Nonnull
 	public final ChestType type;
 
 	/**
@@ -145,7 +137,16 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container." + this.getType().getRegistryName().toString());
+		switch (this.type) {
+		case Small:
+			return MinionChestBlock.container_name_s;
+		case Medium:
+			return MinionChestBlock.container_name_m;
+		case Large:
+			return MinionChestBlock.container_name_l;
+		default:
+			throw new IllegalStateException("Illegal Minion Chest Type:\t" + this.type.name());
+		}
 	}
 
 	@Override
@@ -166,7 +167,7 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public int getSizeInventory() {
-		return this.type.additional;
+		return this.items.size();
 	}
 
 	@Override
@@ -207,6 +208,35 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 				SoundCategory.BLOCKS, .5f, this.world.rand.nextFloat() * .1f + .9f);
 	}
 
+	public void openInventory(PlayerEntity player) {
+		if (!player.isSpectator()) {
+			if (this.numPlayersUsing < 0) {
+				this.numPlayersUsing = 0;
+			}
+
+			++this.numPlayersUsing;
+			this.onOpenOrClose();
+		}
+
+	}
+
+	public void closeInventory(PlayerEntity player) {
+		if (!player.isSpectator()) {
+			--this.numPlayersUsing;
+			this.onOpenOrClose();
+		}
+
+	}
+
+	protected void onOpenOrClose() {
+		Block block = this.getBlockState().getBlock();
+		if (block instanceof ChestBlock) {
+			this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
+			this.world.notifyNeighborsOfStateChange(this.pos, block);
+		}
+
+	}
+
 	@Override
 	public void read(CompoundNBT compound) {
 		HypixelSkyBlockMod.LOGGER.info("AbstractMinionChestTileEntity Reading");
@@ -219,6 +249,7 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public boolean receiveClientEvent(int id, int ChestType) {
+		HypixelSkyBlockMod.LOGGER.info("Receiving Client Event id " + id + " of chest type " + ChestType);
 		if (id == 1) {
 			this.numPlayersUsing = ChestType;
 			return true;
@@ -234,11 +265,13 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
+		HypixelSkyBlockMod.LOGGER.info("Remove stack form slot " + index);
 		return ItemStackHelper.getAndRemove(this.items, index);
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
+		HypixelSkyBlockMod.LOGGER.info("Setting slot " + index + " to " + stack.toString());
 		final ItemStack indexStack = this.items.get(index);
 		final boolean flag = !stack.isEmpty() && stack.isItemEqual(indexStack)
 				&& ItemStack.areItemStackTagsEqual(stack, indexStack);
@@ -284,6 +317,7 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public void updateContainingBlockInfo() {
+		HypixelSkyBlockMod.LOGGER.info("Update Containing Block Info.");
 		super.updateContainingBlockInfo();
 		if (this.chestHandler != null) {
 			this.chestHandler.invalidate();
@@ -298,5 +332,23 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 		if (!this.checkLootAndWrite(compound))
 			ItemStackHelper.saveAllItems(compound, this.items);
 		return compound;
+	}
+
+	public static class SmallMCTE extends AbstractMinionChestTileEntity {
+		public SmallMCTE() {
+			super(ModTileEntityTypes.small_mcte.get(), ChestType.Small);
+		}
+	}
+
+	public static class MediumMCTE extends AbstractMinionChestTileEntity {
+		public MediumMCTE() {
+			super(ModTileEntityTypes.medium_mcte.get(), ChestType.Medium);
+		}
+	}
+
+	public static class LargeMCTE extends AbstractMinionChestTileEntity {
+		public LargeMCTE() {
+			super(ModTileEntityTypes.large_mcte.get(), ChestType.Large);
+		}
 	}
 }
