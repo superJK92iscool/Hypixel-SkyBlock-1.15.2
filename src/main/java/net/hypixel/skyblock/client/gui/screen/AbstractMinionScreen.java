@@ -119,6 +119,7 @@ public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionCo
 		 *
 		 * @param xIn x coordinate
 		 * @param yIn y coordinate
+		 * @param name {@link String} to display on the button.
 		 */
 		public Button(int xIn, int yIn, String name) {
 			super(xIn, yIn, 18, 18, name);

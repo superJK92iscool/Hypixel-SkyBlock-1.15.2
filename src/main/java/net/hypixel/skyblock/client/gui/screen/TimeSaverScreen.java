@@ -1,6 +1,5 @@
 package net.hypixel.skyblock.client.gui.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
@@ -57,8 +56,6 @@ public class TimeSaverScreen extends ContainerScreen<TimeSaverContainer> {
 
 		/**
 		 * Binds and renders a texture over this button.
-		 *
-		 * @param matrixStack {@link MatrixStack} to use.
 		 */
 		protected abstract void bindTexture();
 
