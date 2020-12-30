@@ -642,13 +642,7 @@
 		{
 			"name": "tail1",
 			"origin": [0, 9, 8],
-			"children": [37,
-				{
-					"name": "tail2",
-					"origin": [0, 1, 8],
-					"children": [38]
-				}
-			]
+			"children": [37, 38]
 		},
 		{
 			"name": "backLegL",

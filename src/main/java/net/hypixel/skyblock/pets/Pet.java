@@ -12,6 +12,7 @@ import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.util.PetLevelRequirement;
+import net.minecraft.item.Item;
 
 /**
  * Basis for all
@@ -22,13 +23,6 @@ import net.hypixel.skyblock.util.PetLevelRequirement;
  * @since 11 October 2019
  */
 public abstract class Pet {
-	/**
-	 * An enumerated type that holds all pets.<br>
-	 * Used to determine if two pets are identical.<br>
-	 *
-	 * @version 08 September 2020
-	 * @since 11 October 2019
-	 */
 	public enum PetType {
 		Baby_Yeti, Bat, Bee, Black_Cat, Blaze, Blue_Whale, Chicken, Dolphin, Elephant, Ender_Dragon, Enderman,
 		Endermite, Flying_Fish, Ghoul, Giraffe, Golem, Guardian, Horse, Hound, Jellyfish, Jerry, Lion, Magma_Cube,
@@ -64,13 +58,18 @@ public abstract class Pet {
 	 * {@link Collection}
 	 */
 	@Nonnull
-	protected final Collection collection;
+	public final Collection collection;
 
 	/**
 	 * Current amount of experience held.
 	 */
 	@Nonnegative
 	protected float current_xp;
+	
+	@Nonnegative
+	protected int req_xp;
+	
+	protected Item held_item;
 
 	/**
 	 * Level of this.
@@ -82,7 +81,7 @@ public abstract class Pet {
 	 * {@link PetType}.
 	 */
 	@Nonnull
-	protected final PetType petType;
+	public final PetType petType;
 
 	/**
 	 * {@link ModItemRarity}
@@ -94,8 +93,19 @@ public abstract class Pet {
 		this.rarity = Objects.requireNonNull(rarity, "Pet must have a rarity.");
 		this.petType = Objects.requireNonNull(petType, "Pet must have a PetType");
 		this.collection = Objects.requireNonNull(collection, "Pet must have a Collection");
-		this.level = 0;
+		this.level = 1;
 		this.current_xp = 0;
+		this.req_xp = PetLevelRequirement.getRequirement(this.rarity, this.level);
+	}
+
+	public void addExperience(float xp) {
+		ImmutableList<Integer> lvl = PetLevelRequirement.getRequirement(this.rarity);
+		int amount = lvl.get(this.level + 1);
+		int inc = this.level + 1;
+		while (amount < xp)
+			amount += lvl.get(++inc);
+		this.level += inc;
+		this.req_xp = lvl.get(this.level + 1);
 	}
 
 	/**
@@ -126,6 +136,8 @@ public abstract class Pet {
 			return false;
 		return true;
 	}
+
+	public abstract double[] getBuffs();
 
 	/**
 	 * @return {@link #collection}
@@ -170,7 +182,7 @@ public abstract class Pet {
 	public boolean isIdentical(Pet other) {
 		return this.petType == other.petType;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Pet [collection=" + this.collection + ", current_xp=" + this.current_xp + ", level=" + this.level
@@ -181,18 +193,10 @@ public abstract class Pet {
 	 * Sets {@link #level} to the next level.
 	 */
 	public void upgradeLevel() {
-		++this.level;
+		if (this.level < 100)
+			++this.level;
 	}
 	
-	public void addExperience(float xp) {
-		ImmutableList<Integer> lvl = PetLevelRequirement.getRequirement(this.rarity);
-		int amount = lvl.get(this.level + 1);
-		int inc = this.level + 1;
-		while (amount < xp)
-			amount += lvl.get(++inc);
-		this.level += inc;
-	}
-
 	/**
 	 * Sets {@link #rarity} to the next tier.
 	 */

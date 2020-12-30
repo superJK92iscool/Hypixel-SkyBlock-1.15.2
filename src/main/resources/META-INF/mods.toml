@@ -24,7 +24,7 @@ updateJSONURL="https://hypixel.net/forums/skyblock-patch-notes.158/"
 
 displayURL="https://hypixel.net/forums/skyblock.157/"
 
-credits="Hypixel SkyBlock Developers"
+credits="Hypixel SkyBlock Developers. Textures by ImperiaL_24. BlockBench"
 
 authors="Hypixel SkyBlock Developers"
 
@@ -38,22 +38,15 @@ Models made with BlockBench
 Get is here: https://blockbench.net/downloads/
 '''
 
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[31,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
-    ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
-    side="BOTH"
-# Here's another dependency
 [[dependencies.examplemod]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.15.2]"
-    ordering="NONE"
-    side="BOTH"
+	modId="forge"
+	mandatory=true
+	versionRange="[31,)"
+	ordering="NONE"
+	side="BOTH"
+[[dependencies.examplemod]]
+	modId="minecraft"
+	mandatory=true
+	versionRange="[1.15.2]"
+	ordering="NONE"
+	side="BOTH"

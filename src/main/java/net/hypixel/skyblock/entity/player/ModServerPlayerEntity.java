@@ -45,7 +45,7 @@ public class ModServerPlayerEntity extends ServerPlayerEntity {
 	}
 
 	public void addPet(PetItem pet) {
-		this.pet_list.add(pet.getPet());
+		this.pet_list.add(pet.pet);
 	}
 
 	public void consumeBait() {

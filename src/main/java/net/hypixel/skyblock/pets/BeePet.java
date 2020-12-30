@@ -11,7 +11,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
  * @version 17 August 2020
  * @since 17 August 2020
  */
-public class BeePet extends Pet {
+public final class BeePet extends Pet {
 	public BeePet() {
 		super(Pet.getRandomRarityLow(), Collection.Farming, PetType.Bee);
 	}
@@ -29,5 +29,10 @@ public class BeePet extends Pet {
 			}
 			continue;
 		}
+	}
+
+	@Override
+	public double[] getBuffs() {
+		return null;
 	}
 }

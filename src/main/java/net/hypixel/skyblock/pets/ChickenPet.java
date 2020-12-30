@@ -17,4 +17,9 @@ public class ChickenPet extends Pet {
 	@Override
 	public void effect(ModServerPlayerEntity player) {
 	}
+
+	@Override
+	public double[] getBuffs() {
+		return null;
+	}
 }

@@ -11,9 +11,9 @@ import net.minecraft.util.text.TextFormatting;
  * @version 26 July 2020
  */
 public enum ModItemRarity {
-	Common(TextFormatting.WHITE), Epic(TextFormatting.DARK_PURPLE), Legendary(TextFormatting.GOLD),
-	Mythic(TextFormatting.LIGHT_PURPLE), Rare(TextFormatting.BLUE), Special(TextFormatting.RED),
-	Uncommon(TextFormatting.GREEN), Very_Special(TextFormatting.DARK_RED);
+	Common(TextFormatting.WHITE, 0), Uncommon(TextFormatting.GREEN, 1), Rare(TextFormatting.BLUE, 2),
+	Epic(TextFormatting.DARK_PURPLE, 3), Legendary(TextFormatting.GOLD, 4), Mythic(TextFormatting.LIGHT_PURPLE, 5),
+	Special(TextFormatting.RED, 6), Very_Special(TextFormatting.DARK_RED, 7);
 
 	/**
 	 * A {@link ImmutableList} of {@link ModItemRarity} that are higher rarities.
@@ -38,14 +38,17 @@ public enum ModItemRarity {
 	 * The {@link TextFormatting} of this {@code ModItemRarity}
 	 */
 	public final TextFormatting color;
+	
+	public final int rank;
 
 	/**
 	 * Construct this.
 	 *
 	 * @param color {@link TextFormatting} for this.
 	 */
-	private ModItemRarity(TextFormatting color) {
+	private ModItemRarity(TextFormatting color, int rank) {
 		this.color = color;
+		this.rank = rank;
 	}
 
 	/**
