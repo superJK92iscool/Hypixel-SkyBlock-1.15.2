@@ -2,6 +2,7 @@ package net.hypixel.skyblock.init.blocks;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.blocks.minion.AbstractMinionBlock;
+import net.hypixel.skyblock.blocks.minion.AcaciaMinionBlock;
 import net.hypixel.skyblock.blocks.minion.CoalMinion;
 import net.hypixel.skyblock.blocks.minion.CobblestoneMinion;
 import net.hypixel.skyblock.blocks.minion.WheatMinion;
@@ -25,27 +26,27 @@ public class MinionBlockInit {
 			HypixelSkyBlockMod.MOD_ID);
 
 	public static final RegistryObject<Block> acacia_minion_1 = minionBlocks.register("acacia_minion_1",
-			() -> new Block(Properties.from(new Block(Properties.from(Blocks.STONE)))));
+			() -> new AcaciaMinionBlock(MinionTier.I));
 	public static final RegistryObject<Block> acacia_minion_2 = minionBlocks.register("acacia_minion_2",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.II));
 	public static final RegistryObject<Block> acacia_minion_3 = minionBlocks.register("acacia_minion_3",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.III));
 	public static final RegistryObject<Block> acacia_minion_4 = minionBlocks.register("acacia_minion_4",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.IV));
 	public static final RegistryObject<Block> acacia_minion_5 = minionBlocks.register("acacia_minion_5",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.V));
 	public static final RegistryObject<Block> acacia_minion_6 = minionBlocks.register("acacia_minion_6",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.VI));
 	public static final RegistryObject<Block> acacia_minion_7 = minionBlocks.register("acacia_minion_7",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.VII));
 	public static final RegistryObject<Block> acacia_minion_8 = minionBlocks.register("acacia_minion_8",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.VIII));
 	public static final RegistryObject<Block> acacia_minion_9 = minionBlocks.register("acacia_minion_9",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.IX));
 	public static final RegistryObject<Block> acacia_minion_a = minionBlocks.register("acacia_minion_a",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.X));
 	public static final RegistryObject<Block> acacia_minion_b = minionBlocks.register("acacia_minion_b",
-			() -> new Block(Properties.from(Blocks.STONE)));
+			() -> new AcaciaMinionBlock(MinionTier.XI));
 
 	public static final RegistryObject<Block> birch_minion_1 = minionBlocks.register("birch_minion_1",
 			() -> new Block(Properties.from(Blocks.STONE)));

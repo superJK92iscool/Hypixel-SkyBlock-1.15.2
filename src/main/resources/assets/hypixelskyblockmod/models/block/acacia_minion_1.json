@@ -4,7 +4,8 @@
 	"textures": {
 		"0": "hypixelskyblockmod:blocks/minion_body",
 		"1": "hypixelskyblockmod:blocks/acacia_minion",
-		"2": "hypixelskyblockmod:blocks/tier/tier_1"
+		"2": "hypixelskyblockmod:blocks/tier/tier_1",
+		"particle": "hypixelskyblockmod:blocks/acacia_minion"
 	},
 	"elements": [
 		{
