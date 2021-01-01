@@ -8,6 +8,17 @@ import net.hypixel.skyblock.tileentity.TimeSaverTileEntity.NightSaverTileEntity;
 import net.hypixel.skyblock.tileentity.minion.AbstractMinionChestTileEntity.LargeMCTE;
 import net.hypixel.skyblock.tileentity.minion.AbstractMinionChestTileEntity.MediumMCTE;
 import net.hypixel.skyblock.tileentity.minion.AbstractMinionChestTileEntity.SmallMCTE;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE1;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE2;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE3;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE4;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE5;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE6;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE7;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE8;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE9;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTEa;
+import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTEb;
 import net.hypixel.skyblock.tileentity.minion.CoalMinionTileEntity.CoalMTE1;
 import net.hypixel.skyblock.tileentity.minion.CoalMinionTileEntity.CoalMTE2;
 import net.hypixel.skyblock.tileentity.minion.CoalMinionTileEntity.CoalMTE3;
@@ -55,7 +66,42 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @since 11 June 2019
  */
 public class ModTileEntityTypes {
-	public static final DeferredRegister<TileEntityType<?>> tile_entity_types = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, HypixelSkyBlockMod.MOD_ID);
+	public static final DeferredRegister<TileEntityType<?>> tile_entity_types = new DeferredRegister<>(
+			ForgeRegistries.TILE_ENTITIES, HypixelSkyBlockMod.MOD_ID);
+
+	public static final RegistryObject<TileEntityType<AcaciaMTE1>> acacia_minion_1 = tile_entity_types.register(
+			"acacia_minion_1",
+			() -> Builder.create(AcaciaMTE1::new, MinionBlockInit.acacia_minion_1.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE2>> acacia_minion_2 = tile_entity_types.register(
+			"acacia_minion_2",
+			() -> Builder.create(AcaciaMTE2::new, MinionBlockInit.acacia_minion_2.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE3>> acacia_minion_3 = tile_entity_types.register(
+			"acacia_minion_3",
+			() -> Builder.create(AcaciaMTE3::new, MinionBlockInit.acacia_minion_3.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE4>> acacia_minion_4 = tile_entity_types.register(
+			"acacia_minion_4",
+			() -> Builder.create(AcaciaMTE4::new, MinionBlockInit.acacia_minion_4.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE5>> acacia_minion_5 = tile_entity_types.register(
+			"acacia_minion_5",
+			() -> Builder.create(AcaciaMTE5::new, MinionBlockInit.acacia_minion_5.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE6>> acacia_minion_6 = tile_entity_types.register(
+			"acacia_minion_6",
+			() -> Builder.create(AcaciaMTE6::new, MinionBlockInit.acacia_minion_6.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE7>> acacia_minion_7 = tile_entity_types.register(
+			"acacia_minion_7",
+			() -> Builder.create(AcaciaMTE7::new, MinionBlockInit.acacia_minion_7.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE8>> acacia_minion_8 = tile_entity_types.register(
+			"acacia_minion_8",
+			() -> Builder.create(AcaciaMTE8::new, MinionBlockInit.acacia_minion_8.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTE9>> acacia_minion_9 = tile_entity_types.register(
+			"acacia_minion_9",
+			() -> Builder.create(AcaciaMTE9::new, MinionBlockInit.acacia_minion_9.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTEa>> acacia_minion_a = tile_entity_types.register(
+			"acacia_minion_a",
+			() -> Builder.create(AcaciaMTEa::new, MinionBlockInit.acacia_minion_a.get()).build(null));
+	public static final RegistryObject<TileEntityType<AcaciaMTEb>> acacia_minion_b = tile_entity_types.register(
+			"acacia_minion_b",
+			() -> Builder.create(AcaciaMTEb::new, MinionBlockInit.acacia_minion_b.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<CoalMTE1>> coal_minion_1 = tile_entity_types.register(
 			"coal_minion_1", () -> Builder.create(CoalMTE1::new, MinionBlockInit.coal_minion_1.get()).build(null));

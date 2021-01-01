@@ -5,12 +5,17 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
+import net.hypixel.skyblock.blocks.minion.AbstractMinionBlock;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock;
 import net.hypixel.skyblock.inventory.container.minion.AbstractMinionContainer;
+import net.hypixel.skyblock.tileentity.minion.AbstractMinionTileEntity.MinionTier;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.AbstractButton;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -33,11 +38,22 @@ public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionCo
 	@Nonnull
 	public static final ResourceLocation background_texture = new ResourceLocation(HypixelSkyBlockMod.MOD_ID,
 			"textures/gui/abstract_minion_screen.png");
-	
+
+	/**
+	 * Determine if {@link #upgrade} and {@link #empty} are drawn to the screen.
+	 */
 	private boolean buttonsNotDrawn;
+
+	/**
+	 * {@link UpgradeButton} to display on this screen.
+	 */
 	private UpgradeButton upgrade;
+
+	/**
+	 * {@link EmptyButton} to display on this screen.
+	 */
 	private EmptyButton empty;
-	
+
 	/**
 	 * Construct this.
 	 *
@@ -104,21 +120,24 @@ public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionCo
 		super.render(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
 		if (this.buttonsNotDrawn)
 			this.buttonsNotDrawn = false;
 	}
-	
+
+	/**
+	 * Serve as a base for buttons to be displayed on this screen.
+	 */
 	@OnlyIn(Dist.CLIENT)
 	abstract static class Button extends AbstractButton {
 		/**
 		 * Construct this.
 		 *
-		 * @param xIn x coordinate
-		 * @param yIn y coordinate
+		 * @param xIn  x coordinate
+		 * @param yIn  y coordinate
 		 * @param name {@link String} to display on the button.
 		 */
 		public Button(int xIn, int yIn, String name) {
@@ -126,6 +145,13 @@ public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionCo
 		}
 	}
 
+	/**
+	 * When this {@link Button} is pressed, automatically upgrade this
+	 * {@link AbstractMinionBlock} to the next {@link MinionTier}.<br>
+	 * This {@link Button} will not do anything if the {@link AbstractMinionBlock} is at the
+	 * maximum {@link MinionTier}<br>
+	 * or if the {@link PlayerEntity} does not have the required materials.
+	 */
 	class UpgradeButton extends Button {
 		public UpgradeButton(int x, int y) {
 			super(x + 119, y + 109, "\u2191");
@@ -134,15 +160,22 @@ public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionCo
 		@Override
 		public void onPress() {
 			HypixelSkyBlockMod.LOGGER.info(UpgradeButton.class.getSimpleName() + " pressed.");
-			//AbstractMinionScreen.this.minecraft.getConnection().sendPacket(new CEmptyMinionPacket());
+			// AbstractMinionScreen.this.minecraft.getConnection().sendPacket(new
+			// CEmptyMinionPacket());
 		}
-		
+
 		@Override
 		public void renderToolTip(int x, int y) {
 			AbstractMinionScreen.this.renderTooltip("Upgrade to next Tier", x, y);
 		}
 	}
 
+	/**
+	 * When this {@link Button} is pressed, automatically empty all {@link Item}
+	 * from this {@link AbstractMinionBlock}.<br>
+	 * Also empties {@link MinionChestBlock} if the {@link AbstractMinionBlock} has one.
+	 * This {@link Button} will not do anything is the {@link AbstractMinionBlock} is empty.
+	 */
 	class EmptyButton extends Button {
 		public EmptyButton(int x, int y) {
 			super(x + 138, y + 109, "\u2193");
@@ -151,9 +184,9 @@ public final class AbstractMinionScreen extends ContainerScreen<AbstractMinionCo
 		@Override
 		public void onPress() {
 			HypixelSkyBlockMod.LOGGER.info(EmptyButton.class.getSimpleName() + " pressed.");
-			//AbstractMinionScreen.this.minecraft.getConnection().sendPacket(null);
+			// AbstractMinionScreen.this.minecraft.getConnection().sendPacket(null);
 		}
-		
+
 		@Override
 		public void renderToolTip(int x, int y) {
 			AbstractMinionScreen.this.renderTooltip("Empty the Minion of contents", x, y);
