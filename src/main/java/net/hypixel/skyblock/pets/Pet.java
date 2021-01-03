@@ -12,6 +12,7 @@ import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.util.PetLevelRequirement;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 
 /**
@@ -136,7 +137,11 @@ public abstract class Pet {
 			return false;
 		return true;
 	}
-
+	
+	/**
+	 * Creates a primitive type array of buffs applied to {@link PlayerEntity}
+	 * @return primitive type array.
+	 */
 	public abstract double[] getBuffs();
 
 	/**

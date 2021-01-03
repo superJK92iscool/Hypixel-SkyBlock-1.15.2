@@ -5,9 +5,11 @@ import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
 
 /**
+ * The <a href="https://hypixel-skyblock.fandom.com/wiki/Chicken_Pet">Chicken Pet</a>.
+ * 
  * @author MrPineapple070
- * @version 12 October 2020
- * @since 12 October 2020
+ * @version 21 February 2020
+ * @since 21 February 2020
  */
 public class ChickenPet extends Pet {
 	protected ChickenPet() {

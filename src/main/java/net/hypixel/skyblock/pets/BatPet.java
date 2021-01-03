@@ -4,6 +4,13 @@ import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
 
+/**
+ * The <a href="https://hypixel-skyblock.fandom.com/wiki/Bat_Pet">Bat Pet</a>.
+ * 
+ * @author MrPineapple070
+ * @version 30 October 2020
+ * @since 21 February 2020
+ */
 public final class BatPet extends Pet {
 	private double scc;
 	private double intel;
@@ -65,6 +72,7 @@ public final class BatPet extends Pet {
 		player.activePet = this;
 	}
 	
+	@Override
 	public double[] getBuffs() {
 		return new double[] {this.scc, this.intel, this.speed, this.candy, this.n_intel, this.n_speed, this.wings, this.sonar};
 	}

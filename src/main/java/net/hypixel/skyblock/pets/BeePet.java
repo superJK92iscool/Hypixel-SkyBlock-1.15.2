@@ -7,9 +7,11 @@ import net.hypixel.skyblock.items.Collection;
 import net.minecraft.entity.player.ServerPlayerEntity;
 
 /**
+ * The <a href="https://hypixel-skyblock.fandom.com/wiki/Bee_Pet"> Bee Pet</a>.
+ * 
  * @author MrPineapple070
- * @version 17 August 2020
- * @since 17 August 2020
+ * @version 21 Febuaru 2019
+ * @since 21 February 2019
  */
 public final class BeePet extends Pet {
 	public BeePet() {

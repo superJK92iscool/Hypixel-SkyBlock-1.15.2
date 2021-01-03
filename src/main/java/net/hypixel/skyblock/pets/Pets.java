@@ -14,7 +14,7 @@ public class Pets {
 	public static final Pet black_cat = null;
 	public static final Pet blaze = null;
 	public static final Pet blue_whale = null;
-	public static final Pet chicken = null;
+	public static final Pet chicken = new ChickenPet();
 	public static final Pet dolphin = null;
 	public static final Pet elephant = null;
 	public static final Pet ender_dragon = null;

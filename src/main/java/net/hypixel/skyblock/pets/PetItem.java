@@ -27,9 +27,19 @@ import net.minecraft.world.World;
  * @version 23 June 2020
  */
 public abstract class PetItem extends Item {
+	/**
+	 * {@link ITextComponent} containing an empty {@link String}.
+	 */
 	protected static final ITextComponent blank = new StringTextComponent("");
+
+	/**
+	 * {@link ITextComponent} containing the default progress to the next level.<br>
+	 * By default this contains 20 '-' with {@link FormatingCodes#white}.<br>
+	 * This can be changes to contain any amount of {@link FormatingCodes#green} and
+	 * {@link FormatingCodes#white} '-' as long the total number of '-' is 20.
+	 */
 	protected ITextComponent lvl_progress = new StringTextComponent(FormatingCodes.white + "--------------------");
-	
+
 	/**
 	 * The {@link Pet} of this.
 	 */
@@ -44,7 +54,7 @@ public abstract class PetItem extends Item {
 	@Override
 	public abstract void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip,
 			ITooltipFlag flagIn);
-	
+
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
 		ITextComponent lvl = new StringTextComponent("[Lvl " + this.pet.getLevel() + "]");
