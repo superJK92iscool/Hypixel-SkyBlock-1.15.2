@@ -10,6 +10,7 @@ import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.util.FormatingCodes;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -57,7 +58,7 @@ public abstract class PetItem extends Item {
 
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
-		ITextComponent lvl = new StringTextComponent("[Lvl " + this.pet.getLevel() + "]");
+		ITextComponent lvl = new StringTextComponent("[Lvl " + this.pet.getLevel() + "] ");
 		return lvl.appendSibling(super.getDisplayName(stack).applyTextStyle(this.pet.getRarity().color));
 	}
 
@@ -73,6 +74,20 @@ public abstract class PetItem extends Item {
 	 */
 	public Collection getPetType() {
 		return this.pet.collection;
+	}
+	
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (worldIn.isRemote)
+			return;
+		if (!(entityIn instanceof PlayerEntity))
+			return;
+		PlayerEntity player = (PlayerEntity)entityIn;
+		Item item = stack.getItem();
+		if (!(item instanceof PetItem))
+			return;
+		PetItem pet = (PetItem)item;
+		pet.pet.effect(player);
 	}
 
 	@Override

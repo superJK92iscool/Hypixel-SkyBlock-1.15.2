@@ -1,8 +1,8 @@
 package net.hypixel.skyblock.pets;
 
-import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
+import net.minecraft.entity.player.PlayerEntity;
 
 /**
  * The <a href="https://hypixel-skyblock.fandom.com/wiki/Chicken_Pet">Chicken Pet</a>.
@@ -17,7 +17,7 @@ public class ChickenPet extends Pet {
 	}
 
 	@Override
-	public void effect(ModServerPlayerEntity player) {
+	public void effect(PlayerEntity player) {
 	}
 
 	@Override

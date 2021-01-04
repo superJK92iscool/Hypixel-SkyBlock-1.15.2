@@ -1,8 +1,8 @@
 package net.hypixel.skyblock.pets;
 
-import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
+import net.minecraft.entity.player.PlayerEntity;
 
 /**
  * The <a href="https://hypixel-skyblock.fandom.com/wiki/Bat_Pet">Bat Pet</a>.
@@ -26,7 +26,7 @@ public final class BatPet extends Pet {
 	}
 
 	@Override
-	public void effect(ModServerPlayerEntity player) {
+	public void effect(PlayerEntity player) {
 		this.scc = .05d * this.level;
 		this.intel = this.level;
 		this.speed = .05d * this.level;
@@ -69,7 +69,6 @@ public final class BatPet extends Pet {
 		this.candy = c * this.level;
 		this.wings = w * this.level;
 		this.sonar = s * this.level;
-		player.activePet = this;
 	}
 	
 	@Override

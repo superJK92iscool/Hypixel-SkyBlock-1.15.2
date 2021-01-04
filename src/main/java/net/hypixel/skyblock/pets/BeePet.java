@@ -1,10 +1,7 @@
 package net.hypixel.skyblock.pets;
 
-import java.util.List;
-
-import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
 /**
  * The <a href="https://hypixel-skyblock.fandom.com/wiki/Bee_Pet"> Bee Pet</a>.
@@ -19,18 +16,7 @@ public final class BeePet extends Pet {
 	}
 
 	@Override
-	public void effect(ModServerPlayerEntity player) {
-		final List<ServerPlayerEntity> players = player.getServerWorld().getPlayers();
-		for (final ServerPlayerEntity p : players) {
-			if (p instanceof ModServerPlayerEntity) {
-				final ModServerPlayerEntity mp = (ModServerPlayerEntity) p;
-				if (player == mp)
-					continue;
-				if (player.getActivePet().isIdentical(mp.getActivePet()))
-					continue;
-			}
-			continue;
-		}
+	public void effect(PlayerEntity player) {
 	}
 
 	@Override

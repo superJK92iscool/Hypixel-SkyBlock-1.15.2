@@ -5,10 +5,10 @@ import java.util.Random;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 
-import net.hypixel.skyblock.entity.player.ModServerPlayerEntity;
 import net.hypixel.skyblock.items.Collection;
 import net.hypixel.skyblock.items.ModItemRarity;
 import net.hypixel.skyblock.util.PetLevelRequirement;
@@ -66,10 +66,14 @@ public abstract class Pet {
 	 */
 	@Nonnegative
 	protected float current_xp;
-	
+
 	@Nonnegative
 	protected int req_xp;
-	
+
+	/**
+	 * {@link Item} that this pet holds.
+	 */
+	@Nullable
 	protected Item held_item;
 
 	/**
@@ -99,13 +103,18 @@ public abstract class Pet {
 		this.req_xp = PetLevelRequirement.getRequirement(this.rarity, this.level);
 	}
 
+	/**
+	 * Add experience points to the pet.
+	 * 
+	 * @param xp amount of experience points to add.
+	 */
 	public void addExperience(float xp) {
 		ImmutableList<Integer> lvl = PetLevelRequirement.getRequirement(this.rarity);
 		int amount = lvl.get(this.level + 1);
 		int inc = this.level + 1;
 		while (amount < xp)
 			amount += lvl.get(++inc);
-		this.level += inc;
+		this.level = inc;
 		this.req_xp = lvl.get(this.level + 1);
 	}
 
@@ -114,32 +123,13 @@ public abstract class Pet {
 	 *
 	 * @param player the player.
 	 */
-	public abstract void effect(ModServerPlayerEntity player);
+	public abstract void effect(PlayerEntity player);
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Pet))
-			return false;
-		final Pet other = (Pet) obj;
-		if (this.collection != other.collection)
-			return false;
-		if (this.current_xp != other.current_xp)
-			return false;
-		if (this.level != other.level)
-			return false;
-		if (this.petType != other.petType)
-			return false;
-		if (this.rarity != other.rarity)
-			return false;
-		return true;
-	}
-	
 	/**
-	 * Creates a primitive type array of buffs applied to {@link PlayerEntity}
+	 * Creates a primitive type array of buffs applied to {@link PlayerEntity}.<br>
+	 * As each {@link Pet} gives different buffs, {@link Pet}s should not call this
+	 * method to get a different {@link Pet}'s buffs.
+	 * 
 	 * @return primitive type array.
 	 */
 	public abstract double[] getBuffs();
@@ -171,23 +161,17 @@ public abstract class Pet {
 	public ModItemRarity getRarity() {
 		return this.rarity;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (this.collection == null ? 0 : this.collection.hashCode());
-		result = prime * result + (int)this.current_xp;
-		result = prime * result + this.level;
-		result = prime * result + (this.petType == null ? 0 : this.petType.hashCode());
-		result = prime * result + (this.rarity == null ? 0 : this.rarity.hashCode());
-		return result;
-	}
-
+	
+	/**
+	 * Determine if this Pet is similar to another Pet.<br>
+	 * Checks if {@link #petType} of the two pets are the same.
+	 * @param other {@link Pet} to compare with.
+	 * @return true / false
+	 */
 	public boolean isIdentical(Pet other) {
 		return this.petType == other.petType;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Pet [collection=" + this.collection + ", current_xp=" + this.current_xp + ", level=" + this.level
@@ -201,7 +185,7 @@ public abstract class Pet {
 		if (this.level < 100)
 			++this.level;
 	}
-	
+
 	/**
 	 * Sets {@link #rarity} to the next tier.
 	 */
