@@ -32,14 +32,19 @@ public abstract class PetItem extends Item {
 	 * {@link ITextComponent} containing an empty {@link String}.
 	 */
 	protected static final ITextComponent blank = new StringTextComponent("");
-
+	
 	/**
-	 * {@link ITextComponent} containing the default progress to the next level.<br>
+	 * {@link String} containing the level of this pet.<br>
+	 */
+	protected static final String level = "\u00A77[Lvl %d]\u00A7r ";
+	
+	/**
+	 * {@link String} containing the default progress to the next level.<br>
 	 * By default this contains 20 '-' with {@link FormatingCodes#white}.<br>
 	 * This can be changes to contain any amount of {@link FormatingCodes#green} and
 	 * {@link FormatingCodes#white} '-' as long the total number of '-' is 20.
 	 */
-	protected ITextComponent lvl_progress = new StringTextComponent(FormatingCodes.white + "--------------------");
+	protected String lvl_progress = FormatingCodes.white + "--------------------";
 
 	/**
 	 * The {@link Pet} of this.
@@ -58,21 +63,21 @@ public abstract class PetItem extends Item {
 
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
-		ITextComponent lvl = new StringTextComponent("[Lvl " + this.pet.getLevel() + "] ");
+		ITextComponent lvl = new StringTextComponent(String.format(level, this.pet.getLevel()));
 		return lvl.appendSibling(super.getDisplayName(stack).applyTextStyle(this.pet.getRarity().color));
 	}
 
 	/**
-	 * @return {@link ModItemRarity} of {@link #pet}
+	 * @return {@link Pet#rarity}
 	 */
 	public ModItemRarity getPetRarity() {
 		return this.pet.rarity;
 	}
 
 	/**
-	 * @return {@link Collection} of {@link #pet}
+	 * @return {@link Pet#collection}
 	 */
-	public Collection getPetType() {
+	public Collection getPetCollection() {
 		return this.pet.collection;
 	}
 	

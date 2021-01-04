@@ -3,9 +3,9 @@
 	"parent": "block/cube_all",
 	"textures": {
 		"0": "hypixelskyblockmod:blocks/minion_body",
-		"1": "hypixelskyblockmod:blocks/cobblestone_minion",
-		"2": "hypixelskyblockmod:blocks/tier/tier_1",
-		"particle": "hypixelskyblockmod:blocks/cobblestone_minion"
+		"1": "hypixelskyblockmod:blocks/birch_minion",
+		"2": "hypixelskyblockmod:blocks/tier/tier_6",
+		"particle": "hypixelskyblockmod:blocks/birch_minion"
 	},
 	"elements": [
 		{

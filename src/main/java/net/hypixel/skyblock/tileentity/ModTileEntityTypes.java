@@ -19,6 +19,28 @@ import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE8;
 import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTE9;
 import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTEa;
 import net.hypixel.skyblock.tileentity.minion.AcaciaMinionTileEntity.AcaciaMTEb;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE1;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE2;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE3;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE4;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE5;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE6;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE7;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE8;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTE9;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTEa;
+import net.hypixel.skyblock.tileentity.minion.BirchMinionTileEntity.BirchMTEb;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE1;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE2;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE3;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE4;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE5;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE6;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE7;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE8;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTE9;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTEa;
+import net.hypixel.skyblock.tileentity.minion.BlazeMinionTileEntity.BlazeMTEb;
 import net.hypixel.skyblock.tileentity.minion.CoalMinionTileEntity.CoalMTE1;
 import net.hypixel.skyblock.tileentity.minion.CoalMinionTileEntity.CoalMTE2;
 import net.hypixel.skyblock.tileentity.minion.CoalMinionTileEntity.CoalMTE3;
@@ -102,6 +124,52 @@ public class ModTileEntityTypes {
 	public static final RegistryObject<TileEntityType<AcaciaMTEb>> acacia_minion_b = tile_entity_types.register(
 			"acacia_minion_b",
 			() -> Builder.create(AcaciaMTEb::new, MinionBlockInit.acacia_minion_b.get()).build(null));
+
+	public static final RegistryObject<TileEntityType<BirchMTE1>> birch_minion_1 = tile_entity_types.register(
+			"birch_minion_1", () -> Builder.create(BirchMTE1::new, MinionBlockInit.birch_minion_1.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE2>> birch_minion_2 = tile_entity_types.register(
+			"birch_minion_2", () -> Builder.create(BirchMTE2::new, MinionBlockInit.birch_minion_2.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE3>> birch_minion_3 = tile_entity_types.register(
+			"birch_minion_3", () -> Builder.create(BirchMTE3::new, MinionBlockInit.birch_minion_3.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE4>> birch_minion_4 = tile_entity_types.register(
+			"birch_minion_4", () -> Builder.create(BirchMTE4::new, MinionBlockInit.birch_minion_4.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE5>> birch_minion_5 = tile_entity_types.register(
+			"birch_minion_5", () -> Builder.create(BirchMTE5::new, MinionBlockInit.birch_minion_5.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE6>> birch_minion_6 = tile_entity_types.register(
+			"birch_minion_6", () -> Builder.create(BirchMTE6::new, MinionBlockInit.birch_minion_6.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE7>> birch_minion_7 = tile_entity_types.register(
+			"birch_minion_7", () -> Builder.create(BirchMTE7::new, MinionBlockInit.birch_minion_7.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE8>> birch_minion_8 = tile_entity_types.register(
+			"birch_minion_8", () -> Builder.create(BirchMTE8::new, MinionBlockInit.birch_minion_8.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTE9>> birch_minion_9 = tile_entity_types.register(
+			"birch_minion_9", () -> Builder.create(BirchMTE9::new, MinionBlockInit.birch_minion_9.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTEa>> birch_minion_a = tile_entity_types.register(
+			"birch_minion_a", () -> Builder.create(BirchMTEa::new, MinionBlockInit.birch_minion_a.get()).build(null));
+	public static final RegistryObject<TileEntityType<BirchMTEb>> birch_minion_b = tile_entity_types.register(
+			"birch_minion_b", () -> Builder.create(BirchMTEb::new, MinionBlockInit.birch_minion_b.get()).build(null));
+	
+	public static final RegistryObject<TileEntityType<BlazeMTE1>> blaze_minion_1 = tile_entity_types.register(
+			"blaze_minion_1", () -> Builder.create(BlazeMTE1::new, MinionBlockInit.blaze_minion_1.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE2>> blaze_minion_2 = tile_entity_types.register(
+			"blaze_minion_2", () -> Builder.create(BlazeMTE2::new, MinionBlockInit.blaze_minion_2.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE3>> blaze_minion_3 = tile_entity_types.register(
+			"blaze_minion_3", () -> Builder.create(BlazeMTE3::new, MinionBlockInit.blaze_minion_3.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE4>> blaze_minion_4 = tile_entity_types.register(
+			"blaze_minion_4", () -> Builder.create(BlazeMTE4::new, MinionBlockInit.blaze_minion_4.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE5>> blaze_minion_5 = tile_entity_types.register(
+			"blaze_minion_5", () -> Builder.create(BlazeMTE5::new, MinionBlockInit.blaze_minion_5.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE6>> blaze_minion_6 = tile_entity_types.register(
+			"blaze_minion_6", () -> Builder.create(BlazeMTE6::new, MinionBlockInit.blaze_minion_6.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE7>> blaze_minion_7 = tile_entity_types.register(
+			"blaze_minion_7", () -> Builder.create(BlazeMTE7::new, MinionBlockInit.blaze_minion_7.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE8>> blaze_minion_8 = tile_entity_types.register(
+			"blaze_minion_8", () -> Builder.create(BlazeMTE8::new, MinionBlockInit.blaze_minion_8.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTE9>> blaze_minion_9 = tile_entity_types.register(
+			"blaze_minion_9", () -> Builder.create(BlazeMTE9::new, MinionBlockInit.blaze_minion_9.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTEa>> blaze_minion_a = tile_entity_types.register(
+			"blaze_minion_a", () -> Builder.create(BlazeMTEa::new, MinionBlockInit.blaze_minion_a.get()).build(null));
+	public static final RegistryObject<TileEntityType<BlazeMTEb>> blaze_minion_b = tile_entity_types.register(
+			"blaze_minion_b", () -> Builder.create(BlazeMTEb::new, MinionBlockInit.blaze_minion_b.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<CoalMTE1>> coal_minion_1 = tile_entity_types.register(
 			"coal_minion_1", () -> Builder.create(CoalMTE1::new, MinionBlockInit.coal_minion_1.get()).build(null));

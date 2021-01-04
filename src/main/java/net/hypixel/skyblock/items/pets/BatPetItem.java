@@ -27,30 +27,34 @@ public final class BatPetItem extends PetItem {
 	private static final ITextComponent nightmare = new StringTextComponent(FormatingCodes.gold + "Nightmare");
 	private static final ITextComponent wings = new StringTextComponent(FormatingCodes.gold + "Wings of Steel");
 	private static final ITextComponent sonar = new StringTextComponent(FormatingCodes.gold + "Sonar");
+	
+	private static final String intel = StatString.intelligence + ": %.1f";
+	private static final String speed = StatString.speed + ": %.1f";
+	private static final String seacc = StatString.sea_creature_chance + ": %.1f";
+	private static final String candy = "Increases drop chance of candies from mobs by " + FormatingCodes.green + "%.1f%%";
+	private static final String night = "During night, gain %.1f" + StatString.intelligence + ", %.1f" + StatString.speed + ", and night vision";
 
 	public BatPetItem() {
-		super(ItemProperties.mn1, Pets.bat);
+		super(ItemProperties.m1, Pets.bat);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		double[] buff = this.pet.getBuffs();
-		tooltip.add(new StringTextComponent(StatString.intelligence + ": " + buff[1]));
-		tooltip.add(new StringTextComponent(StatString.speed + ": " + buff[2]));
+		tooltip.add(new StringTextComponent(String.format(intel, buff[1])));
+		tooltip.add(new StringTextComponent(String.format(speed, buff[2])));
 		if (buff[0] != 0)
-			tooltip.add(new StringTextComponent(StatString.sea_creature_chance + ": " + buff[0]));
+			tooltip.add(new StringTextComponent(String.format(seacc, buff[0])));
 		tooltip.add(blank);
 		tooltip.add(candy_lover);
-		tooltip.add(new StringTextComponent(
-				"Increases drop chance of candies from mobs by " + FormatingCodes.green + buff[3] + "%"));
+		tooltip.add(new StringTextComponent(String.format(candy, buff[3])));
 
 		ModItemRarity rarity = this.getPetRarity();
 
 		if (rarity.rank >= ModItemRarity.Rare.rank) {
 			tooltip.add(blank);
 			tooltip.add(nightmare);
-			tooltip.add(new StringTextComponent("During night, gain " + buff[4] + StatString.intelligence + ", " + buff[5]
-					+ StatString.speed + ", and night vision"));
+			tooltip.add(new StringTextComponent(String.format(night, buff[4], buff[5])));
 		}
 
 		if (rarity.rank >= ModItemRarity.Legendary.rank) {
@@ -64,6 +68,6 @@ public final class BatPetItem extends PetItem {
 			tooltip.add(sonar);
 		}
 
-		tooltip.add(this.lvl_progress);
+		tooltip.add(new StringTextComponent(this.lvl_progress));
 	}
 }

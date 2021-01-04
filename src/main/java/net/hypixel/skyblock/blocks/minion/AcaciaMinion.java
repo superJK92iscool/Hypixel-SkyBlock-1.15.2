@@ -9,12 +9,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
 /**
+ * The <a href="https://hypixel-skyblock.fandom.com/wiki/Acacia_Minion">Acacia Minion</a>.
+ * 
  * @author MrPineapple070
  * @version 31 December 2020
  * @since 11 July 2019
  */
-public class AcaciaMinionBlock extends AbstractMinionBlock {
-	public AcaciaMinionBlock(MinionTier tier) {
+public class AcaciaMinion extends AbstractMinionBlock {
+	public AcaciaMinion(MinionTier tier) {
 		super(Properties.create(Material.WOOD).sound(SoundType.WOOD), tier);
 	}
 
