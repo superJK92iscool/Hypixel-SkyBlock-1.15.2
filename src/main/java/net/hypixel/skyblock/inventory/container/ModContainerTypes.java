@@ -5,6 +5,17 @@ import net.hypixel.skyblock.inventory.container.AbstractBackpackContainer.Greate
 import net.hypixel.skyblock.inventory.container.AbstractBackpackContainer.LargeBC;
 import net.hypixel.skyblock.inventory.container.AbstractBackpackContainer.MediumBC;
 import net.hypixel.skyblock.inventory.container.AbstractBackpackContainer.SmallBC;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC1;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC2;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC3;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC4;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC5;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC6;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC7;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC8;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC9;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMCa;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMCb;
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMC1;
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMC2;
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMC3;
@@ -55,7 +66,30 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class ModContainerTypes {
 	public static final DeferredRegister<ContainerType<?>> container_types = new DeferredRegister<>(ForgeRegistries.CONTAINERS, HypixelSkyBlockMod.MOD_ID);
-
+	
+	public static final RegistryObject<ContainerType<AcaciaMC1>> acacia_minion_1 = container_types.register("acacia_minion_1",
+			() -> IForgeContainerType.create(AcaciaMC1::new));
+	public static final RegistryObject<ContainerType<AcaciaMC2>> acacia_minion_2 = container_types.register("acacia_minion_2",
+			() -> IForgeContainerType.create(AcaciaMC2::new));
+	public static final RegistryObject<ContainerType<AcaciaMC3>> acacia_minion_3 = container_types.register("acacia_minion_3",
+			() -> IForgeContainerType.create(AcaciaMC3::new));
+	public static final RegistryObject<ContainerType<AcaciaMC4>> acacia_minion_4 = container_types.register("acacia_minion_4",
+			() -> IForgeContainerType.create(AcaciaMC4::new));
+	public static final RegistryObject<ContainerType<AcaciaMC5>> acacia_minion_5 = container_types.register("acacia_minion_5",
+			() -> IForgeContainerType.create(AcaciaMC5::new));
+	public static final RegistryObject<ContainerType<AcaciaMC6>> acacia_minion_6 = container_types.register("acacia_minion_6",
+			() -> IForgeContainerType.create(AcaciaMC6::new));
+	public static final RegistryObject<ContainerType<AcaciaMC7>> acacia_minion_7 = container_types.register("acacia_minion_7",
+			() -> IForgeContainerType.create(AcaciaMC7::new));
+	public static final RegistryObject<ContainerType<AcaciaMC8>> acacia_minion_8 = container_types.register("acacia_minion_8",
+			() -> IForgeContainerType.create(AcaciaMC8::new));
+	public static final RegistryObject<ContainerType<AcaciaMC9>> acacia_minion_9 = container_types.register("acacia_minion_9",
+			() -> IForgeContainerType.create(AcaciaMC9::new));
+	public static final RegistryObject<ContainerType<AcaciaMCa>> acacia_minion_a = container_types.register("acacia_minion_a",
+			() -> IForgeContainerType.create(AcaciaMCa::new));
+	public static final RegistryObject<ContainerType<AcaciaMCb>> acacia_minion_b = container_types.register("acacia_minion_b",
+			() -> IForgeContainerType.create(AcaciaMCb::new));
+	
 	public static final RegistryObject<ContainerType<CoalMC1>> coal_minion_1 = container_types.register("coal_minion_1",
 			() -> IForgeContainerType.create(CoalMC1::new));
 	public static final RegistryObject<ContainerType<CoalMC2>> coal_minion_2 = container_types.register("coal_minion_2",

@@ -33,6 +33,18 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientEventBusSubscriber {
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_1.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_2.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_3.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_4.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_5.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_6.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_7.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_8.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_9.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_a.get(), AbstractMinionScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.acacia_minion_b.get(), AbstractMinionScreen::new);
+		
 		ScreenManager.registerFactory(ModContainerTypes.coal_minion_1.get(), AbstractMinionScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.coal_minion_2.get(), AbstractMinionScreen::new);
 		ScreenManager.registerFactory(ModContainerTypes.coal_minion_3.get(), AbstractMinionScreen::new);
