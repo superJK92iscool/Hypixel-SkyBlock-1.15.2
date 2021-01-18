@@ -2,7 +2,8 @@ package net.hypixel.skyblock.tileentity.minion;
 
 import java.util.Arrays;
 
-import net.hypixel.skyblock.HypixelSkyBlockMod;
+import com.google.common.collect.ImmutableSet;
+
 import net.hypixel.skyblock.blocks.minion.CobblestoneMinion;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.inventory.container.minion.CobblestoneMinionContainer.CobbleMC1;
@@ -20,18 +21,14 @@ import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
 /**
@@ -43,7 +40,7 @@ import net.minecraft.util.text.StringTextComponent;
  * @version 11 June 2019
  * @since 11 June 2019
  */
-public abstract class CobblestoneMinionTileEntity extends AbstractMinionTileEntity {
+public abstract class CobblestoneMinionTileEntity extends AbstractMiningMTE {
 	public static class CobbleMTE1 extends CobblestoneMinionTileEntity {
 		public CobbleMTE1() {
 			super(ModTileEntityTypes.cobblestone_minion_1.get(), MinionTier.I);
@@ -111,9 +108,9 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMinionTileEnti
 	}
 
 	/**
-	 * {@link NonNullList} of {@link Block} that this places
+	 * {@link ImmutableSet} of {@link Block} that this places.
 	 */
-	protected static final NonNullList<Block> validBlocks = NonNullList.from(Blocks.AIR, Blocks.COBBLESTONE);
+	protected static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.AIR, Blocks.COBBLESTONE));
 
 	/**
 	 * Constructs {@code this}
@@ -126,7 +123,7 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMinionTileEnti
 	}
 
 	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
+	protected final Container createMenu(int id, PlayerInventory player) {
 		switch (this.tier) {
 		case I:
 			return new CobbleMC1(id, player, this);
@@ -151,98 +148,39 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMinionTileEnti
 		case XI:
 			return new CobbleMCb(id, player, this);
 		}
-		throw new IllegalStateException("Illegal Minion MinionTier");
+		throw new IllegalStateException("Illegal Minion Tier:\t" + this.tier.name());
 	}
 
 	@Override
-	protected Item[] getCompactor() {
+	protected final Item[] getCompactor() {
 		return new Item[] { Items.DIAMOND };
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
+	protected final StringTextComponent initDisplayName() {
 		return new StringTextComponent("Cobblestone Minion Tier " + this.tier.name());
 	}
 
 	@Override
-	protected SoundEvent getSoundEvent() {
+	protected final SoundEvent getSoundEvent() {
 		return SoundEvents.BLOCK_STONE_BREAK;
 	}
 
 	@Override
-	protected BlockState getState() {
+	protected final BlockState getState() {
 		return Blocks.COBBLESTONE.getDefaultState();
 	}
 
 	@Override
-	protected Item[] getSuperCompactor() {
+	protected final Item[] getSuperCompactor() {
 		return new Item[] { Items.COBBLESTONE, Items.DIAMOND, Items.DIAMOND_BLOCK, ItemInit.enchanted_diamond.get() };
 	}
-
-	@Override
-	protected BlockPos[][][] initSurround() {
-		return new BlockPos[1][7][7];
+	
+	protected final int getSpeed(MinionTier tier) {
+		return CobblestoneMinion.speed.get(tier.asInt);
 	}
-
-	@Override
-	protected BlockPos pickBlock() {
-		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");
-		this.setValidSurround();
-		this.setAirSurround();
-		if (!this.airSurround.isEmpty())
-			return this.airSurround.get(rand.nextInt(this.airSurround.size()));
-		if (!this.validSurround.isEmpty())
-			return this.validSurround.get(rand.nextInt(this.validSurround.size()));
-		return null;
-	}
-
-	@Override
-	protected void setSurround() {
-		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
-		final int[] dx = expanded_size;
-
-		for (int i = 0; i < this.surround[0].length; i++)
-			for (int j = 0; j < this.surround[0][i].length; j++)
-				this.surround[0][i][j] = dx[i] == 0 && dx[j] == 0 ? null
-						: new BlockPos(this.x + dx[j], this.y - 1, this.z + dx[i]);
-		HypixelSkyBlockMod.LOGGER.info(Arrays.deepToString(this.surround));
-	}
-
-	@Override
-	protected void setValidSurround() {
-		HypixelSkyBlockMod.LOGGER.info("Gathering valid BlockPos");
-		this.validSurround.clear();
-		final boolean hasExpander = this.hasUpgrade(ItemInit.minion_expander.get());
-		final int xStart = hasExpander ? 0 : 1,
-				xEnd = hasExpander ? this.surround[0].length : this.surround[0].length - 1;
-		final int zStart = hasExpander ? 0 : 1,
-				zEnd = hasExpander ? this.surround[0].length : this.surround[0].length - 1;
-		for (int x = xStart; x < xEnd; x++)
-			for (int z = zStart; z < zEnd; z++) {
-				final BlockPos pos = this.surround[0][x][z];
-				if (pos == null)
-					continue;
-				final BlockState state = this.world.getBlockState(pos);
-				if (state.getMaterial() == Material.AIR)
-					this.validSurround.add(pos);
-				else if (this.isBlockValid(state.getBlock(), validBlocks))
-					this.validSurround.add(pos);
-				else
-					continue;
-			}
-		HypixelSkyBlockMod.LOGGER.info(this.validSurround.toString());
-	}
-
-	@Override
-	public void tick() {
-		if (this.world.isRemote)
-			return;
-		if (!this.isTicking)
-			this.init();
-		if (this.isCompletlyFull())
-			return;
-		this.tick = ++this.tick % (int) (CobblestoneMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
-		if (this.tick == 0)
-			this.interact(this.pickBlock());
+	
+	public final ImmutableSet<Block> getValidBlocks() {
+		return validBlocks;
 	}
 }

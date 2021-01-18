@@ -1,21 +1,32 @@
 package net.hypixel.skyblock.tileentity.minion;
 
+import java.util.Arrays;
+
+import com.google.common.collect.ImmutableSet;
+
+import net.hypixel.skyblock.blocks.minion.AcaciaMinion;
+import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.StringTextComponent;
 
 /**
  * @author MrPineapple070
  * @version 31 December 2020
  * @since 11 July 2019
  */
-public class AcaciaMinionTileEntity extends AbstractMinionTileEntity {
+public class AcaciaMinionTileEntity extends AbstractForagingMTE {
+	protected static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.ACACIA_LOG));
+	
 	public AcaciaMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
 		super(typeIn, tier);
 	}
@@ -26,50 +37,33 @@ public class AcaciaMinionTileEntity extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	protected Item[] getCompactor() {
-		return null;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return null;
+	public StringTextComponent initDisplayName() {
+		return new StringTextComponent("Acacia Minion Tier " + this.tier.name());
 	}
 
 	@Override
 	protected SoundEvent getSoundEvent() {
-		return null;
+		return SoundEvents.BLOCK_WOOD_BREAK;
 	}
 
 	@Override
 	protected BlockState getState() {
-		return null;
+		return Blocks.ACACIA_LOG.getDefaultState();
 	}
 
 	@Override
 	protected Item[] getSuperCompactor() {
-		return null;
+		return new Item[] {Items.DIAMOND, Items.ACACIA_LOG, ItemInit.enchanted_acacia.get()};
 	}
-
+	
 	@Override
-	protected BlockPos[][][] initSurround() {
-		return null;
+	protected int getSpeed(MinionTier tier) {
+		return AcaciaMinion.speed.get(tier.asInt);
 	}
-
+	
 	@Override
-	protected BlockPos pickBlock() {
-		return null;
-	}
-
-	@Override
-	protected void setSurround() {
-	}
-
-	@Override
-	protected void setValidSurround() {
-	}
-
-	@Override
-	public void tick() {
+	protected ImmutableSet<Block> getValidBlocks() {
+		return validBlocks;
 	}
 	
 	public static class AcaciaMTE1 extends AcaciaMinionTileEntity {

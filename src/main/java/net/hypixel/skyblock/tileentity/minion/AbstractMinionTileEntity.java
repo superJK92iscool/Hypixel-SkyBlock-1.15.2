@@ -10,6 +10,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.items.minion.MinionFuelItem;
@@ -40,12 +42,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -64,9 +65,55 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		implements ITickableTileEntity, IClearable, INamedContainerProvider {
 	/**
+	 * The tier of each Minion
+	 */
+	public enum MinionTier {
+		I(1, 0x0), II(3, 0x1), III(3, 0x2), IV(6, 0x3), IX(12, 0x8), V(6, 0x4), VI(9, 0x5), VII(9, 0x6), VIII(12, 0x7),
+		X(15, 0x9), XI(15, 0xa);
+
+		/**
+		 * A conversion between this and an integer.
+		 */
+		@Nonnegative
+		public final int asInt;
+
+		/**
+		 * The amount of slots for each tier.
+		 */
+		@Nonnegative
+		public final int size;
+
+		private MinionTier(@Nonnegative int size, @Nonnegative int asInt) {
+			this.size = size;
+			this.asInt = asInt;
+		}
+	}
+
+	/**
+	 * Default differentials from the center {@link BlockPos}
+	 */
+	protected static final int[] default_size = { -2, -1, 0, 1, 2 };
+
+	/**
+	 * Expanded differentials from center {@link BlockPos}
+	 */
+	protected static final int[] expanded_size = { -3, -2, -1, 0, 1, 2, 3 };
+
+	/**
 	 * Fuel Slot index.
 	 */
 	protected static final int FUEL_INDEX = 0x0;
+
+	/**
+	 * Inventory start.
+	 */
+	protected static final int INVENTORY_START = 0x4;
+
+	/**
+	 * A Random Number Generator.
+	 */
+	@Nonnull
+	protected static final Random rand = new Random();
 
 	/**
 	 * Seller Slot index.
@@ -84,42 +131,20 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected static final int UPGRADE_2_INDEX = 0x3;
 
 	/**
-	 * Inventory start.
-	 */
-	protected static final int INVENTORY_START = 0x4;
-
-	/**
-	 * Expanded differentials from center {@link BlockPos}
-	 */
-	protected static final int[] expanded_size = { -3, -2, -1, 0, 1, 2, 3 };
-
-	/**
-	 * Default differentials from the center {@link BlockPos}
-	 */
-	protected static final int[] default_size = { -2, -1, 0, 1, 2 };
-
-	/**
-	 * A Random Number Generator.
-	 */
-	@Nonnull
-	protected static final Random rand = new Random();
-
-	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding {@link Blocks#AIR}
 	 */
 	@Nonnull
 	protected final List<BlockPos> airSurround = new ArrayList<>();
 
 	/**
-	 * A {@link List} of {@link BlockPos} of all surrounding valid {@code BlockPos}
-	 */
-	@Nonnull
-	protected final List<BlockPos> validSurround = new ArrayList<>();
-
-	/**
 	 * Index of the current item to merge {@link ItemStack}.
 	 */
 	protected int currentItem;
+	
+	/**
+	 * {@link StringTextComponent} used in {@link #getDisplayName()}.
+	 */
+	protected final StringTextComponent display_name;
 
 	/**
 	 * Determine if {@code this} is ticking.
@@ -149,7 +174,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 */
 	@Nonnegative
 	protected int numPlayersUsing;
-
+	
 	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding {@code BlockPos}
 	 */
@@ -167,6 +192,12 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 */
 	@Nonnull
 	protected final MinionTier tier;
+
+	/**
+	 * A {@link List} of {@link BlockPos} of all surrounding valid {@code BlockPos}
+	 */
+	@Nonnull
+	protected final List<BlockPos> validSurround = new ArrayList<>();
 
 	/**
 	 * X coordinate of this.
@@ -194,6 +225,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		this.tier = Objects.requireNonNull(tier, "Illegal Minion Tier");
 		this.minionContents = NonNullList.withSize(4 + this.tier.size, ItemStack.EMPTY);
 		this.surround = this.initSurround();
+		this.display_name = this.initDisplayName();
 	}
 
 	/**
@@ -417,7 +449,9 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	@Override
-	public abstract ITextComponent getDisplayName();
+	public final ITextComponent getDisplayName() {
+		return this.display_name;
+	}
 
 	/**
 	 * Gets First Empty {@link ItemStack}
@@ -489,11 +523,13 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	public final int getSizeInventory() {
 		return this.minionContents.size();
 	}
-
+	
 	/**
-	 * @return {@link SoundEvent} to play when interacting.
+	 * @return {@link SoundEvent} to play when placing a {@link Block}.
 	 */
 	protected abstract SoundEvent getSoundEvent();
+
+	protected abstract int getSpeed(MinionTier tier);
 
 	@Override
 	public final ItemStack getStackInSlot(int index) {
@@ -567,13 +603,20 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	public final CompoundNBT getUpdateTag() {
 		return this.write(new CompoundNBT());
 	}
-
+	
 	/**
 	 * @return the {@link ItemStack} in both Upgrade Slots.
 	 */
 	protected final ItemStack[] getUpgrades() {
 		return new ItemStack[] { this.getStackInSlot(UPGRADE_1_INDEX), this.getStackInSlot(UPGRADE_2_INDEX) };
 	}
+
+	/**
+	 * Retrieves all {@link Block} that this can place.
+	 * 
+	 * @return {@link ImmutableSet} of valid {@link Block}
+	 */
+	protected abstract ImmutableSet<Block> getValidBlocks();
 
 	/**
 	 * Determines if {@code this} has fuel.
@@ -624,6 +667,12 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		this.pos = pos;
 		this.init();
 	}
+	
+	/**
+	 * Initializes {@link #display_name}
+	 * @return {@link StringTextComponent}.
+	 */
+	protected abstract StringTextComponent initDisplayName();
 
 	/**
 	 * Create a 3d Array of all {@link BlockPos} that surround this.<br>
@@ -642,39 +691,10 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 *         {@code false} if a {@link Block} has not been changed.
 	 */
 	protected boolean interact(BlockPos pos) {
-		if (pos == null)
-			return false;
-		HypixelSkyBlockMod.LOGGER.info("Interacting with " + pos.toString());
-		final BlockState state = this.world.getBlockState(pos);
-		if (state.getMaterial() == Material.AIR) {
-			this.world.playSound(pos.getX(), pos.getY(), pos.getZ(), this.getSoundEvent(), SoundCategory.BLOCKS, 1f, 1f,
-					true);
-			this.world.setBlockState(pos, this.getState());
-		} else {
-			this.addItemStacks(Block.getDrops(state, (ServerWorld) this.world, pos, this));
-			this.world.playEvent(2001, pos, Block.getStateId(state));
-			this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		}
-		return true;
+		return false;
 	}
 
-	/**
-	 * Determine if {@link Block} can be added to {@link #validSurround}.<br>
-	 * Help {@link #setValidSurround()} in adding.<br>
-	 * {@code AbstractMinionTileEntity} can interact with {@code Block} in 3
-	 * dimensions
-	 *
-	 * @param block       The {@code Block} to check.
-	 * @param validBlocks A {@link NonNullList} of valid {@code Block} that this can
-	 *                    interact with
-	 * @return {@code true} if {@code Block} is valid.<br>
-	 *         {@code false} otherwise.
-	 */
-	protected final boolean isBlockValid(@Nonnull Block block, @Nonnull NonNullList<Block> validBlocks) {
-		if (validBlocks.size() < 1)
-			throw new IllegalArgumentException("validBlocks must have at least one element");
-		return validBlocks.contains(block);
-	}
+	
 
 	/**
 	 * Determine if {@code this} and any additional storage are full.
@@ -738,18 +758,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
 	}
 
-	public void log() {
-		HypixelSkyBlockMod.LOGGER.info(this.getClass().getSimpleName());
-		HypixelSkyBlockMod.LOGGER.info("Tier:\t" + this.tier.name());
-		HypixelSkyBlockMod.LOGGER.info("Coords:\t(" + this.x + ", " + this.y + ", " + this.z + ")");
-		HypixelSkyBlockMod.LOGGER.info("Tick:\t" + this.tick);
-		HypixelSkyBlockMod.LOGGER.info("FuelTick:\t" + this.fuelTick);
-		HypixelSkyBlockMod.LOGGER.info("Surround:\t" + Arrays.deepToString(this.surround));
-		HypixelSkyBlockMod.LOGGER.info("ValidSurround:\t" + this.validSurround.toString());
-		HypixelSkyBlockMod.LOGGER.info("AirSurround:\t" + this.airSurround.toString());
-		HypixelSkyBlockMod.LOGGER.info("Contents:\t" + this.minionContents.toString());
-	}
-
 	@Override
 	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		HypixelSkyBlockMod.LOGGER.info("NetworkManager:\t" + net.toString());
@@ -760,21 +768,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	/**
 	 * Pick a random valid {@link BlockPos} to interact with.<br>
 	 * This method depends heavily on the type of minion.<br>
-	 * This method will return {@code null} if no valid blocks are chosen.
+	 * This method will return {@code null} if no valid {@link BlockPos} is chosen.
 	 *
 	 * @return {@link BlockPos} picked.
 	 */
 	protected abstract BlockPos pickBlock();
-
-	/**
-	 * Play a sound in the world.
-	 *
-	 * @param sound the {@link SoundEvent} to play.
-	 */
-	protected final void playSound(SoundEvent sound) {
-		this.world.playSound(null, this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5, sound,
-				SoundCategory.BLOCKS, .5f, rand.nextFloat() * .1f + .9f);
-	}
 
 	@Override
 	public final void read(CompoundNBT compound) {
@@ -836,6 +834,10 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		}
 		HypixelSkyBlockMod.LOGGER.info(this.airSurround.toString());
 	}
+	
+	@Override
+	protected void setItems(NonNullList<ItemStack> itemsIn) {
+	}
 
 	@Override
 	public final void setInventorySlotContents(int index, ItemStack stack) {
@@ -848,12 +850,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			stack.setCount(this.getInventoryStackLimit());
 		if (!flag)
 			this.markDirty();
-	}
-
-	@Override
-	public final void setItems(NonNullList<ItemStack> itemsIn) {
-		HypixelSkyBlockMod.LOGGER.info("Setting items");
-		this.minionContents = Objects.requireNonNull(itemsIn, "New minionContents must be non-null.");
 	}
 
 	/**
@@ -969,30 +965,5 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		super.write(compound);
 		ItemStackHelper.saveAllItems(compound, this.minionContents);
 		return compound;
-	}
-
-	/**
-	 * The tier of each Minion
-	 */
-	public enum MinionTier {
-		I(1, 0x0), II(3, 0x1), III(3, 0x2), IV(6, 0x3), IX(12, 0x8), V(6, 0x4), VI(9, 0x5), VII(9, 0x6), VIII(12, 0x7),
-		X(15, 0x9), XI(15, 0xa);
-
-		/**
-		 * A conversion between this and an integer.
-		 */
-		@Nonnegative
-		public final int asInt;
-
-		/**
-		 * The amount of slots for each tier.
-		 */
-		@Nonnegative
-		public final int size;
-
-		private MinionTier(@Nonnegative int size, @Nonnegative int asInt) {
-			this.size = size;
-			this.asInt = asInt;
-		}
 	}
 }

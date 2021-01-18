@@ -1,5 +1,9 @@
 package net.hypixel.skyblock.tileentity.minion;
 
+import java.util.Arrays;
+
+import com.google.common.collect.ImmutableSet;
+
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.blocks.minion.CoalMinion;
 import net.hypixel.skyblock.init.items.ItemInit;
@@ -18,17 +22,14 @@ import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
 /**
@@ -37,7 +38,7 @@ import net.minecraft.util.text.StringTextComponent;
  * @author MrPineapple070
  * @version 23 July 2020
  */
-public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
+public class CoalMinionTileEntity extends AbstractMiningMTE {
 	public static class CoalMTE1 extends CoalMinionTileEntity {
 		public CoalMTE1() {
 			super(ModTileEntityTypes.coal_minion_1.get(), MinionTier.I);
@@ -104,7 +105,7 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 		}
 	}
 
-	private static final NonNullList<Block> validBlocks = NonNullList.from(Blocks.AIR, Blocks.COAL_ORE);
+	private static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.AIR, Blocks.COAL_ORE));
 
 	private static final Item[] comp = new Item[] { Items.COAL, Items.DIAMOND };
 	private static final Item[] sup = new Item[] { Items.COAL, Items.COAL_BLOCK, Items.DIAMOND, Items.DIAMOND_BLOCK,
@@ -149,11 +150,6 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new StringTextComponent("Coal Minion Tier " + this.tier.name());
-	}
-
-	@Override
 	protected SoundEvent getSoundEvent() {
 		return SoundEvents.BLOCK_STONE_BREAK;
 	}
@@ -169,11 +165,6 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	protected BlockPos[][][] initSurround() {
-		return new BlockPos[1][7][7];
-	}
-
-	@Override
 	protected BlockPos pickBlock() {
 		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");
 		this.setValidSurround();
@@ -183,38 +174,6 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 		if (!this.validSurround.isEmpty())
 			return this.validSurround.get(rand.nextInt(this.validSurround.size()));
 		return null;
-	}
-
-	@Override
-	protected void setSurround() {
-		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
-		for (int x = 0; x < this.surround[0].length; x++)
-			for (int z = 0; z < this.surround[0][x].length; z++)
-				this.surround[0][x][z] = expanded_size[x] == 0 && expanded_size[z] == 0 ? null
-						: new BlockPos(this.x + expanded_size[z], this.y - 1, this.z + expanded_size[x]);
-	}
-
-	@Override
-	protected void setValidSurround() {
-		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
-		final boolean hasExpander = this.hasUpgrade(ItemInit.minion_expander.get());
-		final int iStart = hasExpander ? 1 : 0, iEnd = hasExpander ? this.surround.length : this.surround.length - 1;
-		final int jStart = hasExpander ? 1 : 0, jEnd = hasExpander ? this.surround.length : this.surround.length - 1;
-		this.validSurround.clear();
-		for (int x = iStart; x < iEnd; x++)
-			for (int z = jStart; z < jEnd; z++) {
-				BlockPos pos = this.surround[0][x][z];
-				if (pos == null)
-					continue;
-				BlockState state = this.world.getBlockState(pos);
-				if (state.getMaterial() == Material.AIR)
-					this.validSurround.add(pos);
-				else if (this.isBlockValid(state.getBlock(), validBlocks))
-					this.validSurround.add(pos);
-				else
-					continue;
-			}
-		HypixelSkyBlockMod.LOGGER.info(this.validSurround.toString());
 	}
 
 	@Override
@@ -228,5 +187,20 @@ public abstract class CoalMinionTileEntity extends AbstractMinionTileEntity {
 		this.tick = ++this.tick % (int) (CoalMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
 		if (this.tick == 0)
 			this.interact(this.pickBlock());
+	}
+
+	@Override
+	protected int getSpeed(MinionTier tier) {
+		return 0;
+	}
+
+	@Override
+	protected ImmutableSet<Block> getValidBlocks() {
+		return validBlocks;
+	}
+
+	@Override
+	protected StringTextComponent initDisplayName() {
+		return new StringTextComponent("Coal Minion Tier " + this.tier.name());
 	}
 }

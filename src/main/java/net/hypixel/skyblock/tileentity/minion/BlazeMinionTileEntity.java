@@ -1,6 +1,9 @@
 package net.hypixel.skyblock.tileentity.minion;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -8,66 +11,9 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 public class BlazeMinionTileEntity extends AbstractMinionTileEntity {
-
-	public BlazeMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
-		super(typeIn, tier);
-	}
-
-	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
-		return null;
-	}
-
-	@Override
-	protected Item[] getCompactor() {
-		return null;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return null;
-	}
-
-	@Override
-	protected SoundEvent getSoundEvent() {
-		return null;
-	}
-
-	@Override
-	protected BlockState getState() {
-		return null;
-	}
-
-	@Override
-	protected Item[] getSuperCompactor() {
-		return null;
-	}
-
-	@Override
-	protected BlockPos[][][] initSurround() {
-		return null;
-	}
-
-	@Override
-	protected BlockPos pickBlock() {
-		return null;
-	}
-
-	@Override
-	protected void setSurround() {
-	}
-
-	@Override
-	protected void setValidSurround() {
-	}
-
-	@Override
-	public void tick() {
-	}
-	
 	public static class BlazeMTE1 extends BlazeMinionTileEntity {
 		public BlazeMTE1() {
 			super(ModTileEntityTypes.blaze_minion_1.get(), MinionTier.I);
@@ -132,5 +78,71 @@ public class BlazeMinionTileEntity extends AbstractMinionTileEntity {
 		public BlazeMTEb() {
 			super(ModTileEntityTypes.blaze_minion_b.get(), MinionTier.XI);
 		}
+	}
+	
+	public BlazeMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
+		super(typeIn, tier);
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return null;
+	}
+
+	@Override
+	protected Item[] getCompactor() {
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getSoundEvent() {
+		return null;
+	}
+
+	@Override
+	protected BlockState getState() {
+		return null;
+	}
+
+	@Override
+	protected Item[] getSuperCompactor() {
+		return null;
+	}
+
+	@Override
+	protected BlockPos[][][] initSurround() {
+		return null;
+	}
+	
+	@Override
+	protected StringTextComponent initDisplayName() {
+		return new StringTextComponent("Blaze Minion Tier " + this.tier.name());
+	}
+
+	@Override
+	protected BlockPos pickBlock() {
+		return null;
+	}
+
+	@Override
+	protected void setSurround() {
+	}
+
+	@Override
+	protected void setValidSurround() {
+	}
+
+	@Override
+	public void tick() {
+	}
+
+	@Override
+	protected int getSpeed(MinionTier tier) {
+		return 0;
+	}
+
+	@Override
+	protected ImmutableSet<Block> getValidBlocks() {
+		return null;
 	}
 }

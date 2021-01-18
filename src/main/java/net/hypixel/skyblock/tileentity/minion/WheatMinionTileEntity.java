@@ -1,5 +1,7 @@
 package net.hypixel.skyblock.tileentity.minion;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.blocks.minion.WheatMinion;
 import net.hypixel.skyblock.init.items.ItemInit;
@@ -28,8 +30,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 
 /**
@@ -41,7 +41,7 @@ import net.minecraft.world.server.ServerWorld;
  * @version 11 July 2019
  * @since 11 July 2019
  */
-public class WheatMinionTileEntity extends AbstractMinionTileEntity {
+public class WheatMinionTileEntity extends AbstractPlacerMTE {
 	public static class WheatMTE1 extends WheatMinionTileEntity {
 		public WheatMTE1() {
 			super(ModTileEntityTypes.wheat_minion_1.get(), MinionTier.I);
@@ -147,11 +147,6 @@ public class WheatMinionTileEntity extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new StringTextComponent("Wheat Minion Tier " + this.tier.name());
-	}
-
-	@Override
 	protected SoundEvent getSoundEvent() {
 		return SoundEvents.BLOCK_CROP_BREAK;
 	}
@@ -163,7 +158,7 @@ public class WheatMinionTileEntity extends AbstractMinionTileEntity {
 
 	@Override
 	protected Item[] getSuperCompactor() {
-		return new Item[] { Items.WHEAT, Items.HAY_BLOCK, Items.WHEAT_SEEDS, Items.DIAMOND, Items.DIAMOND_BLOCK };
+		return new Item[] { Items.WHEAT, Items.HAY_BLOCK, Items.WHEAT_SEEDS, Items.DIAMOND, Items.DIAMOND_BLOCK, ItemInit.enchanted_diamond.get() };
 	}
 
 	@Override
@@ -248,5 +243,15 @@ public class WheatMinionTileEntity extends AbstractMinionTileEntity {
 		this.tick = ++this.tick % (int) (WheatMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
 		if (this.tick == 0)
 			this.interact(this.pickBlock());
+	}
+
+	@Override
+	protected ImmutableSet<Block> getValidBlocks() {
+		return null;
+	}
+
+	@Override
+	protected int getSpeed(MinionTier tier) {
+		return 0;
 	}
 }

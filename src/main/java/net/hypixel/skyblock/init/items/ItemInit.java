@@ -25,6 +25,8 @@ public class ItemInit {
 	public static final DeferredRegister<Item> items = new DeferredRegister<Item>(ForgeRegistries.ITEMS,
 			HypixelSkyBlockMod.MOD_ID);
 	
+	public static final RegistryObject<Item> enchanted_acacia = items.register("enchanted_acacia", () -> new EnchantedItem(ItemProperties.fg64));
+	
 	public static final RegistryObject<Item> enchanted_bread = items.register("enchanted_bread", () -> new Item(ItemProperties.f64));
 	public static final RegistryObject<Item> enchanted_egg = items.register("enchanted_egg", () -> new Item(ItemProperties.f64));
 	

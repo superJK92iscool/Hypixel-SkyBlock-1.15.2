@@ -1,72 +1,24 @@
 package net.hypixel.skyblock.tileentity.minion;
 
+import java.util.Arrays;
+
+import com.google.common.collect.ImmutableSet;
+
+import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.StringTextComponent;
 
-public class BirchMinionTileEntity extends AbstractMinionTileEntity {
-	public BirchMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
-		super(typeIn, tier);
-	}
-
-	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
-		return null;
-	}
-
-	@Override
-	protected Item[] getCompactor() {
-		return null;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return null;
-	}
-
-	@Override
-	protected SoundEvent getSoundEvent() {
-		return null;
-	}
-
-	@Override
-	protected BlockState getState() {
-		return null;
-	}
-
-	@Override
-	protected Item[] getSuperCompactor() {
-		return null;
-	}
-
-	@Override
-	protected BlockPos[][][] initSurround() {
-		return null;
-	}
-
-	@Override
-	protected BlockPos pickBlock() {
-		return null;
-	}
-
-	@Override
-	protected void setSurround() {
-	}
-
-	@Override
-	protected void setValidSurround() {
-	}
-
-	@Override
-	public void tick() {
-	}
-	
+public class BirchMinionTileEntity extends AbstractForagingMTE {
 	public static class BirchMTE1 extends BirchMinionTileEntity {
 		public BirchMTE1() {
 			super(ModTileEntityTypes.birch_minion_1.get(), MinionTier.I);
@@ -131,5 +83,46 @@ public class BirchMinionTileEntity extends AbstractMinionTileEntity {
 		public BirchMTEb() {
 			super(ModTileEntityTypes.birch_minion_b.get(), MinionTier.XI);
 		}
+	}
+	
+	protected static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.BIRCH_LOG));
+	
+	public BirchMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
+		super(typeIn, tier);
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getSoundEvent() {
+		return SoundEvents.BLOCK_WOOD_BREAK;
+	}
+
+	@Override
+	protected int getSpeed(MinionTier tier) {
+		return 0;
+	}
+
+	@Override
+	protected BlockState getState() {
+		return Blocks.BIRCH_LOG.getDefaultState();
+	}
+
+	@Override
+	protected Item[] getSuperCompactor() {
+		return new Item[] {Items.DIAMOND, Items.BIRCH_LOG, ItemInit.enchanted_diamond.get()};
+	}
+
+	@Override
+	protected ImmutableSet<Block> getValidBlocks() {
+		return validBlocks;
+	}
+
+	@Override
+	protected StringTextComponent initDisplayName() {
+		return new StringTextComponent("Birch Minion Tier " + this.tier.name());
 	}
 }

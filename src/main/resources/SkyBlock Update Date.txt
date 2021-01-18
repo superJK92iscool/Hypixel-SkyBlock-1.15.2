@@ -54,3 +54,7 @@ Date		Version	Name
 06 Nov 2020	0.9.11	City Project: Farm Merchant's Dwelling
 12 Nov 2020	0.9.12	Guesting Update II
 17 Nov 2020	0.9.13	Catacombs Floor 7
+04 Dec 2020	0.10.0	Enchanting Maga-Overhaul
+04 Dec 2020	0.10.1	Enchanting Day-One
+07 Dec 2020	0.10.2	Guesting
+13 Jan 2021	0.11.0	Dwarven Mines
