@@ -3,7 +3,6 @@ package net.hypixel.skyblock.tileentity.minion;
 import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
-import net.hypixel.skyblock.blocks.minion.WheatMinion;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.inventory.container.minion.WheatMinionContainer.WheatMC1;
 import net.hypixel.skyblock.inventory.container.minion.WheatMinionContainer.WheatMC2;
@@ -30,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 
 /**
@@ -137,8 +137,9 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 			return new WheatMCa(id, player, this);
 		case XI:
 			return new WheatMCb(id, player, this);
+		default:
+			throw new IllegalStateException("Illegal Minion MinionTier " + this.tier.name());
 		}
-		throw new IllegalStateException("Illegal Minion MinionTier " + this.tier.name());
 	}
 
 	@Override
@@ -152,6 +153,11 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 	}
 
 	@Override
+	protected int getSpeed(MinionTier tier) {
+		return 0;
+	}
+
+	@Override
 	protected BlockState getState() {
 		return Blocks.WHEAT.getDefaultState();
 	}
@@ -159,6 +165,16 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 	@Override
 	protected Item[] getSuperCompactor() {
 		return new Item[] { Items.WHEAT, Items.HAY_BLOCK, Items.WHEAT_SEEDS, Items.DIAMOND, Items.DIAMOND_BLOCK, ItemInit.enchanted_diamond.get() };
+	}
+
+	@Override
+	protected ImmutableSet<Block> getValidBlocks() {
+		return null;
+	}
+
+	@Override
+	protected StringTextComponent initDisplayName() {
+		return new StringTextComponent("Wheat Minion Tier " + this.tier.name());
 	}
 
 	@Override
@@ -182,18 +198,6 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 			this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 		return true;
-	}
-
-	@Override
-	protected BlockPos pickBlock() {
-		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");
-		this.setValidSurround();
-		this.setAirSurround();
-		if (!this.airSurround.isEmpty())
-			return this.airSurround.get(rand.nextInt(this.airSurround.size())).up();
-		if (!this.validSurround.isEmpty())
-			return this.validSurround.get(rand.nextInt(this.validSurround.size())).up();
-		return null;
 	}
 
 	@Override
@@ -230,28 +234,5 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 			for (int j = jStart; j < jEnd; j++)
 				this.surround[0][i][j] = dx[i] == 0 && dx[j] == 0 ? null
 						: new BlockPos(this.x + dx[j], this.y - 1, this.z + dx[i]);
-	}
-
-	@Override
-	public void tick() {
-		if (this.world.isRemote)
-			return;
-		if (!this.isTicking)
-			this.init();
-		if (this.isCompletlyFull())
-			return;
-		this.tick = ++this.tick % (int) (WheatMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
-		if (this.tick == 0)
-			this.interact(this.pickBlock());
-	}
-
-	@Override
-	protected ImmutableSet<Block> getValidBlocks() {
-		return null;
-	}
-
-	@Override
-	protected int getSpeed(MinionTier tier) {
-		return 0;
 	}
 }

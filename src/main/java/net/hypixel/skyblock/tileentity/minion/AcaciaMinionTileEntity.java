@@ -25,47 +25,6 @@ import net.minecraft.util.text.StringTextComponent;
  * @since 11 July 2019
  */
 public class AcaciaMinionTileEntity extends AbstractForagingMTE {
-	protected static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.ACACIA_LOG));
-	
-	public AcaciaMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
-		super(typeIn, tier);
-	}
-
-	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
-		return null;
-	}
-
-	@Override
-	public StringTextComponent initDisplayName() {
-		return new StringTextComponent("Acacia Minion Tier " + this.tier.name());
-	}
-
-	@Override
-	protected SoundEvent getSoundEvent() {
-		return SoundEvents.BLOCK_WOOD_BREAK;
-	}
-
-	@Override
-	protected BlockState getState() {
-		return Blocks.ACACIA_LOG.getDefaultState();
-	}
-
-	@Override
-	protected Item[] getSuperCompactor() {
-		return new Item[] {Items.DIAMOND, Items.ACACIA_LOG, ItemInit.enchanted_acacia.get()};
-	}
-	
-	@Override
-	protected int getSpeed(MinionTier tier) {
-		return AcaciaMinion.speed.get(tier.asInt);
-	}
-	
-	@Override
-	protected ImmutableSet<Block> getValidBlocks() {
-		return validBlocks;
-	}
-	
 	public static class AcaciaMTE1 extends AcaciaMinionTileEntity {
 		public AcaciaMTE1() {
 			super(ModTileEntityTypes.acacia_minion_1.get(), MinionTier.I);
@@ -77,31 +36,31 @@ public class AcaciaMinionTileEntity extends AbstractForagingMTE {
 			super(ModTileEntityTypes.acacia_minion_2.get(), MinionTier.II);
 		}
 	}
-	
+
 	public static class AcaciaMTE3 extends AcaciaMinionTileEntity {
 		public AcaciaMTE3() {
 			super(ModTileEntityTypes.acacia_minion_3.get(), MinionTier.III);
 		}
 	}
-	
+
 	public static class AcaciaMTE4 extends AcaciaMinionTileEntity {
 		public AcaciaMTE4() {
 			super(ModTileEntityTypes.acacia_minion_4.get(), MinionTier.IV);
 		}
 	}
-	
+
 	public static class AcaciaMTE5 extends AcaciaMinionTileEntity {
 		public AcaciaMTE5() {
 			super(ModTileEntityTypes.acacia_minion_5.get(), MinionTier.V);
 		}
 	}
-	
+
 	public static class AcaciaMTE6 extends AcaciaMinionTileEntity {
 		public AcaciaMTE6() {
 			super(ModTileEntityTypes.acacia_minion_6.get(), MinionTier.VI);
 		}
 	}
-	
+
 	public static class AcaciaMTE7 extends AcaciaMinionTileEntity {
 		public AcaciaMTE7() {
 			super(ModTileEntityTypes.acacia_minion_7.get(), MinionTier.VII);
@@ -130,5 +89,46 @@ public class AcaciaMinionTileEntity extends AbstractForagingMTE {
 		public AcaciaMTEb() {
 			super(ModTileEntityTypes.acacia_minion_b.get(), MinionTier.XI);
 		}
+	}
+	
+	protected static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.ACACIA_LOG));
+	
+	public AcaciaMinionTileEntity(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
+		super(typeIn, tier);
+	}
+	
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		return null;
+	}
+	
+	@Override
+	protected SoundEvent getSoundEvent() {
+		return SoundEvents.BLOCK_WOOD_BREAK;
+	}
+	
+	@Override
+	protected int getSpeed(MinionTier tier) {
+		return AcaciaMinion.speed.get(tier.asInt);
+	}
+	
+	@Override
+	protected BlockState getState() {
+		return Blocks.ACACIA_SAPLING.getDefaultState();
+	}
+	
+	@Override
+	protected Item[] getSuperCompactor() {
+		return new Item[] {Items.DIAMOND, Items.ACACIA_LOG, ItemInit.enchanted_acacia.get()};
+	}
+	
+	@Override
+	protected ImmutableSet<Block> getValidBlocks() {
+		return validBlocks;
+	}
+	
+	@Override
+	public StringTextComponent initDisplayName() {
+		return new StringTextComponent("Acacia Minion Tier " + this.tier.name());
 	}
 }

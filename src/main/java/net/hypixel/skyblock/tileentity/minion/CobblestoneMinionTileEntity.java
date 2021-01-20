@@ -147,8 +147,9 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMiningMTE {
 			return new CobbleMCa(id, player, this);
 		case XI:
 			return new CobbleMCb(id, player, this);
+		default:
+			throw new IllegalStateException("Illegal Minion Tier:\t" + this.tier.name());
 		}
-		throw new IllegalStateException("Illegal Minion Tier:\t" + this.tier.name());
 	}
 
 	@Override

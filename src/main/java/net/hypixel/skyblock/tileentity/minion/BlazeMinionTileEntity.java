@@ -1,15 +1,10 @@
 package net.hypixel.skyblock.tileentity.minion;
 
-import com.google.common.collect.ImmutableSet;
-
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -95,16 +90,6 @@ public class BlazeMinionTileEntity extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	protected SoundEvent getSoundEvent() {
-		return null;
-	}
-
-	@Override
-	protected BlockState getState() {
-		return null;
-	}
-
-	@Override
 	protected Item[] getSuperCompactor() {
 		return null;
 	}
@@ -120,7 +105,7 @@ public class BlazeMinionTileEntity extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	protected BlockPos pickBlock() {
+	protected BlockPos pickBlockPos() {
 		return null;
 	}
 
@@ -139,10 +124,5 @@ public class BlazeMinionTileEntity extends AbstractMinionTileEntity {
 	@Override
 	protected int getSpeed(MinionTier tier) {
 		return 0;
-	}
-
-	@Override
-	protected ImmutableSet<Block> getValidBlocks() {
-		return null;
 	}
 }

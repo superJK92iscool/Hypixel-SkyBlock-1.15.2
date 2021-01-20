@@ -10,8 +10,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableSet;
-
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.items.minion.MinionFuelItem;
@@ -42,7 +40,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -67,9 +64,9 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	/**
 	 * The tier of each Minion
 	 */
-	public enum MinionTier {
-		I(1, 0x0), II(3, 0x1), III(3, 0x2), IV(6, 0x3), IX(12, 0x8), V(6, 0x4), VI(9, 0x5), VII(9, 0x6), VIII(12, 0x7),
-		X(15, 0x9), XI(15, 0xa);
+	public static enum MinionTier {
+		I(1, 0), II(3, 1), III(3, 2), IV(6, 3), V(6, 4), VI(9, 5), VII(9, 6), VIII(12, 7), IX(12, 8), X(15, 9),
+		XI(15, 10), XII(15, 11);
 
 		/**
 		 * A conversion between this and an integer.
@@ -88,16 +85,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			this.asInt = asInt;
 		}
 	}
-
-	/**
-	 * Default differentials from the center {@link BlockPos}
-	 */
-	protected static final int[] default_size = { -2, -1, 0, 1, 2 };
-
-	/**
-	 * Expanded differentials from center {@link BlockPos}
-	 */
-	protected static final int[] expanded_size = { -3, -2, -1, 0, 1, 2, 3 };
 
 	/**
 	 * Fuel Slot index.
@@ -131,6 +118,27 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected static final int UPGRADE_2_INDEX = 0x3;
 
 	/**
+	 * The list of everything this will hold.
+	 */
+	@Nonnull
+	public NonNullList<ItemStack> minionContents;
+
+	/**
+	 * X coordinate of this.
+	 */
+	public int x;
+
+	/**
+	 * Y coordinate of this.
+	 */
+	public int y;
+
+	/**
+	 * Z coordinate of this.
+	 */
+	public int z;
+
+	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding {@link Blocks#AIR}
 	 */
 	@Nonnull
@@ -140,7 +148,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * Index of the current item to merge {@link ItemStack}.
 	 */
 	protected int currentItem;
-	
+
 	/**
 	 * {@link StringTextComponent} used in {@link #getDisplayName()}.
 	 */
@@ -158,12 +166,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected AbstractMinionChestTileEntity mcte;
 
 	/**
-	 * The list of everything this will hold.
-	 */
-	@Nonnull
-	public NonNullList<ItemStack> minionContents;
-
-	/**
 	 * {@link LazyOptional} of {@link IItemHandlerModifiable}
 	 */
 	@Nonnull
@@ -174,7 +176,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 */
 	@Nonnegative
 	protected int numPlayersUsing;
-	
+
 	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding {@code BlockPos}
 	 */
@@ -200,21 +202,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected final List<BlockPos> validSurround = new ArrayList<>();
 
 	/**
-	 * X coordinate of this.
-	 */
-	public int x;
-
-	/**
-	 * Y coordinate of this.
-	 */
-	public int y;
-
-	/**
-	 * Z coordinate of this.
-	 */
-	public int z;
-
-	/**
 	 * Create an Abstract {@link TileEntity} for {@code this}.
 	 *
 	 * @param typeIn {@code TileEntity} of this.
@@ -226,6 +213,222 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		this.minionContents = NonNullList.withSize(4 + this.tier.size, ItemStack.EMPTY);
 		this.surround = this.initSurround();
 		this.display_name = this.initDisplayName();
+	}
+
+	@Override
+	public final void clear() {
+		super.clear();
+		this.minionContents.clear();
+	}
+
+	@Override
+	public final ItemStack decrStackSize(int index, int count) {
+		return ItemStackHelper.getAndSplit(this.minionContents, index, count);
+	}
+
+	@Override
+	public final <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			return this.minionHandler.cast();
+		return super.getCapability(cap, side);
+	}
+
+	@Override
+	public final ITextComponent getDisplayName() {
+		return this.display_name;
+	}
+
+	@Override
+	public final NonNullList<ItemStack> getItems() {
+		return this.minionContents;
+	}
+
+	/**
+	 * @return {@link #mcte}
+	 */
+	public final AbstractMinionChestTileEntity getMcte() {
+		return this.mcte;
+	}
+
+	@Override
+	public final int getSizeInventory() {
+		return this.minionContents.size();
+	}
+
+	@Override
+	public final ItemStack getStackInSlot(int index) {
+		return this.minionContents.get(index);
+	}
+
+	/**
+	 * @return {@link #tier}
+	 */
+	public final MinionTier getTier() {
+		return this.tier;
+	}
+
+	@Override
+	public final SUpdateTileEntityPacket getUpdatePacket() {
+		final CompoundNBT nbt = new CompoundNBT();
+		this.write(nbt);
+		return new SUpdateTileEntityPacket(this.getPos(), 1, nbt);
+	}
+
+	@Override
+	public final CompoundNBT getUpdateTag() {
+		return this.write(new CompoundNBT());
+	}
+
+	/**
+	 * Initialize all variables.
+	 */
+	public final void init() {
+		this.isTicking = true;
+		this.x = this.pos.getX();
+		this.y = this.pos.getY();
+		this.z = this.pos.getZ();
+		this.tick = 0;
+		this.fuelTick = 0;
+		HypixelSkyBlockMod.LOGGER.info(this.toString());
+		this.setSurround();
+	}
+
+	/**
+	 * Determine if {@code this} and any additional storage are full.
+	 *
+	 * @return {@code true} if full. {@code false} otherwise
+	 */
+	public final boolean isCompletlyFull() {
+		if (this.isInventoryFull())
+			if (this.mcte != null)
+				return this.mcte.isFull();
+		return this.hasSeller();
+	}
+
+	@Override
+	public final boolean isEmpty() {
+		if (this.hasSeller())
+			return false;
+		for (int i = 4; i < this.getSizeInventory(); ++i)
+			if (this.getStackInSlot(i).isEmpty())
+				return true;
+		if (this.mcte != null)
+			return this.mcte.isFull();
+		return false;
+	}
+
+	@Override
+	public final boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
+		final Item item = stack.getItem();
+		HypixelSkyBlockMod.LOGGER.info(item.getTags().toString());
+		switch (index) {
+		case FUEL_INDEX:
+			return item.isIn(ModItemTags.fuel);
+		case SELLER_INDEX:
+			return item.isIn(ModItemTags.seller);
+		case UPGRADE_1_INDEX:
+		case UPGRADE_2_INDEX:
+			return item.isIn(ModItemTags.upgrade);
+		default:
+			return false;
+		}
+	}
+
+	@Override
+	public final boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
+		if (this.world.getTileEntity(this.pos) != this)
+			return false;
+		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
+	}
+
+	@Override
+	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		HypixelSkyBlockMod.LOGGER.info("NetworkManager:\t" + net.toString());
+		HypixelSkyBlockMod.LOGGER.info("SUpdateTileEntityPacket:\t" + pkt.toString());
+		this.read(pkt.getNbtCompound());
+	}
+
+	@Override
+	public final void read(CompoundNBT compound) {
+		HypixelSkyBlockMod.LOGGER.info("Minion NBT Reading");
+		HypixelSkyBlockMod.LOGGER.info("CompoundNBT:\t" + compound.toString());
+		super.read(compound);
+		this.minionContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		ItemStackHelper.loadAllItems(compound, this.minionContents);
+	}
+
+	@Override
+	public final boolean receiveClientEvent(int id, int type) {
+		HypixelSkyBlockMod.LOGGER.info("Receiving Client Event. id:\t" + id + " type:\t" + type);
+		if (id == 1) {
+			this.numPlayersUsing = type;
+			return true;
+		}
+		return super.receiveClientEvent(id, type);
+	}
+
+	@Override
+	public final void remove() {
+		HypixelSkyBlockMod.LOGGER.info("Removing " + this.getClass().getSimpleName());
+		super.remove();
+		if (this.minionHandler != null)
+			this.minionHandler.invalidate();
+	}
+
+	@Override
+	public final ItemStack removeStackFromSlot(int index) {
+		HypixelSkyBlockMod.LOGGER.info("Removing stack from slot " + index);
+		return ItemStackHelper.getAndRemove(this.minionContents, index);
+	}
+
+	@Override
+	public final void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
+		HypixelSkyBlockMod.LOGGER.info("Setting slot" + index + " to " + stack.toString());
+		final ItemStack indexStack = this.minionContents.get(index);
+		final boolean flag = !stack.isEmpty() && stack.isItemEqual(indexStack)
+				&& ItemStack.areItemStackTagsEqual(stack, indexStack);
+		this.minionContents.set(index, stack);
+		if (stack.getCount() > this.getInventoryStackLimit())
+			stack.setCount(this.getInventoryStackLimit());
+		if (!flag)
+			this.markDirty();
+	}
+
+	/**
+	 * Changes {@link #mcte}
+	 *
+	 * @param mcte the new {@link AbstractMinionChestTileEntity}
+	 */
+	public final void setMcte(@Nullable AbstractMinionChestTileEntity mcte) {
+		HypixelSkyBlockMod.LOGGER.info("Setting AbstractMinionChestTileEntity");
+		this.mcte = mcte;
+	}
+
+	@Override
+	public abstract void tick();
+
+	@Override
+	public final String toString() {
+		return this.getClass().getSimpleName() + " [x=" + this.x + ", y=" + this.y + ", z=" + this.z + ", tier="
+				+ this.tier + "]";
+	}
+
+	@Override
+	public final void updateContainingBlockInfo() {
+		HypixelSkyBlockMod.LOGGER.info("Updating Containing Block Info");
+		super.updateContainingBlockInfo();
+		if (this.minionHandler != null) {
+			this.minionHandler.invalidate();
+			this.minionHandler = null;
+		}
+	}
+
+	@Override
+	public final CompoundNBT write(CompoundNBT compound) {
+		HypixelSkyBlockMod.LOGGER.info("Minion NBT Writting:\t" + compound.toString());
+		super.write(compound);
+		ItemStackHelper.saveAllItems(compound, this.minionContents);
+		return compound;
 	}
 
 	/**
@@ -363,12 +566,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 				&& stack1.getCount() < stack1.getMaxStackSize() && stack1.getCount() < this.getInventoryStackLimit();
 	}
 
-	@Override
-	public final void clear() {
-		super.clear();
-		this.minionContents.clear();
-	}
-
 	/**
 	 * Handle {@link ItemInit#compactor}.<br>
 	 * Sometimes this will do nothing unless paired with
@@ -410,11 +607,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	@Override
 	protected abstract Container createMenu(int id, PlayerInventory player);
 
-	@Override
-	public final ItemStack decrStackSize(int index, int count) {
-		return ItemStackHelper.getAndSplit(this.minionContents, index, count);
-	}
-
 	/**
 	 * Handle {@link ItemInit#diamond_spreading}<br>
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Diamond_Spreading">Diamond
@@ -428,13 +620,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			this.add(-1, new ItemStack(Items.DIAMOND));
 	}
 
-	@Override
-	public final <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return this.minionHandler.cast();
-		return super.getCapability(cap, side);
-	}
-
 	/**
 	 * Determine all possible {@link Item} that could be compacted using the
 	 * {@link ItemInit#compactor}.
@@ -446,11 +631,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	@Override
 	protected final ITextComponent getDefaultName() {
 		return new TranslationTextComponent("container." + this.getType().getRegistryName().toString().toLowerCase());
-	}
-
-	@Override
-	public final ITextComponent getDisplayName() {
-		return this.display_name;
 	}
 
 	/**
@@ -500,18 +680,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		return inv;
 	}
 
-	@Override
-	public final NonNullList<ItemStack> getItems() {
-		return this.minionContents;
-	}
-
-	/**
-	 * @return {@link #mcte}
-	 */
-	public final AbstractMinionChestTileEntity getMcte() {
-		return this.mcte;
-	}
-
 	/**
 	 * @return the {@link ItemStack} in the Seller Slot.
 	 */
@@ -519,27 +687,13 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		return this.getStackInSlot(SELLER_INDEX);
 	}
 
-	@Override
-	public final int getSizeInventory() {
-		return this.minionContents.size();
-	}
-	
 	/**
-	 * @return {@link SoundEvent} to play when placing a {@link Block}.
+	 * Determines the time between {@link #interact(BlockPos)} calls in ticks.
+	 * 
+	 * @param tier {@link MinionTier}
+	 * @return time between actions in ticks.
 	 */
-	protected abstract SoundEvent getSoundEvent();
-
 	protected abstract int getSpeed(MinionTier tier);
-
-	@Override
-	public final ItemStack getStackInSlot(int index) {
-		return this.minionContents.get(index);
-	}
-
-	/**
-	 * @return {@link BlockState} to place when interacting.
-	 */
-	protected abstract BlockState getState();
 
 	/**
 	 * Determine all possible {@link Item} that could be super compacted.<br>
@@ -586,37 +740,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
-	 * @return {@link #tier}
-	 */
-	public final MinionTier getTier() {
-		return this.tier;
-	}
-
-	@Override
-	public final SUpdateTileEntityPacket getUpdatePacket() {
-		final CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
-		return new SUpdateTileEntityPacket(this.getPos(), 1, nbt);
-	}
-
-	@Override
-	public final CompoundNBT getUpdateTag() {
-		return this.write(new CompoundNBT());
-	}
-	
-	/**
 	 * @return the {@link ItemStack} in both Upgrade Slots.
 	 */
 	protected final ItemStack[] getUpgrades() {
 		return new ItemStack[] { this.getStackInSlot(UPGRADE_1_INDEX), this.getStackInSlot(UPGRADE_2_INDEX) };
 	}
-
-	/**
-	 * Retrieves all {@link Block} that this can place.
-	 * 
-	 * @return {@link ImmutableSet} of valid {@link Block}
-	 */
-	protected abstract ImmutableSet<Block> getValidBlocks();
 
 	/**
 	 * Determines if {@code this} has fuel.
@@ -650,26 +778,8 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
-	 * Initialize all variables.
-	 */
-	public final void init() {
-		this.isTicking = true;
-		this.x = this.pos.getX();
-		this.y = this.pos.getY();
-		this.z = this.pos.getZ();
-		this.tick = 0;
-		this.fuelTick = 0;
-		HypixelSkyBlockMod.LOGGER.info(this.toString());
-		this.setSurround();
-	}
-
-	public final void init(BlockPos pos) {
-		this.pos = pos;
-		this.init();
-	}
-	
-	/**
 	 * Initializes {@link #display_name}
+	 * 
 	 * @return {@link StringTextComponent}.
 	 */
 	protected abstract StringTextComponent initDisplayName();
@@ -686,37 +796,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	/**
 	 * Interact with {@code pos}
 	 *
-	 * @param pos is the result of {@link #pickBlock()}
+	 * @param pos is the result of {@link #pickBlockPos()}
 	 * @return {@code true} if a {@link Block} has been changed.<br>
 	 *         {@code false} if a {@link Block} has not been changed.
 	 */
 	protected boolean interact(BlockPos pos) {
-		return false;
-	}
-
-	
-
-	/**
-	 * Determine if {@code this} and any additional storage are full.
-	 *
-	 * @return {@code true} if full. {@code false} otherwise
-	 */
-	public final boolean isCompletlyFull() {
-		if (this.isInventoryFull())
-			if (this.mcte != null)
-				return this.mcte.isFull();
-		return this.hasSeller();
-	}
-
-	@Override
-	public final boolean isEmpty() {
-		if (this.hasSeller())
-			return false;
-		for (int i = 4; i < this.getSizeInventory(); ++i)
-			if (this.getStackInSlot(i).isEmpty())
-				return true;
-		if (this.mcte != null)
-			return this.mcte.isFull();
 		return false;
 	}
 
@@ -734,37 +818,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		return true;
 	}
 
-	@Override
-	public final boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
-		final Item item = stack.getItem();
-		HypixelSkyBlockMod.LOGGER.info(item.getTags().toString());
-		switch (index) {
-		case FUEL_INDEX:
-			return item.isIn(ModItemTags.fuel);
-		case SELLER_INDEX:
-			return item.isIn(ModItemTags.seller);
-		case UPGRADE_1_INDEX:
-		case UPGRADE_2_INDEX:
-			return item.isIn(ModItemTags.upgrade);
-		default:
-			return false;
-		}
-	}
-
-	@Override
-	public final boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this)
-			return false;
-		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
-	}
-
-	@Override
-	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		HypixelSkyBlockMod.LOGGER.info("NetworkManager:\t" + net.toString());
-		HypixelSkyBlockMod.LOGGER.info("SUpdateTileEntityPacket:\t" + pkt.toString());
-		this.read(pkt.getNbtCompound());
-	}
-
 	/**
 	 * Pick a random valid {@link BlockPos} to interact with.<br>
 	 * This method depends heavily on the type of minion.<br>
@@ -772,40 +825,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 *
 	 * @return {@link BlockPos} picked.
 	 */
-	protected abstract BlockPos pickBlock();
-
-	@Override
-	public final void read(CompoundNBT compound) {
-		HypixelSkyBlockMod.LOGGER.info("Minion NBT Reading");
-		HypixelSkyBlockMod.LOGGER.info("CompoundNBT:\t" + compound.toString());
-		super.read(compound);
-		this.minionContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(compound, this.minionContents);
-	}
-
-	@Override
-	public final boolean receiveClientEvent(int id, int type) {
-		HypixelSkyBlockMod.LOGGER.info("Receiving Client Event. id:\t" + id + " type:\t" + type);
-		if (id == 1) {
-			this.numPlayersUsing = type;
-			return true;
-		}
-		return super.receiveClientEvent(id, type);
-	}
-
-	@Override
-	public final void remove() {
-		HypixelSkyBlockMod.LOGGER.info("Removing " + this.getClass().getSimpleName());
-		super.remove();
-		if (this.minionHandler != null)
-			this.minionHandler.invalidate();
-	}
-
-	@Override
-	public final ItemStack removeStackFromSlot(int index) {
-		HypixelSkyBlockMod.LOGGER.info("Removing stack from slot " + index);
-		return ItemStackHelper.getAndRemove(this.minionContents, index);
-	}
+	protected abstract BlockPos pickBlockPos();
 
 	/**
 	 * Removes a stack from the indexes.
@@ -822,7 +842,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
-	 * Determine all surround {@link BlockPos} that is Air
+	 * Determine all surround {@link BlockPos} that equal {@link Material#AIR}.
 	 */
 	protected void setAirSurround() {
 		HypixelSkyBlockMod.LOGGER.info("Finding Air in valid BlockPos");
@@ -834,32 +854,10 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		}
 		HypixelSkyBlockMod.LOGGER.info(this.airSurround.toString());
 	}
-	
+
 	@Override
 	protected void setItems(NonNullList<ItemStack> itemsIn) {
-	}
-
-	@Override
-	public final void setInventorySlotContents(int index, ItemStack stack) {
-		HypixelSkyBlockMod.LOGGER.info("Setting slot" + index + " to " + stack.toString());
-		final ItemStack indexStack = this.minionContents.get(index);
-		final boolean flag = !stack.isEmpty() && stack.isItemEqual(indexStack)
-				&& ItemStack.areItemStackTagsEqual(stack, indexStack);
-		this.minionContents.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit())
-			stack.setCount(this.getInventoryStackLimit());
-		if (!flag)
-			this.markDirty();
-	}
-
-	/**
-	 * Changes {@link #mcte}
-	 *
-	 * @param mcte the new {@link AbstractMinionChestTileEntity}
-	 */
-	public final void setMcte(AbstractMinionChestTileEntity mcte) {
-		HypixelSkyBlockMod.LOGGER.info("Setting AbstractMinionChestTileEntity");
-		this.mcte = mcte;
+		this.minionContents = Objects.requireNonNull(itemsIn, "New Minion Contents must be non-null");
 	}
 
 	/**
@@ -938,32 +936,5 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 				this.add(-1, new ItemStack(ItemMap.enchMap.get(item), ItemMap.enchCountMap.get(item)));
 			}
 		}
-	}
-
-	@Override
-	public abstract void tick();
-
-	@Override
-	public final String toString() {
-		return this.getClass().getSimpleName() + " [x=" + this.x + ", y=" + this.y + ", z=" + this.z + ", tier="
-				+ this.tier + "]";
-	}
-
-	@Override
-	public final void updateContainingBlockInfo() {
-		HypixelSkyBlockMod.LOGGER.info("Updating Containing Block Info");
-		super.updateContainingBlockInfo();
-		if (this.minionHandler != null) {
-			this.minionHandler.invalidate();
-			this.minionHandler = null;
-		}
-	}
-
-	@Override
-	public final CompoundNBT write(CompoundNBT compound) {
-		HypixelSkyBlockMod.LOGGER.info("Minion NBT Writting:\t" + compound.toString());
-		super.write(compound);
-		ItemStackHelper.saveAllItems(compound, this.minionContents);
-		return compound;
 	}
 }

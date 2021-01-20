@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.hypixel.skyblock.HypixelSkyBlockMod;
-import net.hypixel.skyblock.blocks.minion.CoalMinion;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMC1;
 import net.hypixel.skyblock.inventory.container.minion.CoalMinionContainer.CoalMC2;
@@ -29,7 +27,6 @@ import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 
 /**
@@ -140,8 +137,9 @@ public class CoalMinionTileEntity extends AbstractMiningMTE {
 			return new CoalMCa(id, player, this);
 		case XI:
 			return new CoalMCb(id, player, this);
+		default:
+			throw new IllegalStateException("Illegal Minion Tier:\t" + this.tier.name());
 		}
-		throw new IllegalStateException("Illegal Minion MinionTier");
 	}
 
 	@Override
@@ -162,31 +160,6 @@ public class CoalMinionTileEntity extends AbstractMiningMTE {
 	@Override
 	protected Item[] getSuperCompactor() {
 		return sup;
-	}
-
-	@Override
-	protected BlockPos pickBlock() {
-		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");
-		this.setValidSurround();
-		this.setAirSurround();
-		if (!this.airSurround.isEmpty())
-			return this.airSurround.get(rand.nextInt(this.airSurround.size()));
-		if (!this.validSurround.isEmpty())
-			return this.validSurround.get(rand.nextInt(this.validSurround.size()));
-		return null;
-	}
-
-	@Override
-	public void tick() {
-		if (this.world.isRemote)
-			return;
-		if (!this.isTicking)
-			this.init();
-		if (this.isCompletlyFull())
-			return;
-		this.tick = ++this.tick % (int) (CoalMinion.speed.get(this.tier.asInt) * this.getFuelSpeed());
-		if (this.tick == 0)
-			this.interact(this.pickBlock());
 	}
 
 	@Override

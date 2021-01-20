@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
+import net.hypixel.skyblock.init.items.ItemInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,7 +15,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 
 /**
@@ -25,33 +25,51 @@ import net.minecraft.world.server.ServerWorld;
  * @since 11 July 2019
  */
 public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
+	/**
+	 * Differentials from the center {@link BlockPos} when {@link #count(Item)}
+	 * using {@link ItemInit#minion_expander} is 0
+	 */
+	@Nonnull
+	protected static final int[] default_size = { -2, -1, 0, 1, 2 };
+
+	/**
+	 * Differentials from the center {@link BlockPos} when {@link #count(Item)}
+	 * using {@link ItemInit#minion_expander} is 2
+	 */
+	@Nonnull
+	protected static final int[] expanded_2_size = { -4, -3, -2, -1, 0, 1, 2, 3, 4 };
+
+	/**
+	 * Differentials from the center {@link BlockPos} when {@link #count(Item)}
+	 * using {@link ItemInit#minion_expander} is 1
+	 */
+	@Nonnull
+	protected static final int[] expanded_size = { -3, -2, -1, 0, 1, 2, 3 };
+	
 	public AbstractPlacerMTE(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
 		super(typeIn, tier);
 	}
 	
+	/**
+	 * Determines {@link SoundEvent} when {@link #interact(BlockPos)} results in placing {@link Block}
+	 * 
+	 * @return {@link SoundEvent} to play when placing a {@link Block}.
+	 */
 	protected abstract SoundEvent getSoundEvent();
-
-	@Override
-	protected BlockState getState() {
-		return null;
-	}
-
-	@Override
-	protected Item[] getSuperCompactor() {
-		return null;
-	}
 	
+	/**
+	 * Determines {@link BlockState} when {@link #interact(BlockPos)} results in placing {@link Block}
+	 * 
+	 * @return {@link BlockState} to place when interacting.
+	 */
+	protected abstract BlockState getState();
+	
+	/**
+	 * Determines all {@link Block} that this can place.
+	 * 
+	 * @return an {@link ImmutableSet} of {@link Block}. 
+	 */
 	protected abstract ImmutableSet<Block> getValidBlocks();
-
-	@Override
-	protected StringTextComponent initDisplayName() {
-		return null;
-	}
-
-	@Override
-	protected BlockPos[][][] initSurround() {
-		return new BlockPos[7][7][7];
-	}
 	
 	@Override
 	protected boolean interact(BlockPos pos) {
@@ -90,8 +108,12 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 		return blocks.contains(block);
 	}
 	
-	protected BlockPos pickBlock() {
-		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");
+	/**
+	 * Picks a random {@link BlockPos} to interact with using {@link #rand}.
+	 * @return a random {@link BlockPos}
+	 */
+	protected final BlockPos pickBlockPos() {
+		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");	
 		this.setValidSurround();
 		this.setAirSurround();
 		if (!this.airSurround.isEmpty())
@@ -102,7 +124,7 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	}
 
 	@Override
-	public void tick() {
+	public final void tick() {
 		if (this.world.isRemote)
 			return;
 		if (!this.isTicking)
@@ -111,6 +133,6 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 			return;
 		this.tick = ++this.tick % (int) (getSpeed(this.tier) * this.getFuelSpeed());
 		if (this.tick == 0)
-			this.interact(this.pickBlock());
+			this.interact(this.pickBlockPos());
 	}
 }
