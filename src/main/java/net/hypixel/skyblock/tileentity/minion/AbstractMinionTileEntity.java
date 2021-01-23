@@ -16,7 +16,6 @@ import net.hypixel.skyblock.items.minion.MinionFuelItem;
 import net.hypixel.skyblock.tags.ModItemTags;
 import net.hypixel.skyblock.util.ItemMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.crash.CrashReport;
@@ -847,11 +846,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected void setAirSurround() {
 		HypixelSkyBlockMod.LOGGER.info("Finding Air in valid BlockPos");
 		this.airSurround.clear();
-		for (final BlockPos pos : this.validSurround) {
-			BlockState state = this.world.getBlockState(pos);
-			if (state.getMaterial() == Material.AIR)
-				this.airSurround.add(pos);
-		}
+		for (BlockPos[][] y : this.surround)
+			for (BlockPos[] x : y)
+				for (BlockPos pos : x)
+					if (this.world.getBlockState(pos).getMaterial() == Material.AIR)
+						this.airSurround.add(pos);
 		HypixelSkyBlockMod.LOGGER.info(this.airSurround.toString());
 	}
 

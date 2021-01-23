@@ -72,7 +72,7 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	protected abstract ImmutableSet<Block> getValidBlocks();
 	
 	@Override
-	protected boolean interact(BlockPos pos) {
+	protected final boolean interact(BlockPos pos) {
 		if (pos == null)
 			return false;
 		HypixelSkyBlockMod.LOGGER.info("Interacting with " + pos.toString());

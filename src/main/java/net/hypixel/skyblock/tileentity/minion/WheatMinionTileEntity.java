@@ -25,12 +25,10 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
 
 /**
  * The {@link AbstractMinionTileEntity} for the
@@ -182,7 +180,7 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 		return new BlockPos[1][7][7];
 	}
 
-	@Override
+	/**@Override
 	protected boolean interact(BlockPos pos) {
 		if (pos == null)
 			return false;
@@ -198,7 +196,7 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 			this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 		return true;
-	}
+	}*/
 
 	@Override
 	protected void setAirSurround() {

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
@@ -51,9 +50,7 @@ public abstract class AbstractMiningMTE extends AbstractPlacerMTE {
 				if (pos == null)
 					continue;
 				final BlockState state = this.world.getBlockState(pos);
-				if (state.getMaterial() == Material.AIR)
-					this.validSurround.add(pos);
-				else if (this.isBlockValid(state.getBlock()))
+				if (this.isBlockValid(state.getBlock()))
 					this.validSurround.add(pos);
 				else
 					continue;
