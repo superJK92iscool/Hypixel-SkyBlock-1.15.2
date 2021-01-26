@@ -85,19 +85,16 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 	protected void setValidSurround() {
 		HypixelSkyBlockMod.LOGGER.info("Gathering valid BlockPos");
 		this.validSurround.clear();
-		for (BlockPos[][] y : this.surround)
-			for (BlockPos[] x : y)
-				for (BlockPos pos : x) {
-					if (pos == null)
-						continue;
-					BlockState state = this.world.getBlockState(pos);
-					if (state.getMaterial() == Material.AIR)
-						this.validSurround.add(pos);
-					else if (this.isBlockValid(state.getBlock()))
-						this.validSurround.add(pos);
-					else
-						continue;
-				}
+		for (BlockPos[] x : this.surround[0])
+			for (BlockPos pos : x) {
+				if (pos == null)
+					continue;
+				BlockState state = this.world.getBlockState(pos.down());
+				if (state.getMaterial() == Material.EARTH)
+					this.validSurround.add(pos);
+				else
+					continue;
+			}
 		HypixelSkyBlockMod.LOGGER.info(this.validSurround.toString());
 	}
 }

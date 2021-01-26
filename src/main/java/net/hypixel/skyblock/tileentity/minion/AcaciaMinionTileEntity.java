@@ -6,6 +6,17 @@ import com.google.common.collect.ImmutableSet;
 
 import net.hypixel.skyblock.blocks.minion.AcaciaMinion;
 import net.hypixel.skyblock.init.items.ItemInit;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC1;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC2;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC3;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC4;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC5;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC6;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC7;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC8;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMC9;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMCa;
+import net.hypixel.skyblock.inventory.container.minion.AcaciaMinionContainer.AcaciaMCb;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -99,7 +110,32 @@ public class AcaciaMinionTileEntity extends AbstractForagingMTE {
 	
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return null;
+		switch (this.tier) {
+		case I:
+			return new AcaciaMC1(id, player, this);
+		case II:
+			return new AcaciaMC2(id, player, this);
+		case III:
+			return new AcaciaMC3(id, player, this);
+		case IV:
+			return new AcaciaMC4(id, player, this);
+		case V:
+			return new AcaciaMC5(id, player, this);
+		case VI:
+			return new AcaciaMC6(id, player, this);
+		case VII:
+			return new AcaciaMC7(id, player, this);
+		case VIII:
+			return new AcaciaMC8(id, player, this);
+		case IX:
+			return new AcaciaMC9(id, player, this);
+		case X:
+			return new AcaciaMCa(id, player, this);
+		case XI:
+			return new AcaciaMCb(id, player, this);
+		default:
+			throw new IllegalStateException("Illegal Minion Tier:\t" + this.tier);
+		}
 	}
 	
 	@Override
