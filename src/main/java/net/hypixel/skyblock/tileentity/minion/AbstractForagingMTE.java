@@ -78,7 +78,7 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 		}
 		
 		for (BlockPos[] row : this.surround[0])
-			HypixelSkyBlockMod.LOGGER.info(Arrays.deepToString(row));
+			LOGGER.info(Arrays.deepToString(row));
 	}
 
 	@Override
@@ -95,6 +95,6 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 				else
 					continue;
 			}
-		HypixelSkyBlockMod.LOGGER.info(this.validSurround.toString());
+		LOGGER.info(this.validSurround.toString());
 	}
 }

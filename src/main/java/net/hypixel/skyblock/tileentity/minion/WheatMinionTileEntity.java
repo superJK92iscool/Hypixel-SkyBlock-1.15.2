@@ -180,7 +180,7 @@ public class WheatMinionTileEntity extends AbstractPlacerMTE {
 		return new BlockPos[1][7][7];
 	}
 
-	/**@Override
+	/**
 	protected boolean interact(BlockPos pos) {
 		if (pos == null)
 			return false;

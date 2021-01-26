@@ -4,17 +4,18 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.init.items.ItemInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 /**
@@ -75,7 +76,7 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	protected final boolean interact(BlockPos pos) {
 		if (pos == null)
 			return false;
-		HypixelSkyBlockMod.LOGGER.info("Interacting with " + pos.toString());
+		LOGGER.info("Interacting with " + pos.toString());
 		final BlockState state = this.world.getBlockState(pos);
 		if (state.getMaterial() == Material.AIR) {
 			this.world.playSound(pos.getX(), pos.getY(), pos.getZ(), this.getSoundEvent(), SoundCategory.BLOCKS, 1f, 1f,
@@ -96,8 +97,6 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	 * dimensions
 	 *
 	 * @param block       The {@code Block} to check.
-	 * @param validBlocks A {@link ImmutableSet} of valid {@code Block} that this can
-	 *                    interact with
 	 * @return {@code true} if {@code Block} is valid.<br>
 	 *         {@code false} otherwise.
 	 */
@@ -109,17 +108,17 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	}
 	
 	/**
-	 * Picks a random {@link BlockPos} to interact with using {@link #rand}.
+	 * Picks a random {@link BlockPos} to interact with using {@link World#rand} of {@link TileEntity#world}.
 	 * @return a random {@link BlockPos}
 	 */
 	protected final BlockPos pickBlockPos() {
-		HypixelSkyBlockMod.LOGGER.info("Picking a BlockPos");	
+		LOGGER.info("Picking a BlockPos");	
 		this.setValidSurround();
 		this.setAirSurround();
 		if (!this.airSurround.isEmpty())
-			return this.airSurround.get(rand.nextInt(this.airSurround.size()));
+			return this.airSurround.get(this.world.rand.nextInt(this.airSurround.size()));
 		if (!this.validSurround.isEmpty())
-			return this.validSurround.get(rand.nextInt(this.validSurround.size()));
+			return this.validSurround.get(this.world.rand.nextInt(this.validSurround.size()));
 		return null;
 	}
 
