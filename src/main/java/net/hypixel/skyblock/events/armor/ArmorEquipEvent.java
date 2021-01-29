@@ -54,16 +54,16 @@ public class ArmorEquipEvent {
 				continue;
 			switch (armor.getEquipmentSlot()) {
 			case HEAD:
-				health += GolemSet.helmet_hp;
+				health += (float)GolemSet.helmet_hp;
 				break;
 			case CHEST:
-				health += GolemSet.chestplate_hp;
+				health += (float)GolemSet.chestplate_hp;
 				break;
 			case LEGS:
-				health += GolemSet.leggings_hp;
+				health += (float)GolemSet.leggings_hp;
 				break;
 			case FEET:
-				health += GolemSet.boots_hp;
+				health += (float)GolemSet.boots_hp;
 				break;
 			default:
 				continue;

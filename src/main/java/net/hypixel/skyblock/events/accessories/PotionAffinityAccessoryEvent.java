@@ -46,11 +46,11 @@ public class PotionAffinityAccessoryEvent {
 		else return;
 		int duration = effect.getDuration();
 		if (inv.hasItemStack(Artifact))
-			duration *= 1.5;
+			duration = (int)(1.5*duration);
 		else if (inv.hasItemStack(Ring))
-			duration *= 1.25;
+			duration = (int)(1.25*duration);
 		else if (inv.hasItemStack(Talisman))
-			duration *= 1.1;
+			duration = (int)(1.1*duration);
 		effect.combine(new EffectInstance(effect.getPotion(), duration, effect.getAmplifier()));
 	}
 }

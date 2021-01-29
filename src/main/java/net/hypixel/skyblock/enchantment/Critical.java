@@ -33,7 +33,7 @@ public class Critical extends ModEnchantment {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-		level *= 1.1;
+		level = (int)(1.1*level);
 		super.onEntityDamaged(user, target, level);
 	}
 }

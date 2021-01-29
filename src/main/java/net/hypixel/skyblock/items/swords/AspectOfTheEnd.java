@@ -43,8 +43,8 @@ public class AspectOfTheEnd extends ModSwordItem {
 		
 		double x = playerIn.getPosX(), y = playerIn.getPosY(), z = playerIn.getPosZ();
 		float phi = playerIn.rotationYaw, theta = playerIn.rotationPitch;
-		phi *= Math.PI/180f;
-		theta *= Math.PI/180f;
+		phi *= (float)Math.PI/180f;
+		theta *= (float)Math.PI/180f;
 		
 		x += Math.sin(theta);
 		y += Math.sin(phi)*Math.cos(theta);
