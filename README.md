@@ -1,3 +1,4 @@
 # Hypixel-SkyBlock-1.15.2
 Hypixel SkyBlock  
-Epic Gamer Time  
+Play on the Hypixel Network at mc.hypixel.net.
+Learn more about it here: https://hypixel.net/forums/skyblock.157/
