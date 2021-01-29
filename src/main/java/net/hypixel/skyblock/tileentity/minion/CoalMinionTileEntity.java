@@ -30,10 +30,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.StringTextComponent;
 
 /**
- * The base for Coal Minion TileEntity
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/Coal_Minion>Coal Minion</a>.
  *
  * @author MrPineapple070
- * @version 23 July 2020
+ * @version 21 February 2020
+ * @since 11 July 2019
  */
 public class CoalMinionTileEntity extends AbstractMiningMTE {
 	public static class CoalMTE1 extends CoalMinionTileEntity {

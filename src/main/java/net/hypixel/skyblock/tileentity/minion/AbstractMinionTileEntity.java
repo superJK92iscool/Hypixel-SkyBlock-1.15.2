@@ -57,8 +57,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * description of Minions.
  *
  * @author MrPineapple070
- * @version 11 June 2019
- * @since 11 June 2019
+ * @version 21 February 2020
+ * @since 11 July 2019
  */
 public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		implements ITickableTileEntity, IClearable, INamedContainerProvider {
@@ -66,7 +66,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * The tier of each Minion
 	 */
 	public static enum MinionTier {
-		I(1, 0), II(3, 1), III(3, 2), IV(6, 3), V(6, 4), VI(9, 5), VII(9, 6), VIII(12, 7), IX(12, 8), X(15, 9),
+		I(1, 0), II(3, 1), III(3, 2), IV(6, 3), IX(12, 8), V(6, 4), VI(9, 5), VII(9, 6), VIII(12, 7), X(15, 9),
 		XI(15, 10), XII(15, 11);
 
 		/**
@@ -86,7 +86,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			this.asInt = asInt;
 		}
 	}
-
+	
 	/**
 	 * {@link Logger} for this
 	 */
@@ -118,27 +118,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected static final int UPGRADE_2_INDEX = 0x3;
 
 	/**
-	 * The list of everything this will hold.
-	 */
-	@Nonnull
-	public NonNullList<ItemStack> minionContents;
-
-	/**
-	 * X coordinate of this.
-	 */
-	public int x;
-
-	/**
-	 * Y coordinate of this.
-	 */
-	public int y;
-
-	/**
-	 * Z coordinate of this.
-	 */
-	public int z;
-
-	/**
 	 * A {@link List} of {@link BlockPos} of all surrounding {@link Blocks#AIR}
 	 */
 	@Nonnull
@@ -164,6 +143,12 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 */
 	@Nullable
 	protected AbstractMinionChestTileEntity mcte;
+
+	/**
+	 * The list of everything this will hold.
+	 */
+	@Nonnull
+	public NonNullList<ItemStack> minionContents;
 
 	/**
 	 * {@link LazyOptional} of {@link IItemHandlerModifiable}
@@ -202,6 +187,21 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected final List<BlockPos> validSurround = new ArrayList<>();
 
 	/**
+	 * X coordinate of this.
+	 */
+	public int x;
+
+	/**
+	 * Y coordinate of this.
+	 */
+	public int y;
+
+	/**
+	 * Z coordinate of this.
+	 */
+	public int z;
+
+	/**
 	 * Create an Abstract {@link TileEntity} for {@code this}.
 	 *
 	 * @param typeIn {@code TileEntity} of this.
@@ -213,211 +213,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		this.minionContents = NonNullList.withSize(4 + this.tier.size, ItemStack.EMPTY);
 		this.surround = this.initSurround();
 		this.display_name = this.initDisplayName();
-	}
-
-	@Override
-	public final void clear() {
-		super.clear();
-		this.minionContents.clear();
-	}
-
-	@Override
-	public final ItemStack decrStackSize(int index, int count) {
-		return ItemStackHelper.getAndSplit(this.minionContents, index, count);
-	}
-
-	@Override
-	public final <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return this.minionHandler.cast();
-		return super.getCapability(cap, side);
-	}
-
-	@Override
-	public final ITextComponent getDisplayName() {
-		return this.display_name;
-	}
-
-	@Override
-	public final NonNullList<ItemStack> getItems() {
-		return this.minionContents;
-	}
-
-	/**
-	 * @return {@link #mcte}
-	 */
-	public final AbstractMinionChestTileEntity getMcte() {
-		return this.mcte;
-	}
-
-	@Override
-	public final int getSizeInventory() {
-		return this.minionContents.size();
-	}
-
-	@Override
-	public final ItemStack getStackInSlot(int index) {
-		return this.minionContents.get(index);
-	}
-
-	/**
-	 * @return {@link #tier}
-	 */
-	public final MinionTier getTier() {
-		return this.tier;
-	}
-
-	@Override
-	public final SUpdateTileEntityPacket getUpdatePacket() {
-		final CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
-		return new SUpdateTileEntityPacket(this.getPos(), 1, nbt);
-	}
-
-	@Override
-	public final CompoundNBT getUpdateTag() {
-		return this.write(new CompoundNBT());
-	}
-
-	/**
-	 * Initialize all variables.
-	 */
-	public final void init() {
-		this.isTicking = true;
-		this.x = this.pos.getX();
-		this.y = this.pos.getY();
-		this.z = this.pos.getZ();
-		this.tick = 0;
-		this.fuelTick = 0;
-		LOGGER.info(this.toString());
-		this.setSurround();
-	}
-
-	/**
-	 * Determine if {@code this} and any additional storage are full.
-	 *
-	 * @return {@code true} if full. {@code false} otherwise
-	 */
-	public final boolean isCompletlyFull() {
-		if (!this.isInventoryFull())
-			return false;
-		if (this.mcte != null)
-			return this.mcte.isFull();
-		return this.hasSeller();
-	}
-
-	@Override
-	public final boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
-		final Item item = stack.getItem();
-		LOGGER.info(item.getTags().toString());
-		switch (index) {
-		case FUEL_INDEX:
-			return item.isIn(ModItemTags.fuel);
-		case SELLER_INDEX:
-			return item.isIn(ModItemTags.seller);
-		case UPGRADE_1_INDEX:
-		case UPGRADE_2_INDEX:
-			return item.isIn(ModItemTags.upgrade);
-		default:
-			return false;
-		}
-	}
-
-	@Override
-	public final boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this)
-			return false;
-		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
-	}
-
-	@Override
-	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		LOGGER.info("NetworkManager:\t" + net.toString());
-		LOGGER.info("SUpdateTileEntityPacket:\t" + pkt.toString());
-		this.read(pkt.getNbtCompound());
-	}
-
-	@Override
-	public final void read(CompoundNBT compound) {
-		LOGGER.info("Minion NBT Reading");
-		LOGGER.info("CompoundNBT:\t" + compound.toString());
-		super.read(compound);
-		this.minionContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(compound, this.minionContents);
-	}
-
-	@Override
-	public final boolean receiveClientEvent(int id, int type) {
-		LOGGER.info("Receiving Client Event. id:\t" + id + " type:\t" + type);
-		if (id == 1) {
-			this.numPlayersUsing = type;
-			return true;
-		}
-		return super.receiveClientEvent(id, type);
-	}
-
-	@Override
-	public final void remove() {
-		LOGGER.info("Removing " + this.getClass().getSimpleName());
-		super.remove();
-		if (this.minionHandler != null)
-			this.minionHandler.invalidate();
-	}
-
-	@Override
-	public final ItemStack removeStackFromSlot(int index) {
-		LOGGER.info("Removing stack from slot " + index);
-		return ItemStackHelper.getAndRemove(this.minionContents, index);
-	}
-
-	@Override
-	public final void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
-		LOGGER.info("Setting slot" + index + " to " + stack.toString());
-		final ItemStack indexStack = this.minionContents.get(index);
-		final boolean flag = !stack.isEmpty() && stack.isItemEqual(indexStack)
-				&& ItemStack.areItemStackTagsEqual(stack, indexStack);
-		this.minionContents.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit())
-			stack.setCount(this.getInventoryStackLimit());
-		if (!flag)
-			this.markDirty();
-	}
-
-	/**
-	 * Changes {@link #mcte}
-	 *
-	 * @param mcte the new {@link AbstractMinionChestTileEntity}
-	 */
-	public final void setMcte(@Nullable AbstractMinionChestTileEntity mcte) {
-		LOGGER.info("Setting AbstractMinionChestTileEntity");
-		this.mcte = mcte;
-	}
-
-	@Override
-	public abstract void tick();
-
-	@Override
-	public final String toString() {
-		return this.getClass().getSimpleName() + " [x=" + this.x + ", y=" + this.y + ", z=" + this.z + ", tier="
-				+ this.tier + "]";
-	}
-
-	@Override
-	public final void updateContainingBlockInfo() {
-		LOGGER.info("Updating Containing Block Info");
-		super.updateContainingBlockInfo();
-		if (this.minionHandler != null) {
-			this.minionHandler.invalidate();
-			this.minionHandler = null;
-		}
-	}
-
-	@Override
-	public final CompoundNBT write(CompoundNBT compound) {
-		LOGGER.info(this.getClass().getSimpleName() + " NBT Writting:\t" + compound.toString());
-		super.write(compound);
-		ItemStackHelper.saveAllItems(compound, this.minionContents);
-		return compound;
 	}
 
 	/**
@@ -524,7 +319,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	/**
 	 * Handle {@link ItemInit#auto_smelter}.<br>
 	 * Certain smeltable items will not smelt through this method as
-	 * {@link #superCompactor()} takes priority.
+	 * {@link #superCompactor()} takes priority.<br>
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Auto_Smelter">Auto
 	 * Smelter.</a>
 	 */
@@ -553,6 +348,12 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	protected final boolean canMergeStacks(ItemStack stack1, ItemStack stack2) {
 		return !stack1.isEmpty() && this.stackEqualExact(stack1, stack2) && stack1.isStackable()
 				&& stack1.getCount() < stack1.getMaxStackSize() && stack1.getCount() < this.getInventoryStackLimit();
+	}
+
+	@Override
+	public final void clear() {
+		super.clear();
+		this.minionContents.clear();
 	}
 
 	/**
@@ -596,6 +397,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	@Override
 	protected abstract Container createMenu(int id, PlayerInventory player);
 
+	@Override
+	public final ItemStack decrStackSize(int index, int count) {
+		return ItemStackHelper.getAndSplit(this.minionContents, index, count);
+	}
+
 	/**
 	 * Handle {@link ItemInit#diamond_spreading}<br>
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Diamond_Spreading">Diamond
@@ -609,6 +415,13 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			this.add(-1, new ItemStack(Items.DIAMOND));
 	}
 
+	@Override
+	public final <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			return this.minionHandler.cast();
+		return super.getCapability(cap, side);
+	}
+
 	/**
 	 * Determine all possible {@link Item} that could be compacted using the
 	 * {@link ItemInit#compactor}.
@@ -620,6 +433,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	@Override
 	protected final ITextComponent getDefaultName() {
 		return new TranslationTextComponent("container." + this.getType().getRegistryName().toString().toLowerCase());
+	}
+
+	@Override
+	public final ITextComponent getDisplayName() {
+		return this.display_name;
 	}
 
 	/**
@@ -669,11 +487,28 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		return inv;
 	}
 
+	@Override
+	public final NonNullList<ItemStack> getItems() {
+		return this.minionContents;
+	}
+
+	/**
+	 * @return {@link #mcte}
+	 */
+	public final AbstractMinionChestTileEntity getMcte() {
+		return this.mcte;
+	}
+
 	/**
 	 * @return the {@link ItemStack} in the Seller Slot.
 	 */
 	protected final ItemStack getSeller() {
 		return this.getStackInSlot(SELLER_INDEX);
+	}
+
+	@Override
+	public final int getSizeInventory() {
+		return this.minionContents.size();
 	}
 
 	/**
@@ -683,6 +518,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * @return time between actions in ticks.
 	 */
 	protected abstract int getSpeed(MinionTier tier);
+
+	@Override
+	public final ItemStack getStackInSlot(int index) {
+		return this.minionContents.get(index);
+	}
 
 	/**
 	 * Determine all possible {@link Item} that could be super compacted.<br>
@@ -729,6 +569,25 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
+	 * @return {@link #tier}
+	 */
+	public final MinionTier getTier() {
+		return this.tier;
+	}
+
+	@Override
+	public final SUpdateTileEntityPacket getUpdatePacket() {
+		final CompoundNBT nbt = new CompoundNBT();
+		this.write(nbt);
+		return new SUpdateTileEntityPacket(this.getPos(), 1, nbt);
+	}
+
+	@Override
+	public final CompoundNBT getUpdateTag() {
+		return this.write(new CompoundNBT());
+	}
+
+	/**
 	 * @return the {@link ItemStack} in both Upgrade Slots.
 	 */
 	protected final ItemStack[] getUpgrades() {
@@ -767,6 +626,20 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
+	 * Initialize all variables.
+	 */
+	public final void init() {
+		this.isTicking = true;
+		this.x = this.pos.getX();
+		this.y = this.pos.getY();
+		this.z = this.pos.getZ();
+		this.tick = 0;
+		this.fuelTick = 0;
+		LOGGER.info(this.toString());
+		this.setSurround();
+	}
+
+	/**
 	 * Initializes {@link #display_name}
 	 * 
 	 * @return {@link StringTextComponent}.
@@ -794,6 +667,19 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
+	 * Determine if {@code this} and any additional storage are full.
+	 *
+	 * @return {@code true} if full. {@code false} otherwise
+	 */
+	public final boolean isCompletlyFull() {
+		if (!this.isInventoryFull())
+			return false;
+		if (this.mcte != null)
+			return this.mcte.isFull();
+		return this.hasSeller();
+	}
+
+	/**
 	 * Determine if {@code this} is fill.
 	 *
 	 * @return {@code true} if full. {@code false} otherwise.
@@ -807,6 +693,37 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		return true;
 	}
 
+	@Override
+	public final boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
+		final Item item = stack.getItem();
+		LOGGER.info(item.getTags().toString());
+		switch (index) {
+		case FUEL_INDEX:
+			return item.isIn(ModItemTags.fuel);
+		case SELLER_INDEX:
+			return item.isIn(ModItemTags.seller);
+		case UPGRADE_1_INDEX:
+		case UPGRADE_2_INDEX:
+			return item.isIn(ModItemTags.upgrade);
+		default:
+			return false;
+		}
+	}
+
+	@Override
+	public final boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
+		if (this.world.getTileEntity(this.pos) != this)
+			return false;
+		return player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d;
+	}
+
+	@Override
+	public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		LOGGER.info("NetworkManager:\t" + net.toString());
+		LOGGER.info("SUpdateTileEntityPacket:\t" + pkt.toString());
+		this.read(pkt.getNbtCompound());
+	}
+
 	/**
 	 * Pick a random valid {@link BlockPos} to interact with.<br>
 	 * This method depends heavily on the type of minion.<br>
@@ -815,6 +732,39 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * @return {@link BlockPos} picked.
 	 */
 	protected abstract BlockPos pickBlockPos();
+
+	@Override
+	public final void read(CompoundNBT compound) {
+		LOGGER.info("Minion NBT Reading");
+		LOGGER.info("CompoundNBT:\t" + compound.toString());
+		super.read(compound);
+		this.minionContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		ItemStackHelper.loadAllItems(compound, this.minionContents);
+	}
+
+	@Override
+	public final boolean receiveClientEvent(int id, int type) {
+		LOGGER.info("Receiving Client Event. id:\t" + id + " type:\t" + type);
+		if (id == 1) {
+			this.numPlayersUsing = type;
+			return true;
+		}
+		return super.receiveClientEvent(id, type);
+	}
+
+	@Override
+	public final void remove() {
+		LOGGER.info("Removing " + this.getClass().getSimpleName());
+		super.remove();
+		if (this.minionHandler != null)
+			this.minionHandler.invalidate();
+	}
+
+	@Override
+	public final ItemStack removeStackFromSlot(int index) {
+		LOGGER.info("Removing stack from slot " + index);
+		return ItemStackHelper.getAndRemove(this.minionContents, index);
+	}
 
 	/**
 	 * Removes a stack from the indexes.
@@ -839,14 +789,42 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		for (BlockPos[][] y : this.surround)
 			for (BlockPos[] x : y)
 				for (BlockPos pos : x)
-					if (this.world.getBlockState(pos).getMaterial() == Material.AIR)
-						this.airSurround.add(pos);
+					try {
+						if (this.world.getBlockState(pos).getMaterial() == Material.AIR)
+							this.airSurround.add(pos);
+					} catch (NullPointerException npe) {
+						LOGGER.info(pos.toString() + "outside of world.");
+						continue;
+					}
 		LOGGER.info(this.airSurround.toString());
+	}
+
+	@Override
+	public final void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
+		LOGGER.info("Setting slot" + index + " to " + stack.toString());
+		final ItemStack indexStack = this.minionContents.get(index);
+		final boolean flag = !stack.isEmpty() && stack.isItemEqual(indexStack)
+				&& ItemStack.areItemStackTagsEqual(stack, indexStack);
+		this.minionContents.set(index, stack);
+		if (stack.getCount() > this.getInventoryStackLimit())
+			stack.setCount(this.getInventoryStackLimit());
+		if (!flag)
+			this.markDirty();
 	}
 
 	@Override
 	protected void setItems(NonNullList<ItemStack> itemsIn) {
 		this.minionContents = Objects.requireNonNull(itemsIn, "New Minion Contents must be non-null");
+	}
+
+	/**
+	 * Changes {@link #mcte}
+	 *
+	 * @param mcte the new {@link AbstractMinionChestTileEntity}
+	 */
+	public final void setMcte(@Nullable AbstractMinionChestTileEntity mcte) {
+		LOGGER.info("Setting AbstractMinionChestTileEntity");
+		this.mcte = mcte;
 	}
 
 	/**
@@ -929,5 +907,32 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 				this.add(-1, new ItemStack(ItemMap.enchMap.get(item), ItemMap.enchCountMap.get(item)));
 			}
 		}
+	}
+
+	@Override
+	public abstract void tick();
+
+	@Override
+	public final String toString() {
+		return this.getClass().getSimpleName() + " [x=" + this.x + ", y=" + this.y + ", z=" + this.z + ", tier="
+				+ this.tier + "]";
+	}
+
+	@Override
+	public final void updateContainingBlockInfo() {
+		LOGGER.info("Updating Containing Block Info");
+		super.updateContainingBlockInfo();
+		if (this.minionHandler != null) {
+			this.minionHandler.invalidate();
+			this.minionHandler = null;
+		}
+	}
+
+	@Override
+	public final CompoundNBT write(CompoundNBT compound) {
+		LOGGER.info(this.getClass().getSimpleName() + " NBT Writting:\t" + compound.toString());
+		super.write(compound);
+		ItemStackHelper.saveAllItems(compound, this.minionContents);
+		return compound;
 	}
 }

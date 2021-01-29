@@ -2,7 +2,7 @@ package net.hypixel.skyblock.inventory.container.minion;
 
 import javax.annotation.Nonnull;
 
-import net.hypixel.skyblock.blocks.minion.MinionChestBlock.ChestType;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock.MinionChestType;
 import net.hypixel.skyblock.inventory.container.ModContainerTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,13 +31,13 @@ public abstract class MinionChestContainer extends Container {
 	protected final IInventory chestInventory;
 
 	/**
-	 * {@link ChestType} of this.
+	 * {@link MinionChestType} of this.
 	 */
 	@Nonnull
-	protected final ChestType type;
+	protected final MinionChestType type;
 
 	protected MinionChestContainer(ContainerType<? extends MinionChestContainer> typeIn, int windowId,
-			PlayerInventory pInvIn, ChestType type) {
+			PlayerInventory pInvIn, MinionChestType type) {
 		super(typeIn, windowId);
 		this.type = type;
 		this.chestInventory = new Inventory(this.type.additional);
@@ -65,7 +65,7 @@ public abstract class MinionChestContainer extends Container {
 			colMax = 5;
 			break;
 		default:
-			throw new IllegalStateException("Illegal ChestType " + this.type.name());
+			throw new IllegalStateException("Illegal MinionChestType " + this.type.name());
 		}
 
 		// Main Inventory
@@ -121,7 +121,7 @@ public abstract class MinionChestContainer extends Container {
 	
 	public static class SmallMCC extends MinionChestContainer {
 		public SmallMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.small_mcc.get(), windowId, pInvIn, ChestType.Small);
+			super(ModContainerTypes.small_mcc.get(), windowId, pInvIn, MinionChestType.Small);
 		}
 
 		public SmallMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
@@ -131,7 +131,7 @@ public abstract class MinionChestContainer extends Container {
 	
 	public static class MediumMCC extends MinionChestContainer {
 		public MediumMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.medium_mcc.get(), windowId, pInvIn, ChestType.Medium);
+			super(ModContainerTypes.medium_mcc.get(), windowId, pInvIn, MinionChestType.Medium);
 		}
 
 		public MediumMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {
@@ -141,7 +141,7 @@ public abstract class MinionChestContainer extends Container {
 	
 	public static class LargeMCC extends MinionChestContainer {
 		public LargeMCC(int windowId, PlayerInventory pInvIn) {
-			super(ModContainerTypes.large_mcc.get(), windowId, pInvIn, ChestType.Large);
+			super(ModContainerTypes.large_mcc.get(), windowId, pInvIn, MinionChestType.Large);
 		}
 
 		public LargeMCC(int windowId, PlayerInventory pInvIn, PacketBuffer data) {

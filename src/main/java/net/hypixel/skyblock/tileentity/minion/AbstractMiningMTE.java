@@ -8,6 +8,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
+/**
+ * Server as a base for all Mining Minions.
+ *  
+ * @author MrPineapple070
+ * @version 21 February 2020
+ * @since 11 July 2019
+ */
 public abstract class AbstractMiningMTE extends AbstractPlacerMTE {
 	public AbstractMiningMTE(TileEntityType<? extends AbstractMinionTileEntity> typeIn, MinionTier tier) {
 		super(typeIn, tier);

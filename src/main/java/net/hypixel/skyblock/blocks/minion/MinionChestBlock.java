@@ -67,12 +67,12 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	protected static final VoxelShape shape = Block.makeCuboidShape(1, 0, 1, 15, 14, 15);
 
 	/**
-	 * The {@link ChestType} of {@code this}
+	 * The {@link MinionChestType} of {@code this}
 	 */
 	@Nonnull
-	public final ChestType type;
+	public final MinionChestType type;
 
-	protected MinionChestBlock(Properties properties, @Nonnull ChestType type) {
+	protected MinionChestBlock(Properties properties, @Nonnull MinionChestType type) {
 		super(properties, () -> {
 			switch (type) {
 			case Small:
@@ -82,10 +82,10 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 			case Large:
 				return ModTileEntityTypes.large_mcte.get();
 			default:
-				throw new IllegalStateException("Illegal ChestType " + type.name());
+				throw new IllegalStateException("Illegal MinionChestType " + type.name());
 			}
 		});
-		this.type = Objects.requireNonNull(type, "ChestType cannot be null.");
+		this.type = Objects.requireNonNull(type, "MinionChestType cannot be null.");
 		this.setDefaultState(this.stateContainer.getBaseState().with(facing, Direction.NORTH));
 	}
 	
@@ -116,7 +116,7 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 		case Large:
 			return ModTileEntityTypes.large_mcte.get().create();
 		default:
-			throw new IllegalStateException("Illegal ChestType " + this.type.name());
+			throw new IllegalStateException("Illegal MinionChestType " + this.type.name());
 		}
 	}
 
@@ -131,7 +131,7 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 	}
 
 	/**
-	 * @return {@link ChestType#additional}
+	 * @return {@link MinionChestType#additional}
 	 */
 	public int getSize() {
 		return this.type.additional;
@@ -174,7 +174,7 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 			}, container_name_l);
 			break;
 		default:
-			throw new IllegalStateException("Illegal ChestType " + this.type.name());
+			throw new IllegalStateException("Illegal MinionChestType " + this.type.name());
 		}
 
 		TileEntity te = worldIn.getTileEntity(pos);
@@ -199,7 +199,7 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 		return state.with(facing, rot.rotate(state.get(facing)));
 	}
 	
-	public enum ChestType {
+	public enum MinionChestType {
 		/**
 		 * Gives 3 extra slots.
 		 */
@@ -226,26 +226,26 @@ public abstract class MinionChestBlock extends AbstractChestBlock<AbstractMinion
 		 */
 		public final int additional;
 
-		private ChestType(int additional) {
+		private MinionChestType(int additional) {
 			this.additional = additional;
 		}
 	}
 
 	public static class SmallMCB extends MinionChestBlock {
 		public SmallMCB(Properties properties) {
-			super(properties, ChestType.Small);
+			super(properties, MinionChestType.Small);
 		}
 	}
 
 	public static class MediumMCB extends MinionChestBlock {	
 		public MediumMCB(Properties properties) {
-			super(properties, ChestType.Medium);
+			super(properties, MinionChestType.Medium);
 		}
 	}
 
 	public static class LargeMCB extends MinionChestBlock {
 		public LargeMCB(Properties properties) {
-			super(properties, ChestType.Large);
+			super(properties, MinionChestType.Large);
 		}
 	}
 }

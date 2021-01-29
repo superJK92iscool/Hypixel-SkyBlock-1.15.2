@@ -8,23 +8,28 @@ import javax.annotation.Nullable;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.blocks.minion.MinionChestBlock;
-import net.hypixel.skyblock.blocks.minion.MinionChestBlock.ChestType;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock.MinionChestType;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.LargeMCC;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.MediumMCC;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer.SmallMCC;
 import net.hypixel.skyblock.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.ChestType;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
@@ -41,18 +46,58 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 /**
- * Server as a base for MinionChest TileEntity
+ * Serve as a base for
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/Minion_Chests">Minion
+ * Chest</a> {@link TileEntity}
  *
  * @author MrPineapple070
  * @version 5 July 2020
+ * @since 11 July 2019
  */
 @OnlyIn(value = Dist.CLIENT, _interface = IChestLid.class)
-public abstract class AbstractMinionChestTileEntity extends LockableLootTileEntity implements IChestLid, ITickableTileEntity {
+public abstract class AbstractMinionChestTileEntity extends LockableLootTileEntity
+implements IChestLid, ITickableTileEntity {
+	public static class LargeMCTE extends AbstractMinionChestTileEntity {
+		public LargeMCTE() {
+			super(ModTileEntityTypes.large_mcte.get(), MinionChestType.Large);
+		}
+	}
+
+	public static class MediumMCTE extends AbstractMinionChestTileEntity {
+		public MediumMCTE() {
+			super(ModTileEntityTypes.medium_mcte.get(), MinionChestType.Medium);
+		}
+	}
+
+	public static class SmallMCTE extends AbstractMinionChestTileEntity {
+		public SmallMCTE() {
+			super(ModTileEntityTypes.small_mcte.get(), MinionChestType.Small);
+		}
+	}
+
+	/**
+	 * The angle of the chest lid
+	 */
+	public float lidAngle;
+
+	/**
+	 * The angle of the chest lid last tick
+	 */
+	public float prevLidAngle;
+
+	/**
+	 * The {@link MinionChestType} of this.
+	 */
+	@Nonnull
+	public final MinionChestType type;
+
 	@Nullable
-	protected LazyOptional<IItemHandler> chestHandler = LazyOptional.of(() -> new InvWrapper(this));
+	protected LazyOptional<IItemHandler> chestHandler;
 
 	/**
 	 * The {@link NonNullList} of things that {@code this} contains.
@@ -61,20 +106,10 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	protected NonNullList<ItemStack> items;
 
 	/**
-	 * The angle of the chest lid
-	 */
-	public float lidAngle;
-
-	/**
 	 * The number of Players using {@code this}
 	 */
 	@Nonnegative
 	protected int numPlayersUsing;
-
-	/**
-	 * The angle of the chest lid last tick
-	 */
-	public float prevLidAngle;
 
 	/**
 	 * A counter that is incremented once each tick. Used to determine when to
@@ -84,21 +119,15 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 	protected int ticksSinceSync;
 
 	/**
-	 * The {@link ChestType} of this.
-	 */
-	@Nonnull
-	public final ChestType type;
-
-	/**
 	 * Construct this.
 	 *
 	 * @param typeIn the {@link TileEntityType}
-	 * @param type   the {@link ChestType}
+	 * @param type   the {@link MinionChestType}
 	 */
 	protected AbstractMinionChestTileEntity(TileEntityType<? extends AbstractMinionChestTileEntity> typeIn,
-			ChestType type) {
+			MinionChestType type) {
 		super(typeIn);
-		this.type = Objects.requireNonNull(type, "Minion Chest Tile Entity must have a ChestType.");
+		this.type = Objects.requireNonNull(type, "Minion Chest Tile Entity must have a MinionChestType.");
 		this.items = NonNullList.withSize(this.type.additional, ItemStack.EMPTY);
 	}
 
@@ -107,6 +136,43 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 			return false;
 		else
 			return (player.getDistanceSq(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5) <= 64d);
+	}
+
+	public void closeInventory(PlayerEntity player) {
+		if (!player.isSpectator()) {
+			--this.numPlayersUsing;
+			this.onOpenOrClose();
+		}
+
+	}
+	
+	/**
+	 * Creates an {@link IItemHandlerModifiable}
+	 * 
+	 * @return {@link IItemHandlerModifiable}
+	 */
+	private IItemHandlerModifiable createHandler() {
+		BlockState state = this.getBlockState();
+		if (!(state.getBlock() instanceof ChestBlock))
+			return new InvWrapper(this);
+		ChestType type = state.get(ChestBlock.TYPE);
+		if (type != ChestType.SINGLE) {
+			BlockPos opos = this.getPos().offset(ChestBlock.getDirectionToAttached(state));
+			BlockState ostate = this.getWorld().getBlockState(opos);
+			if (state.getBlock() == ostate.getBlock()) {
+				ChestType otype = ostate.get(ChestBlock.TYPE);
+				if (otype != ChestType.SINGLE && type != otype
+						&& state.get(ChestBlock.FACING) == ostate.get(ChestBlock.FACING)) {
+					TileEntity ote = this.getWorld().getTileEntity(opos);
+					if (ote instanceof ChestTileEntity) {
+						IInventory top = type == ChestType.RIGHT ? this : (IInventory) ote;
+						IInventory bottom = type == ChestType.RIGHT ? (IInventory) ote : this;
+						return new CombinedInvWrapper(new InvWrapper(top), new InvWrapper(bottom));
+					}
+				}
+			}
+		}
+		return new InvWrapper(this);
 	}
 
 	@Override
@@ -119,7 +185,7 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 		case Large:
 			return new LargeMCC(id, player);
 		default:
-			throw new IllegalStateException("Illegal ChestType " + this.type.name());
+			throw new IllegalStateException("Illegal MinionChestType " + this.type.name());
 		}
 	}
 
@@ -130,8 +196,11 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			if (this.chestHandler == null)
+				this.chestHandler = LazyOptional.of(this::createHandler);
 			return this.chestHandler.cast();
+		}
 		return super.getCapability(cap, side);
 	}
 
@@ -197,15 +266,13 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 		return true;
 	}
 
-	/**
-	 * Play a sound in the world.
-	 *
-	 * @param sound the {@link SoundEvent} to play.
-	 */
-	protected void playSound(SoundEvent sound) {
-		this.world.playSound((PlayerEntity) null,
-				new BlockPos(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5), sound,
-				SoundCategory.BLOCKS, .5f, this.world.rand.nextFloat() * .1f + .9f);
+	protected void onOpenOrClose() {
+		Block block = this.getBlockState().getBlock();
+		if (block instanceof ChestBlock) {
+			this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
+			this.world.notifyNeighborsOfStateChange(this.pos, block);
+		}
+
 	}
 
 	public void openInventory(PlayerEntity player) {
@@ -220,21 +287,15 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	}
 
-	public void closeInventory(PlayerEntity player) {
-		if (!player.isSpectator()) {
-			--this.numPlayersUsing;
-			this.onOpenOrClose();
-		}
-
-	}
-
-	protected void onOpenOrClose() {
-		Block block = this.getBlockState().getBlock();
-		if (block instanceof ChestBlock) {
-			this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
-			this.world.notifyNeighborsOfStateChange(this.pos, block);
-		}
-
+	/**
+	 * Play a sound in the world.
+	 *
+	 * @param sound the {@link SoundEvent} to play.
+	 */
+	protected void playSound(SoundEvent sound) {
+		this.world.playSound((PlayerEntity) null,
+				new BlockPos(this.pos.getX() + .5, this.pos.getY() + .5, this.pos.getZ() + .5), sound,
+				SoundCategory.BLOCKS, .5f, this.world.rand.nextFloat() * .1f + .9f);
 	}
 
 	@Override
@@ -317,7 +378,6 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 
 	@Override
 	public void updateContainingBlockInfo() {
-		HypixelSkyBlockMod.LOGGER.info("Update Containing Block Info.");
 		super.updateContainingBlockInfo();
 		if (this.chestHandler != null) {
 			this.chestHandler.invalidate();
@@ -332,23 +392,5 @@ public abstract class AbstractMinionChestTileEntity extends LockableLootTileEnti
 		if (!this.checkLootAndWrite(compound))
 			ItemStackHelper.saveAllItems(compound, this.items);
 		return compound;
-	}
-
-	public static class SmallMCTE extends AbstractMinionChestTileEntity {
-		public SmallMCTE() {
-			super(ModTileEntityTypes.small_mcte.get(), ChestType.Small);
-		}
-	}
-
-	public static class MediumMCTE extends AbstractMinionChestTileEntity {
-		public MediumMCTE() {
-			super(ModTileEntityTypes.medium_mcte.get(), ChestType.Medium);
-		}
-	}
-
-	public static class LargeMCTE extends AbstractMinionChestTileEntity {
-		public LargeMCTE() {
-			super(ModTileEntityTypes.large_mcte.get(), ChestType.Large);
-		}
 	}
 }

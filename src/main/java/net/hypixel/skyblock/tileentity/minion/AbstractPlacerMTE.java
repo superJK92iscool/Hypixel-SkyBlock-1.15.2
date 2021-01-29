@@ -22,10 +22,16 @@ import net.minecraft.world.server.ServerWorld;
  * Place and Break {@link Block}.
  * 
  * @author MrPineapple070
- * @version 17 January 2021
+ * @version 21 February 2020
  * @since 11 July 2019
  */
 public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
+	/**
+	 * {@link BlockState} resulting from {@link Block#getDefaultState()} on {@link Blocks#AIR}
+	 */
+	@Nonnull
+	protected static final BlockState air = Blocks.AIR.getDefaultState();
+	
 	/**
 	 * Differentials from the center {@link BlockPos} when {@link #count(Item)}
 	 * using {@link ItemInit#minion_expander} is 0
@@ -85,7 +91,7 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 		} else {
 			this.addItemStacks(Block.getDrops(state, (ServerWorld) this.world, pos, this));
 			this.world.playEvent(2001, pos, Block.getStateId(state));
-			this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
+			this.world.setBlockState(pos, air);
 		}
 		return true;
 	}
@@ -112,9 +118,9 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	 * @return a random {@link BlockPos}
 	 */
 	protected final BlockPos pickBlockPos() {
-		LOGGER.info("Picking a BlockPos");	
-		this.setValidSurround();
+		LOGGER.info("Picking a BlockPos");
 		this.setAirSurround();
+		this.setValidSurround();
 		if (!this.airSurround.isEmpty())
 			return this.airSurround.get(this.world.rand.nextInt(this.airSurround.size()));
 		if (!this.validSurround.isEmpty())

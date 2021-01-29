@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.hypixel.skyblock.HypixelSkyBlockMod;
-import net.hypixel.skyblock.blocks.minion.MinionChestBlock.ChestType;
+import net.hypixel.skyblock.blocks.minion.MinionChestBlock.MinionChestType;
 import net.hypixel.skyblock.inventory.container.minion.MinionChestContainer;
 import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -48,13 +48,13 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 			"textures/gui/large_minion_chest_screen.png");
 
 	/**
-	 * The {@link ChestType} of this.
+	 * The {@link MinionChestType} of this.
 	 */
 	@Nonnull
-	protected final ChestType type;
+	protected final MinionChestType type;
 
 	protected MinionChestScreen(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn,
-			ChestType type) {
+			MinionChestType type) {
 		super(screenContainer, inv, titleIn);
 		this.guiLeft = 0;
 		this.guiTop = 0;
@@ -78,7 +78,7 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 			this.minecraft.getTextureManager().bindTexture(large);
 			break;
 		default:
-			throw new IllegalStateException("Illegal ChestType " + this.type.name());
+			throw new IllegalStateException("Illegal MinionChestType " + this.type.name());
 		}
 		this.blit((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
 	}
@@ -99,19 +99,19 @@ public abstract class MinionChestScreen extends ContainerScreen<MinionChestConta
 
 	public static class SmallMCS extends MinionChestScreen {
 		public SmallMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, ChestType.Small);
+			super(screenContainer, inv, titleIn, MinionChestType.Small);
 		}
 	}
 
 	public static class MediumMCS extends MinionChestScreen {
 		public MediumMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, ChestType.Medium);
+			super(screenContainer, inv, titleIn, MinionChestType.Medium);
 		}
 	}
 
 	public static class LargeMCS extends MinionChestScreen {
 		public LargeMCS(MinionChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-			super(screenContainer, inv, titleIn, ChestType.Large);
+			super(screenContainer, inv, titleIn, MinionChestType.Large);
 		}
 	}
 }

@@ -18,6 +18,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.StringTextComponent;
 
+/**
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/Birch_Minion">Birch Minion</a>.
+ * 
+ * @author MrPineapple070
+ * @version 21 February 2020
+ * @since 11 July 2019
+ */
 public class BirchMinionTileEntity extends AbstractForagingMTE {
 	public static class BirchMTE1 extends BirchMinionTileEntity {
 		public BirchMTE1() {

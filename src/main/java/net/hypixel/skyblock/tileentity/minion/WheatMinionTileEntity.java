@@ -36,7 +36,7 @@ import net.minecraft.util.text.StringTextComponent;
  * Minion</a>.
  *
  * @author MrPineapple070
- * @version 11 July 2019
+ * @version 21 February 2020
  * @since 11 July 2019
  */
 public class WheatMinionTileEntity extends AbstractPlacerMTE {

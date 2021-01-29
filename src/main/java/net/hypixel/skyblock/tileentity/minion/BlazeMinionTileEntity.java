@@ -8,6 +8,13 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 
+/**
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/Blaze_Minion">Blaze Minion</a>
+ * 
+ * @author MrPineapple070
+ * @version 21 February 2020
+ * @since 11 July 2019
+ */
 public class BlazeMinionTileEntity extends AbstractMinionTileEntity {
 	public static class BlazeMTE1 extends BlazeMinionTileEntity {
 		public BlazeMTE1() {

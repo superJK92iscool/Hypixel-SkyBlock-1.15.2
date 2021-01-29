@@ -25,20 +25,19 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.StringTextComponent;
 
 /**
- * {@link TileEntity} for the <a href=
+ * <a href=
  * "https://hypixel-skyblock.fandom.com/wiki/Cobblestone_Minion">Cobblestone
  * Minion</a>
  *
  * @author MrPineapple070
- * @version 11 June 2019
- * @since 11 June 2019
+ * @version 21 February 2020
+ * @since 11 July 2019
  */
 public abstract class CobblestoneMinionTileEntity extends AbstractMiningMTE {
 	public static class CobbleMTE1 extends CobblestoneMinionTileEntity {
@@ -110,7 +109,8 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMiningMTE {
 	/**
 	 * {@link ImmutableSet} of {@link Block} that this places.
 	 */
-	protected static final ImmutableSet<Block> validBlocks = ImmutableSet.copyOf(Arrays.asList(Blocks.AIR, Blocks.COBBLESTONE));
+	protected static final ImmutableSet<Block> validBlocks = ImmutableSet
+			.copyOf(Arrays.asList(Blocks.AIR, Blocks.COBBLESTONE));
 
 	/**
 	 * Constructs {@code this}
@@ -176,11 +176,11 @@ public abstract class CobblestoneMinionTileEntity extends AbstractMiningMTE {
 	protected final Item[] getSuperCompactor() {
 		return new Item[] { Items.COBBLESTONE, Items.DIAMOND, Items.DIAMOND_BLOCK, ItemInit.enchanted_diamond.get() };
 	}
-	
+
 	protected final int getSpeed(MinionTier tier) {
 		return CobblestoneMinion.speed.get(tier.asInt);
 	}
-	
+
 	public final ImmutableSet<Block> getValidBlocks() {
 		return validBlocks;
 	}

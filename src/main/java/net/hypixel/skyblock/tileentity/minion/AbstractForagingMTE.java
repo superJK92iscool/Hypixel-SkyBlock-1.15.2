@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
  * Serve as a base for all Foraging Minions.
  * 
  * @author MrPineapple070
- * @version 20 January 2021
+ * @version 21 February 2020
  * @since 11 July 2019
  */
 public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
