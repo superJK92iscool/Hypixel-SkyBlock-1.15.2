@@ -144,7 +144,7 @@ public class TimeConverter {
 	public static long hoursMinutesToTicks(final int hours, final int minutes) {
 		long ret = TimeConverter.hours.get(0);
 		ret += hours * ticksPerHour;
-		ret += minutes * ticksPerMinute;
+		ret += minutes * (long)ticksPerMinute;
 		ret %= ticksPerDay;
 		return ret;
 	}

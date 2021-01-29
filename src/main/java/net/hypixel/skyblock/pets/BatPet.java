@@ -15,11 +15,11 @@ public final class BatPet extends Pet {
 	private double scc;
 	private double intel;
 	private double speed;
-	private int candy;
-	private int n_intel;
-	private int n_speed;
-	private int wings;
-	private int sonar;
+	private double candy;
+	private double n_intel;
+	private double n_speed;
+	private double wings;
+	private double sonar;
 	
 	public BatPet() {
 		super(ModItemRarity.Common, Collection.Mining, PetType.Bat);
