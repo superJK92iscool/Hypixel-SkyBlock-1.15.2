@@ -23,16 +23,20 @@ import net.minecraft.world.World;
  * @version 01 July 2020
  * @since 02 August 2019
  */
-public class AspectOfTheEnd extends ModSwordItem {
+public final class AspectOfTheEnd extends ModSwordItem {
+	private static final StringTextComponent item_ability = new StringTextComponent(
+			FormatingCodes.gold + "Item Ability: Instant Transmission");
+	private static final StringTextComponent description = new StringTextComponent(
+			FormatingCodes.gray + "Teleports you 8 blocks ahead of you and you gain +50% Speed for 3 seconds.");
+
 	public AspectOfTheEnd() {
 		super(ModSwordTier.AOTE, ItemProperties.c1, ModItemRarity.Rare);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(FormatingCodes.gold + "Item Ability: Instant Transmission"));
-		tooltip.add(new StringTextComponent(
-				FormatingCodes.gray + "Teleports you 8 blocks ahead of you and you gain +50% Speed for 3 seconds."));
+		tooltip.add(item_ability);
+		tooltip.add(description);
 	}
 
 	@Override
@@ -40,20 +44,20 @@ public class AspectOfTheEnd extends ModSwordItem {
 		ItemStack held = playerIn.getHeldItem(handIn);
 		if (!worldIn.isRemote)
 			return ActionResult.resultPass(held);
-		
+
 		double x = playerIn.getPosX(), y = playerIn.getPosY(), z = playerIn.getPosZ();
 		float phi = playerIn.rotationYaw, theta = playerIn.rotationPitch;
-		phi *= (float)Math.PI/180f;
-		theta *= (float)Math.PI/180f;
-		
+		phi *= (float) Math.PI / 180f;
+		theta *= (float) Math.PI / 180f;
+
 		x += Math.sin(theta);
-		y += Math.sin(phi)*Math.cos(theta);
-		z += Math.cos(phi)*Math.cos(theta);
-		
+		y += Math.sin(phi) * Math.cos(theta);
+		z += Math.cos(phi) * Math.cos(theta);
+
 		x *= 8;
 		y *= 8;
 		z *= 8;
-		
+
 		playerIn.attemptTeleport(x, y, z, false);
 		return ActionResult.resultSuccess(held);
 	}
