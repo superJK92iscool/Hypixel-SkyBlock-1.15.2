@@ -52,6 +52,48 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 	protected final BlockPos[][][] initSurround() {
 		return new BlockPos[1][5][9];
 	}
+	
+	@Override
+	protected void setAirSurround() {
+		LOGGER.info("Finding Air in valid BlockPos");
+		this.airSurround.clear();
+		int x_s, x_e, z_s, z_e;
+		switch (this.count(ItemInit.minion_expander.get())) {
+		case 0:
+		default:
+			x_s = 1; x_e = 4; z_s = 2; z_e = 7;
+			break;
+		case 1:
+			x_s = 0; x_e = 5; z_s = 0; z_e = 9;
+			break;
+		case 2:
+			for (int x = 0; x < 5; ++x)
+				for (int z = 0; z < 9; z += 2)
+					if (this.surround[0][x][z] == null)
+						continue;
+					else if (this.world.getBlockState(this.surround[0][x][z]).getMaterial() != Material.AIR)
+						continue;
+					else
+						switch (x) {
+						case 1:
+						case 2:
+						case 3:
+							if (z == 0 || z == 8)
+								this.airSurround.add(this.surround[0][x][z]);
+						default:
+							this.airSurround.add(this.surround[0][x][z]);
+						}
+			LOGGER.info(this.airSurround.toString());
+			return;
+		}
+		for (int x = x_s; x < x_e; ++x)
+			for (int z = z_s; z < z_e; z += 2)
+				if (this.surround[0][x][z] == null)
+					continue;
+				else if (this.world.getBlockState(this.surround[0][x][z]).getMaterial() == Material.AIR)
+					this.airSurround.add(this.surround[0][x][z]);
+		LOGGER.info(this.airSurround.toString());
+	}
 
 	@Override
 	protected final void setSurround() {

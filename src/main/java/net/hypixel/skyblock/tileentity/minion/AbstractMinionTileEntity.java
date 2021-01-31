@@ -784,18 +784,13 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * Determine all surround {@link BlockPos} that equal {@link Material#AIR}.
 	 */
 	protected void setAirSurround() {
-		LOGGER.info("Finding Air in valid BlockPos");
-		this.airSurround.clear();
 		for (BlockPos[][] y : this.surround)
 			for (BlockPos[] x : y)
 				for (BlockPos pos : x)
-					try {
-						if (this.world.getBlockState(pos).getMaterial() == Material.AIR)
-							this.airSurround.add(pos);
-					} catch (NullPointerException npe) {
-						LOGGER.info(pos.toString() + "outside of world.");
+					if (pos == null)
 						continue;
-					}
+					else if (this.world.getBlockState(pos).getMaterial() == Material.AIR)
+						this.airSurround.add(pos);
 		LOGGER.info(this.airSurround.toString());
 	}
 
