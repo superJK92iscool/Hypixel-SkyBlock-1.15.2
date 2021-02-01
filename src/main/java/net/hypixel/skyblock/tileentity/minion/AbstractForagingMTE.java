@@ -2,9 +2,7 @@ package net.hypixel.skyblock.tileentity.minion;
 
 import java.util.Arrays;
 
-import net.hypixel.skyblock.HypixelSkyBlockMod;
 import net.hypixel.skyblock.init.items.ItemInit;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -54,12 +52,11 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 	}
 	
 	@Override
-	protected void setAirSurround() {
+	protected final void setAirSurround() {
 		LOGGER.info("Finding Air in valid BlockPos");
 		this.airSurround.clear();
 		int x_s, x_e, z_s, z_e;
 		switch (this.count(ItemInit.minion_expander.get())) {
-		case 0:
 		default:
 			x_s = 1; x_e = 4; z_s = 2; z_e = 7;
 			break;
@@ -75,9 +72,7 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 						continue;
 					else
 						switch (x) {
-						case 1:
-						case 2:
-						case 3:
+						case 1: case 2: case 3:
 							if (z == 0 || z == 8)
 								this.airSurround.add(this.surround[0][x][z]);
 						default:
@@ -97,7 +92,7 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 
 	@Override
 	protected final void setSurround() {
-		HypixelSkyBlockMod.LOGGER.info("Gathering Surrounding BlockPos.");
+		LOGGER.info("Gathering Surrounding BlockPos.");
 		int index_x = 0;
 		for (int x : expanded_1_size) {
 			int index_z = 0;
@@ -108,6 +103,7 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 			}
 			index_x += 1;
 		}
+		
 		index_x = 0;
 		for (int x : expanded_size) {
 			int index_z = 1;
@@ -124,19 +120,39 @@ public abstract class AbstractForagingMTE extends AbstractPlacerMTE {
 	}
 
 	@Override
-	protected void setValidSurround() {
-		HypixelSkyBlockMod.LOGGER.info("Gathering valid BlockPos");
+	protected final void setValidSurround() {
+		LOGGER.info("Gathering valid BlockPos");
 		this.validSurround.clear();
-		for (BlockPos[] x : this.surround[0])
-			for (BlockPos pos : x) {
-				if (pos == null)
+		int x_s, x_e, z_s, z_e;
+		switch (this.count(ItemInit.minion_expander.get())) {
+		default:
+			x_s = 1; x_e = 4; z_s = 2; z_e = 7;
+			break;
+		case 1:
+			x_s = 0; x_e = 5; z_s = 0; z_e = 9;
+			break;
+		case 2:
+			for (int x = 0; x < 5; ++x)
+				for (int z = 0; z < 9; z += 2)
+					if (this.surround[0][x][z] == null)
+						continue;
+					if (this.world.getBlockState(this.surround[0][x][z].down()).getMaterial() == Material.EARTH)
+						switch (x) {
+						case 1: case 2: case 3:
+							if (z == 0 || z == 8)
+								this.validSurround.add(this.surround[0][x][z]);
+						default:
+							this.validSurround.add(this.surround[0][x][z]);
+						}
+			LOGGER.info(this.validSurround.toString());
+			return;
+		}
+		for (int x = x_s; x < x_e; ++x)
+			for (int z = z_s; z < z_e; z += 2)
+				if (this.surround[0][x][z] == null)
 					continue;
-				BlockState state = this.world.getBlockState(pos.down());
-				if (state.getMaterial() == Material.EARTH)
-					this.validSurround.add(pos);
-				else
-					continue;
-			}
+				else if (this.world.getBlockState(this.surround[0][x][z].down()).getMaterial() == Material.EARTH)
+					this.validSurround.add(this.surround[0][x][z]);
 		LOGGER.info(this.validSurround.toString());
 	}
 }

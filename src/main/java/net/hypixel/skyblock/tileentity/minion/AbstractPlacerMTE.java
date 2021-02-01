@@ -120,9 +120,9 @@ public abstract class AbstractPlacerMTE extends AbstractMinionTileEntity {
 	protected final BlockPos pickBlockPos() {
 		LOGGER.info("Picking a BlockPos");
 		this.setAirSurround();
-		this.setValidSurround();
 		if (!this.airSurround.isEmpty())
 			return this.airSurround.get(this.world.rand.nextInt(this.airSurround.size()));
+		this.setValidSurround();
 		if (!this.validSurround.isEmpty())
 			return this.validSurround.get(this.world.rand.nextInt(this.validSurround.size()));
 		return null;

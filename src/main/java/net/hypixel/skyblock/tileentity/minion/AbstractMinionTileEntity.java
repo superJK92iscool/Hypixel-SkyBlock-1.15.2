@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -19,6 +20,7 @@ import net.hypixel.skyblock.util.ItemMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
+import net.minecraft.command.arguments.ItemInput;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.crash.ReportedException;
@@ -61,7 +63,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * @since 11 July 2019
  */
 public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
-		implements ITickableTileEntity, IClearable, INamedContainerProvider {
+implements ITickableTileEntity, IClearable, INamedContainerProvider {
 	/**
 	 * The tier of each Minion
 	 */
@@ -86,11 +88,6 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			this.asInt = asInt;
 		}
 	}
-	
-	/**
-	 * {@link Logger} for this
-	 */
-	protected static final Logger LOGGER = LogManager.getLogger();
 
 	/**
 	 * Fuel Slot index.
@@ -101,6 +98,11 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * Inventory start.
 	 */
 	protected static final int INVENTORY_START = 0x4;
+
+	/**
+	 * {@link Logger} for this
+	 */
+	protected static final Logger LOGGER = LogManager.getLogger();
 
 	/**
 	 * Seller Slot index.
@@ -357,6 +359,34 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	}
 
 	/**
+	 * Removes a number of {@link Item} from {@link #minionContents}.<br>
+	 * The number of {@link Item} to clear can be more than the value of {@link #count(Item)}.
+	 * 
+	 * @param item {@link Item} to clear
+	 * @param count the number of {@link Item} to clear
+	 * @return the number of {@link Item} cleared.
+	 */
+	public int clearMatchingItems(Item item, int count) {
+		int i = 0;
+		Predicate<ItemStack> itemStack = new ItemInput(item, null);
+		for(int j = INVENTORY_START; j < this.getSizeInventory(); ++j) {
+			ItemStack itemstack = this.getStackInSlot(j);
+			if (!itemstack.isEmpty() && itemStack.test(itemstack)) {
+				int k = count <= 0 ? itemstack.getCount() : Math.min(count - i, itemstack.getCount());
+				i += k;
+				if (count != 0) {
+					itemstack.shrink(k);
+					if (itemstack.isEmpty())
+						this.setInventorySlotContents(j, ItemStack.EMPTY);
+					if (count > 0 && i >= count)
+						return i;
+				}
+			}
+		}
+		return i;
+	}
+
+	/**
 	 * Handle {@link ItemInit#compactor}.<br>
 	 * Sometimes this will do nothing unless paired with
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Diamond_Spreading">diamond
@@ -385,7 +415,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 */
 	protected final void consumeFuel(MinionFuelItem fuel) {
 		final int time = fuel.getBurnTime();
-		if (time == -1)
+		if (time < 0)
 			return;
 		this.fuelTick = (++this.fuelTick) % time;
 		if (this.fuelTick == 0) {
@@ -539,6 +569,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 	 * @param item {@link Item} to find
 	 * @return the indexes
 	 */
+	@Deprecated
 	protected final int[] getSuperCompIndex(Item item) {
 		LOGGER.info("Finding super compactor indexes for: " + item.getRegistryName().toString());
 		final int[] indexs = new int[3];
@@ -777,7 +808,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 		final ItemStack[] temp = new ItemStack[indexes.length];
 		for (int i = 0; i < indexes.length; i++)
 			temp[i] = this.getStackInSlot(i).getCount() == 32 ? this.decrStackSize(i, 32) : this.removeStackFromSlot(i);
-		return temp;
+			return temp;
 	}
 
 	/**
@@ -884,7 +915,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			i = this.getFirstEmptyStack();
 		return i == -1 ? stack.getCount() : this.addResource(i, stack);
 	}
-
+	
 	/**
 	 * Handle {@link ItemInit#super_compactor_3000}.<br>
 	 * <a href="https://hypixel-skyblock.fandom.com/wiki/Super_Compactor_3000">Super
@@ -898,7 +929,7 @@ public abstract class AbstractMinionTileEntity extends LockableLootTileEntity
 			Integer count = ItemMap.enchCountMap.get(item);
 			count = count == null ? 160 : count;
 			if (this.count(item) == count) {
-				this.removeStacksFromSlot(this.getSuperCompIndex(item));
+				this.clearMatchingItems(item, count);
 				this.add(-1, new ItemStack(ItemMap.enchMap.get(item), ItemMap.enchCountMap.get(item)));
 			}
 		}
