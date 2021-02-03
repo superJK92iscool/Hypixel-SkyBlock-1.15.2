@@ -30,7 +30,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.StringTextComponent;
 
 /**
- * <a href="https://hypixel-skyblock.fandom.com/wiki/Coal_Minion>Coal Minion</a>.
+ * <a href="https://hypixel-skyblock.fandom.com/wiki/Coal_Minion">Coal Minion</a>.
  *
  * @author MrPineapple070
  * @version 21 February 2020
