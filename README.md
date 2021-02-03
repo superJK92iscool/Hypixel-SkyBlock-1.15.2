@@ -2,4 +2,7 @@
 Hypixel SkyBlock  
 Play on the Hypixel Network at mc.hypixel.net.  
 Learn more about it here: https://hypixel.net/forums/skyblock.157/  
-Please also read \CREDITS.md and \LICENCE.md
+## Read the Licence
+/LICENCE.md
+## Credits
+/CREDITS.md
